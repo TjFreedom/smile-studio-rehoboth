@@ -1,0 +1,49 @@
+# Netlify configuration — Smile Studio of Rehoboth
+#
+# INDEXING, READ THIS FIRST
+# =========================
+# NEXT_PUBLIC_ALLOW_INDEXING is deliberately NOT set here, which means every
+# Netlify deploy (including production on the *.netlify.app subdomain) serves:
+#   · <meta name="robots" content="noindex, nofollow">
+#   · X-Robots-Tag: noindex, nofollow
+#   · an empty sitemap.xml
+#   · robots.txt with "Disallow: /"
+#
+# That is intentional and must stay this way until the real domain is
+# connected. A pre-opening dental practice getting indexed at a netlify.app
+# address would compete with www.rehobothsmiles.com for its own brand terms and
+# put a temporary URL in front of patients searching for the practice.
+#
+# TO GO LIVE on www.rehobothsmiles.com:
+#   1. Add the custom domain in Netlify and point DNS at it.
+#   2. Configure the apex -> www redirect (see docs/LAUNCH-CHECKLIST.md §1).
+#   3. THEN set NEXT_PUBLIC_ALLOW_INDEXING=true, scoped to production only.
+#   4. Redeploy and verify robots.txt and sitemap.xml on the live domain.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Show the amber internal placeholder blocks on this review deploy, so
+  # reviewers can see exactly what content is still outstanding.
+  # Set to "false" before the public launch.
+  NEXT_PUBLIC_SHOW_PLACEHOLDERS = "true"
+
+# Netlify's Next.js Runtime. Handles the App Router, route handlers,
+# static prerendering, and the image CDN.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Deploy Previews and branch deploys must never be indexed either. This is a
+# second belt on top of the application-level gate above.
+[context.deploy-preview.build.environment]
+  NEXT_PUBLIC_ALLOW_INDEXING = "false"
+
+[context.branch-deploy.build.environment]
+  NEXT_PUBLIC_ALLOW_INDEXING = "false"
+
+# Security headers are set by the application in next.config.mjs so that they
+# apply identically in local dev, on Netlify, and anywhere else this is hosted.
+# They are not duplicated here, to avoid two sources of truth drifting apart.

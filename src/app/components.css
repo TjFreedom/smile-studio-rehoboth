@@ -1,0 +1,1412 @@
+/* ==========================================================================
+   COMPONENT STYLES
+   Consumes the tokens declared in globals.css. No raw hex values here.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   ANNOUNCEMENT BAR
+   -------------------------------------------------------------------------- */
+
+.announce {
+  background: var(--navy);
+  color: var(--white);
+  font-size: var(--fs-caption);
+}
+
+.announce__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-4);
+  padding-block: 0.6rem;
+  text-align: center;
+}
+
+.announce__text {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 0.6rem;
+  margin: 0;
+  max-width: none;
+  color: var(--white);
+  line-height: 1.4;
+}
+
+.announce__text strong {
+  font-weight: 600;
+}
+
+/* Separator dot, not an em dash. Brand Guide §7 rules out em dashes. */
+.announce__sep {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--seaglass);
+  flex: none;
+}
+
+.announce__text > span:last-child {
+  color: var(--seaglass);
+}
+
+.announce__link {
+  color: var(--white);
+  font-weight: 600;
+  text-underline-offset: 0.25em;
+  white-space: nowrap;
+}
+
+.announce__link:hover {
+  color: var(--seaglass);
+}
+
+@media (max-width: 600px) {
+  .announce__sep {
+    display: none;
+  }
+  .announce__text {
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   HEADER
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  /* Opaque rather than translucent-with-blur. backdrop-filter on a sticky
+     element forces a compositing layer that is repainted on every scroll
+     frame, which measured as a significant render delay under Lighthouse's
+     4x CPU throttle. The blur was decorative; the header reads the same
+     against an opaque background. */
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  min-height: var(--header-h);
+}
+
+.site-header__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  text-decoration: none;
+  flex: none;
+  padding-block: 0.6rem;
+}
+
+.site-header__brand img {
+  width: clamp(200px, 17vw, 234px);
+}
+
+.site-header__affiliation {
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--mist);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.site-header__nav {
+  margin-left: auto;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.6rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.nav-link:hover,
+.nav-link[aria-expanded='true'],
+.nav-link[data-active] {
+  color: var(--blue);
+  background: var(--blue-050);
+}
+
+.nav-link[aria-current='page'] {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.nav-link--toggle svg {
+  transition: transform var(--dur) var(--ease);
+}
+
+.nav-link[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  min-width: 268px;
+  padding: 0.5rem;
+  margin: 0;
+  list-style: none;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+
+.nav-dropdown a {
+  display: block;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--charcoal);
+  text-decoration: none;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.nav-dropdown a:hover {
+  background: var(--bg-soft);
+  color: var(--blue);
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex: none;
+}
+
+.site-header__email {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-header__email:hover {
+  color: var(--blue);
+}
+
+.site-header__phone {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--navy);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-header__cta {
+  white-space: nowrap;
+  min-height: 44px;
+  padding-inline: 1.15rem;
+}
+
+.site-header__burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius);
+  color: var(--navy);
+}
+
+.site-header__burger:hover {
+  background: var(--bg-soft);
+}
+
+/* Progressive collapse. Between 1180px and 1340px the nav and the CTA both
+   need the room, so the email label collapses to its icon first. */
+@media (max-width: 1340px) {
+  .site-header__email span {
+    display: none;
+  }
+  .site-header__inner {
+    gap: var(--sp-4);
+  }
+}
+
+@media (max-width: 1180px) {
+  .site-header__nav {
+    display: none;
+  }
+  .site-header__burger {
+    display: inline-flex;
+  }
+  .site-header__actions {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-header__email span {
+    display: none;
+  }
+  .site-header__affiliation {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header__cta {
+    display: none;
+  }
+  .site-header__brand img {
+    width: 200px; /* Brand Guide §2 minimum for the horizontal lockup. */
+  }
+}
+
+/* Smallest supported viewport (320px).
+   The horizontal lockup may not go below 200px (Brand Guide §2), which leaves
+   only ~80px for the header actions once the container gutters are removed.
+   The email action is dropped here rather than shrinking the logo, because the
+   fixed mobile action bar already surfaces Email as a primary target. */
+@media (max-width: 420px) {
+  .site-header__inner {
+    gap: var(--sp-3);
+  }
+  .site-header__email {
+    display: none;
+  }
+  .site-header__burger {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   MOBILE DRAWER
+   -------------------------------------------------------------------------- */
+
+.mobile-nav {
+  position: fixed;
+  inset: calc(var(--header-h)) 0 0;
+  z-index: 99;
+  overflow-y: auto;
+  background: var(--white);
+  border-top: 1px solid var(--line);
+  padding-block: var(--sp-5) var(--sp-9);
+  animation: drawer-in var(--dur) var(--ease);
+}
+
+@keyframes drawer-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.mobile-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--sp-3);
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-align: left;
+  text-decoration: none;
+}
+
+.mobile-nav__link--toggle svg {
+  color: var(--mist);
+  transition: transform var(--dur) var(--ease);
+}
+
+.mobile-nav__link[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+
+.mobile-nav__sub {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0 0.85rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.mobile-nav__sub a {
+  display: block;
+  padding: 0.6rem 0 0.6rem 1rem;
+  border-left: 2px solid var(--seaglass-100);
+  font-size: 0.9375rem;
+  color: var(--charcoal);
+  text-decoration: none;
+}
+
+.mobile-nav__sub a:hover,
+.mobile-nav__sub a[aria-current='page'] {
+  border-left-color: var(--blue);
+  color: var(--blue);
+}
+
+.mobile-nav__actions {
+  display: grid;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+}
+
+/* --------------------------------------------------------------------------
+   MOBILE ACTION BAR
+   -------------------------------------------------------------------------- */
+
+.mobile-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 95;
+  background: var(--white);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -2px 14px rgba(11, 40, 89, 0.08);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.mobile-bar__item {
+  flex: 1 1 0;
+  /* Flex items default to min-width:auto, which lets a long label such as
+     "Opening Updates" push the fixed bar wider than the viewport. At 320px
+     that produced 28px of horizontal page overflow. */
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  min-height: var(--mobilebar-h);
+  padding: 0.4rem 0.2rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+  text-align: center;
+}
+
+.mobile-bar__item > span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Smallest supported viewport: tighten the label so all three fit. */
+@media (max-width: 360px) {
+  .mobile-bar__item {
+    font-size: 0.625rem;
+    letter-spacing: -0.01em;
+  }
+}
+
+.mobile-bar__item + .mobile-bar__item {
+  border-left: 1px solid var(--line);
+}
+
+.mobile-bar__item:active {
+  background: var(--bg-soft);
+}
+
+@media (max-width: 900px) {
+  .mobile-bar {
+    display: flex;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   BREADCRUMBS
+   -------------------------------------------------------------------------- */
+
+.breadcrumbs {
+  margin-bottom: var(--sp-5);
+}
+
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--fs-caption);
+  color: var(--text-soft);
+}
+
+.breadcrumbs li + li::before {
+  content: '/';
+  margin-right: 0.4rem;
+  color: var(--seaglass);
+}
+
+.breadcrumbs a {
+  color: var(--text-soft);
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+.breadcrumbs [aria-current='page'] {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   PAGE HERO  (interior pages)
+   -------------------------------------------------------------------------- */
+
+.page-hero {
+  position: relative;
+  padding-block: var(--sp-8) var(--sp-7);
+  background: linear-gradient(180deg, var(--seaglass-100) 0%, var(--white) 100%);
+  border-bottom: 1px solid var(--line);
+}
+
+.page-hero h1 {
+  max-width: 20ch;
+}
+
+.page-hero .lede {
+  margin-top: var(--sp-4);
+}
+
+/* --------------------------------------------------------------------------
+   HOME HERO
+   -------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  background: var(--navy);
+  color: var(--white);
+  overflow: hidden;
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(2rem, 4vw, 4.5rem);
+  align-items: center;
+  padding-block: clamp(3rem, 6vw, 5.5rem);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero h1 {
+  color: var(--white);
+  font-size: var(--fs-display);
+  max-width: 15ch;
+}
+
+.hero__lede {
+  margin-top: var(--sp-5);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-relaxed);
+  color: var(--text-invert-soft);
+  max-width: 54ch;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-top: var(--sp-7);
+}
+
+.hero__tertiary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px; /* WCAG 2.2 SC 2.5.8, standalone action */
+  gap: 0.45rem;
+  margin-top: var(--sp-5);
+  color: var(--seaglass);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  text-underline-offset: 0.25em;
+}
+
+.hero__qualifier {
+  margin-top: var(--sp-6);
+  padding: var(--sp-4) var(--sp-5);
+  border-left: 3px solid var(--sand);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--text-invert-soft);
+  max-width: 56ch;
+}
+
+/* Hero visual. Until approved photography or a rendering exists, this is a
+   branded visual treatment, not a stock photo of somebody else's office. */
+.hero__visual {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  /* Single gradient. The stacked radial cost real rasterisation time on the
+     largest painted surface above the fold, for a difference nobody can see. */
+  background: linear-gradient(165deg, var(--navy-600) 0%, var(--navy-900) 100%);
+  border: 1px solid rgba(168, 198, 216, 0.22);
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.hero__visualMark {
+  width: min(62%, 260px);
+  opacity: 0.96;
+}
+
+.hero__visualCaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--sp-5);
+  background: linear-gradient(180deg, transparent, rgba(7, 26, 59, 0.9));
+  font-size: var(--fs-caption);
+  color: var(--seaglass);
+  text-align: center;
+  font-style: normal;
+}
+
+.hero__horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: var(--white);
+  height: 40px;
+}
+
+@media (max-width: 900px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-7);
+  }
+  .hero__visual {
+    aspect-ratio: 16 / 11;
+    order: -1;
+  }
+  .hero h1 {
+    max-width: 18ch;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   QUICK INFO BAR
+   -------------------------------------------------------------------------- */
+
+.quickbar {
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--line);
+}
+
+.quickbar__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  gap: var(--sp-4) var(--sp-5);
+  padding-block: var(--sp-6);
+}
+
+.quickbar__item {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+}
+
+.quickbar__item svg {
+  color: var(--blue);
+  flex: none;
+  margin-top: 0.1rem;
+}
+
+.quickbar__label {
+  display: block;
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--mist);
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.quickbar__value {
+  display: block;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   SERVICE CARDS
+   -------------------------------------------------------------------------- */
+
+.svc-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  height: 100%;
+}
+
+.svc-card__icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius);
+  background: var(--blue-050);
+  color: var(--blue);
+  margin-bottom: var(--sp-2);
+}
+
+.svc-card h3 {
+  margin: 0;
+}
+
+.svc-card p {
+  color: var(--charcoal);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.svc-card .link-arrow {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* Tier badge. Every unconfirmed service carries one. */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-pill);
+  background: var(--sand-100);
+  color: #6d4f33; /* sand darkened to pass 4.5:1 on sand-100 */
+  border: 1px solid var(--sand-200);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+
+.tier-badge--network {
+  background: var(--blue-050);
+  color: var(--blue);
+  border-color: var(--seaglass);
+}
+
+/* --------------------------------------------------------------------------
+   TIMELINE  (construction milestones)
+   -------------------------------------------------------------------------- */
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+.timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: var(--sp-4);
+  padding-bottom: var(--sp-6);
+}
+
+.timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+/* Connector line, drawn between markers only. */
+.timeline__item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 26px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--line);
+}
+
+.timeline__marker {
+  position: relative;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--white);
+  border: 2px solid var(--line-strong);
+  color: var(--mist);
+  flex: none;
+}
+
+.timeline__item[data-status='complete'] .timeline__marker {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+
+.timeline__item[data-status='current'] .timeline__marker {
+  border-color: var(--blue);
+  color: var(--blue);
+  box-shadow: 0 0 0 4px var(--blue-050);
+}
+
+.timeline__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: 0.3rem;
+}
+
+.timeline__status {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--bg-soft);
+  color: var(--mist);
+  border: 1px solid var(--line);
+}
+
+.timeline__item[data-status='current'] .timeline__status {
+  background: var(--blue-050);
+  color: var(--blue);
+  border-color: var(--seaglass);
+}
+
+.timeline__item[data-status='complete'] .timeline__status {
+  background: var(--success-bg);
+  color: var(--success);
+  border-color: rgba(16, 100, 63, 0.25);
+}
+
+.timeline__desc {
+  font-size: var(--fs-small);
+  color: var(--charcoal);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   FAQ  (native details/summary — keyboard accessible with no JS)
+   -------------------------------------------------------------------------- */
+
+.faq {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.faq__item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+  overflow: hidden;
+  transition: border-color var(--dur) var(--ease);
+}
+
+.faq__item[open] {
+  border-color: var(--seaglass);
+}
+
+.faq__q {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--fs-body);
+  color: var(--navy);
+  list-style: none;
+  min-height: 56px;
+}
+
+.faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.faq__q:hover {
+  background: var(--bg-soft);
+}
+
+.faq__q svg {
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--blue);
+  transition: transform var(--dur) var(--ease);
+}
+
+.faq__item[open] .faq__q svg {
+  transform: rotate(180deg);
+}
+
+.faq__a {
+  padding: 0 var(--sp-5) var(--sp-5);
+}
+
+.faq__a p {
+  font-size: var(--fs-small);
+  line-height: 1.65;
+  color: var(--charcoal);
+  max-width: 70ch;
+}
+
+/* --------------------------------------------------------------------------
+   MAP  (static preview, interactive frame loaded only on click)
+   -------------------------------------------------------------------------- */
+
+.map {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  aspect-ratio: 16 / 10;
+}
+
+.map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.map__preview {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-6);
+  text-align: center;
+  background:
+    linear-gradient(180deg, var(--seaglass-100) 0%, var(--bg-soft) 100%);
+}
+
+.map__previewInner {
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-3);
+  max-width: 42ch;
+}
+
+.map__pin {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--navy);
+  box-shadow: var(--shadow);
+}
+
+.map__addr {
+  font-weight: 600;
+  color: var(--navy);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+}
+
+.map__note {
+  font-size: var(--fs-caption);
+  color: var(--mist);
+}
+
+/* --------------------------------------------------------------------------
+   FORMS
+   -------------------------------------------------------------------------- */
+
+.form {
+  display: grid;
+  gap: var(--sp-5);
+}
+
+.form__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: var(--sp-4);
+}
+
+.form__consent {
+  display: grid;
+  gap: var(--sp-4);
+  padding: var(--sp-5);
+  background: var(--bg-soft);
+  border-radius: var(--radius);
+}
+
+.form__legal {
+  font-size: var(--fs-caption);
+  color: var(--text-soft);
+  line-height: 1.6;
+  max-width: 68ch;
+}
+
+.form-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  box-shadow: var(--shadow-sm);
+}
+
+/* --------------------------------------------------------------------------
+   FOOTER
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  /* Muted text inside the footer sits on Harbor Navy, where the light-background
+     --mist would fail. Scoping the token here fixes every descendant that
+     references it, without each rule needing to know it is on a dark field.
+     #9BAABC on Harbor Navy is 6.07:1. */
+  --mist: #9babc0;
+  position: relative;
+  margin-top: auto;
+  background: var(--navy);
+  color: var(--text-invert-soft);
+  font-size: var(--fs-small);
+}
+
+.site-footer__wave {
+  display: block;
+  width: 100%;
+  color: var(--seaglass);
+  opacity: 0.18;
+  transform: rotate(180deg);
+  height: 34px;
+}
+
+.site-footer__top {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr) 1.25fr;
+  gap: var(--sp-7) var(--sp-6);
+  padding-block: var(--sp-8) var(--sp-7);
+}
+
+.site-footer__brand img {
+  width: clamp(210px, 20vw, 250px);
+}
+
+.site-footer__affiliation {
+  margin-top: var(--sp-3);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--seaglass);
+  font-weight: 600;
+}
+
+.site-footer__blurb {
+  margin-top: var(--sp-4);
+  max-width: 34ch;
+  line-height: 1.6;
+  color: var(--text-invert-soft);
+  font-size: var(--fs-caption);
+}
+
+.site-footer__heading {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--seaglass);
+  font-weight: 600;
+  margin-bottom: var(--sp-4);
+}
+
+.site-footer__col ul {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.site-footer a {
+  color: var(--text-invert-soft);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+.site-footer__fact {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--sp-3);
+  align-items: start;
+  margin-bottom: var(--sp-4);
+}
+
+.site-footer__fact svg {
+  color: var(--seaglass);
+  margin-top: 0.15rem;
+}
+
+.site-footer__fact address {
+  font-style: normal;
+  display: grid;
+  gap: 0.1rem;
+  line-height: 1.5;
+}
+
+.site-footer__factLabel {
+  display: block;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--seaglass);
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+}
+
+.site-footer__muted {
+  color: var(--mist);
+  font-size: var(--fs-caption);
+}
+
+.site-footer__status {
+  padding-top: var(--sp-3);
+  border-top: 1px solid rgba(168, 198, 216, 0.2);
+  font-size: var(--fs-caption);
+  color: var(--seaglass);
+  max-width: 32ch;
+}
+
+.site-footer__social {
+  display: flex;
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
+}
+
+.site-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding-block: var(--sp-5);
+  border-top: 1px solid rgba(168, 198, 216, 0.2);
+  font-size: var(--fs-caption);
+}
+
+.site-footer__copy {
+  margin: 0;
+  max-width: none;
+}
+
+.site-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.15rem;
+}
+
+.site-footer__disclaimer {
+  padding-bottom: var(--sp-7);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--mist);
+  max-width: 92ch;
+}
+
+@media (max-width: 1080px) {
+  .site-footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+  .site-footer__brand,
+  .site-footer__visit {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-footer__top {
+    grid-template-columns: 1fr;
+  }
+  .site-footer__brand,
+  .site-footer__visit {
+    grid-column: auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   CONTENT PATTERNS
+   -------------------------------------------------------------------------- */
+
+/* Two-column split with a sticky aside on desktop. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.split__aside {
+  position: sticky;
+  top: calc(var(--header-h) + var(--sp-5));
+  display: grid;
+  gap: var(--sp-5);
+}
+
+@media (max-width: 960px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .split__aside {
+    position: static;
+  }
+}
+
+/* Numbered steps. */
+.steps {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-5);
+}
+
+.steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: var(--sp-4);
+  align-items: start;
+}
+
+.steps li::before {
+  content: counter(step);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stat / fact row. */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--sp-5);
+}
+
+.fact {
+  padding: var(--sp-5);
+  border-left: 2px solid var(--seaglass);
+}
+
+.fact__label {
+  display: block;
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--mist);
+  font-weight: 600;
+  margin-bottom: var(--sp-2);
+}
+
+.fact__value {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.25;
+}
+
+/* Post / update list. */
+.post-list {
+  display: grid;
+  gap: var(--sp-5);
+  list-style: none;
+  padding: 0;
+}
+
+.post-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-size: var(--fs-caption);
+  color: var(--mist);
+  margin-bottom: var(--sp-2);
+}
+
+.post-card h3 {
+  margin-bottom: var(--sp-2);
+}
+
+.post-card h3 a {
+  color: var(--navy);
+  text-decoration: none;
+}
+
+.post-card h3 a:hover {
+  color: var(--blue);
+}
+
+/* Article body. */
+.article-body {
+  max-width: 68ch;
+}
+
+.article-body h2 {
+  margin-top: var(--sp-8);
+  font-size: var(--fs-h2);
+}
+
+.article-body p + p {
+  margin-top: var(--sp-4);
+}
+
+.article-body p {
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-relaxed);
+}
+
+/* Medical / editorial disclaimer under clinical content. */
+.med-disclaimer {
+  margin-top: var(--sp-8);
+  padding: var(--sp-5);
+  background: var(--bg-soft);
+  border-radius: var(--radius);
+  font-size: var(--fs-caption);
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+.med-disclaimer strong {
+  color: var(--navy);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+/* Final CTA band. */
+.cta-band {
+  position: relative;
+  background: var(--navy);
+  color: var(--white);
+  text-align: center;
+  overflow: hidden;
+}
+
+.cta-band h2 {
+  color: var(--white);
+  max-width: 22ch;
+  margin-inline: auto;
+}
+
+.cta-band p {
+  margin-inline: auto;
+  color: var(--text-invert-soft);
+}
+
+.cta-band .btn-row {
+  justify-content: center;
+  margin-top: var(--sp-6);
+}
+
+/* Site map page columns. */
+.sitemap-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: var(--sp-7);
+}
+
+.sitemap-cols h2 {
+  font-size: var(--fs-h3);
+  font-family: var(--font-sans);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: var(--sp-4);
+}
+
+.sitemap-cols ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+  font-size: var(--fs-small);
+}
+
+/* 404 */
+.notfound {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding-block: clamp(4rem, 12vw, 8rem);
+}
+
+.notfound__code {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 14vw, 8rem);
+  line-height: 1;
+  color: var(--seaglass);
+  font-weight: 600;
+}
