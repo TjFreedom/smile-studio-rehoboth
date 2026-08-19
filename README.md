@@ -149,6 +149,50 @@ deviations, both with reasoning, in `docs/ASSUMPTIONS.md`:
 
 Both should be reconciled into Brand Guide v1.1.
 
+## Deployment
+
+Hosted on **Netlify**, under the Freedom team.
+
+| | |
+|---|---|
+| Review URL | https://smile-studio-rehoboth.netlify.app |
+| Netlify admin | https://app.netlify.com/projects/smile-studio-rehoboth |
+| Production domain | `https://www.rehobothsmiles.com` *(not yet connected)* |
+
+### Indexing is deliberately OFF on Netlify
+
+`NEXT_PUBLIC_ALLOW_INDEXING` is **not** set on this deploy, so every Netlify URL
+serves `noindex, nofollow` via both the meta tag and the `X-Robots-Tag` header,
+an empty `sitemap.xml`, and a `robots.txt` of `Disallow: /`.
+
+That is intentional. A pre-opening dental practice indexed at a `netlify.app`
+address would compete with `www.rehobothsmiles.com` for its own brand terms and
+put a temporary URL in front of patients searching for the practice.
+
+**Turn indexing on only after the real domain is connected**, and scope it to
+production. See `docs/LAUNCH-CHECKLIST.md` §1 and §2.
+
+### Redeploying
+
+```bash
+netlify deploy --build --prod
+```
+
+Or connect the GitHub repo in the Netlify UI for deploy-on-push, which also
+gives you Deploy Previews per pull request. Preview and branch deploys are
+pinned to `noindex` in `netlify.toml`.
+
+### Environment variables to set in Netlify
+
+| Variable | When | Notes |
+|---|---|---|
+| `RESEND_API_KEY` | Before forms are relied on | **Without it the forms fail closed in production** and return an error asking the visitor to email instead. |
+| `MAIL_FROM` | With the above | Must be on an SPF/DKIM/DMARC-authenticated domain |
+| `MAIL_TO` | With the above | Defaults to `info@rehobothsmiles.com` |
+| `NEXT_PUBLIC_ALLOW_INDEXING` | **Only at real launch** | Production context only |
+| `NEXT_PUBLIC_SHOW_PLACEHOLDERS` | Currently `true` | Shows the amber outstanding-content notes for reviewers. Set to `false` before public launch. |
+| `NEXT_PUBLIC_GTM_ID` | When Marketing supplies it | Nothing tracking-related loads until this exists |
+
 ## Before you deploy
 
 Read `docs/LAUNCH-CHECKLIST.md`. The blockers are: the four domain redirects
