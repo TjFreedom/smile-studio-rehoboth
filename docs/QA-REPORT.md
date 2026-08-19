@@ -47,7 +47,37 @@ Mobile emulation, local production server, median of repeated runs.
 is the accepted proxy and sits well under the 200ms threshold. Real INP must
 come from field data after launch.
 
-### Measurement caveat, stated plainly
+### Measured on the live Netlify CDN (2026-08-19)
+
+The production re-measurement flagged below has now been done, against
+`https://smile-studio-rehoboth.netlify.app`. Median of three runs, mobile
+emulation:
+
+| Category | Live | Note |
+|---|---|---|
+| Performance | **88** | |
+| Accessibility | **100** | |
+| Best Practices | **100** | |
+| SEO | **69** | **Expected.** The only failing audit is `is-crawlable: Page is blocked from indexing`, which is the deliberate review-deploy posture. Every other SEO audit passes. Returns to 100 once indexing is enabled on the real domain. |
+
+| Metric | Live median | Target | |
+|---|---|---|---|
+| FCP | 1.1s | — | |
+| **LCP** | **2.52s** | < 2.5s | ⚠️ marginal |
+| CLS | **0.000** | < 0.1 | ✅ |
+| TBT | 377ms | — | |
+
+**LCP sits right on the 2.5s threshold**, with 673ms of that being TTFB from the
+test machine to the CDN edge and ~1.84s render delay. Best run was 1.8s. Two
+things will improve this in real use: visitors closer to a CDN edge node than
+this test machine, and the fact that Lighthouse applies a 4x CPU throttle on top
+of an already-busy workstation.
+
+**Recommendation:** re-check LCP from Chrome UX Report field data once the real
+domain has traffic, rather than tuning further against lab numbers. Field data
+is the metric Google actually ranks on.
+
+### Earlier local measurement caveat
 
 Early runs produced Performance 78–83 with LCP 3.1–3.2s and TBT swinging
 252–780ms across *identical* runs. That variance was traced to CPU contention
