@@ -10,6 +10,7 @@ import {
   Timeline,
 } from '@/components/Blocks'
 import { OpeningListForm } from '@/components/Forms'
+import { Logo } from '@/components/Logo'
 import { Button, JsonLd, PlaceholderNote, SectionHead, WaveRule } from '@/components/Ui'
 import { openingFaqs } from '@/content/faqs'
 import { sortedUpdates } from '@/content/construction'
@@ -96,18 +97,23 @@ export default function HomePage() {
             {/* Hero visual.
                 No approved rendering or construction photograph exists yet, so
                 this is a branded visual treatment rather than an unrelated
-                stock dental office implied to be this location. */}
+                stock dental office implied to be this location.
+
+                Uses the full vertical lockup rather than the icon-only mark.
+                Brand Guide §2 restricts the icon mark to favicons, avatars,
+                embroidery, and wayfinding, and says to "lead with the full
+                lockup" until the mark is recognised locally on its own. The
+                panel is portrait, which is exactly what the vertical lockup is
+                for. Reversed variant, because it sits on Harbor Navy. */}
             <figure className="hero__visual" style={{ margin: 0 }}>
-              {/* eslint-disable-next-line @next/next/no-img-element -- SVG, see Logo.tsx */}
-              <img
-                src="/logos/icon-mark-reversed.svg"
-                alt=""
-                width={320}
-                height={320}
+              <Logo
+                variant="vertical-reversed"
+                mobileVariant="horizontal-reversed"
+                switchAt={900}
+                width={340}
                 className="hero__visualMark"
-                loading="eager"
-                fetchPriority="high"
-                aria-hidden="true"
+                priority
+                decorative
               />
               <figcaption className="hero__visualCaption">
                 {address.line1}, {address.city}, {address.state} {address.postalCode}

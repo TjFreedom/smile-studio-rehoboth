@@ -107,7 +107,8 @@
 }
 
 .site-header__brand img {
-  width: clamp(200px, 17vw, 234px);
+  /* Brand Guide §2: never below 200px for the horizontal lockup. */
+  --logo-w: clamp(200px, 17vw, 234px);
 }
 
 .site-header__affiliation {
@@ -287,7 +288,7 @@
     display: none;
   }
   .site-header__brand img {
-    width: 200px; /* Brand Guide §2 minimum for the horizontal lockup. */
+    --logo-w: 200px; /* Brand Guide §2 minimum for the horizontal lockup. */
   }
 }
 
@@ -595,27 +596,54 @@
      largest painted surface above the fold, for a difference nobody can see. */
   background: linear-gradient(165deg, var(--navy-600) 0%, var(--navy-900) 100%);
   border: 1px solid rgba(168, 198, 216, 0.22);
+  /* Two real rows: the lockup takes the free space and centres in it, the
+     caption takes its own height. Previously the caption was absolutely
+     positioned and the panel reserved a fixed padding for it, which broke as
+     soon as the caption wrapped to two lines on mobile and overlapped the
+     lockup. As grid rows, overlap is structurally impossible at any width. */
   display: grid;
-  place-items: center;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  justify-items: center;
   padding: clamp(1.5rem, 4vw, 3rem);
 }
 
+/* <picture> is only a selection wrapper. display:contents makes the <img> the
+   direct grid item, so place-items centring and the img's percentage
+   max-height both resolve against the panel rather than the wrapper. */
+.hero__visual picture {
+  display: contents;
+}
+
 .hero__visualMark {
-  width: min(62%, 260px);
-  opacity: 0.96;
+  /* Full vertical lockup, sized as the panel's focal point. The binding
+     constraint is "DENTISTRY", the smallest element in the lockup: much below
+     300px of lockup width it stops being comfortably readable.
+     Never below the Brand Guide §2 vertical minimum of 130px. */
+  --logo-w: clamp(150px, 80%, 360px);
+  /* No max-height. The panel has a fixed aspect ratio and the lockup is sized
+     as a percentage of that same width, so the height relationship is constant
+     and cannot overflow. A percentage max-height here actively hurt: it
+     squashed the box, and object-fit then letterboxed the artwork down below
+     the Brand Guide §2 minimum width. */
+  object-fit: contain;
+  opacity: 0.97;
+  /* Stated explicitly because <picture> swaps the source across breakpoints
+     while the width/height attributes can only describe one variant. Without
+     this the element inherits `aspect-ratio: auto 340/288` from the attributes
+     and boxes the horizontal lockup at the vertical lockup's proportions. */
+  aspect-ratio: 1362 / 1155; /* vertical lockup */
 }
 
 .hero__visualCaption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: var(--sp-5);
-  background: linear-gradient(180deg, transparent, rgba(7, 26, 59, 0.9));
+  /* In normal flow as the second grid row. No gradient scrim needed now that
+     it no longer overlays the lockup. */
+  padding-top: var(--sp-4);
   font-size: var(--fs-caption);
   color: var(--seaglass);
   text-align: center;
   font-style: normal;
+  max-width: 32ch;
 }
 
 .hero__horizon {
@@ -635,6 +663,13 @@
   .hero__visual {
     aspect-ratio: 16 / 11;
     order: -1;
+  }
+  /* Horizontal lockup takes over here (see Logo mobileVariant). It is a wide,
+     short mark, so it is sized by width and needs far less height headroom.
+     Brand Guide §2 minimum for the horizontal lockup is 200px. */
+  .hero__visualMark {
+    --logo-w: clamp(200px, 66%, 380px);
+    aspect-ratio: 2000 / 720; /* horizontal lockup */
   }
   .hero h1 {
     max-width: 18ch;
@@ -1047,7 +1082,7 @@
 }
 
 .site-footer__brand img {
-  width: clamp(210px, 20vw, 250px);
+  --logo-w: clamp(210px, 20vw, 250px);
 }
 
 .site-footer__affiliation {

@@ -33,6 +33,18 @@ interface LogoProps {
   /** Above-the-fold instances load eagerly. */
   priority?: boolean
   className?: string
+  /**
+   * Swap to a different lockup below `switchAt`.
+   *
+   * Brand Guide §2 assigns the horizontal lockup to wide spaces and the
+   * vertical lockup to narrow or square ones. A container that changes shape
+   * across breakpoints should therefore change lockup with it, rather than
+   * squashing one into the wrong aspect. Rendered as a <picture>, so the
+   * browser fetches only the variant it actually uses.
+   */
+  mobileVariant?: Variant
+  /** Max-width breakpoint at which `mobileVariant` takes over. */
+  switchAt?: number
 }
 
 /**
@@ -54,12 +66,14 @@ export function Logo({
   decorative = false,
   priority = false,
   className,
+  mobileVariant,
+  switchAt = 900,
 }: LogoProps) {
   const source = sources[variant]
   const w = Math.max(width, minWidth[variant])
   const h = Math.round((w * source.h) / source.w)
 
-  return (
+  const img = (
     // eslint-disable-next-line @next/next/no-img-element -- SVG: see note above.
     <img
       src={source.src}
@@ -71,7 +85,22 @@ export function Logo({
       loading={priority ? 'eager' : 'lazy'}
       fetchPriority={priority ? 'high' : 'auto'}
       decoding={priority ? 'sync' : 'async'}
-      style={{ width: w, height: 'auto' }}
+      /**
+       * Width is exposed as a custom property rather than a fixed inline width.
+       * An inline `width` would beat every class rule, which silently defeated
+       * the responsive clamps on the header and footer lockups. Callers can now
+       * override with `--logo-w` from CSS, and the prop remains the fallback.
+       */
+      style={{ width: `var(--logo-w, ${w}px)`, height: 'auto', maxWidth: '100%' }}
     />
+  )
+
+  if (!mobileVariant) return img
+
+  return (
+    <picture>
+      <source media={`(max-width: ${switchAt}px)`} srcSet={sources[mobileVariant].src} />
+      {img}
+    </picture>
   )
 }
