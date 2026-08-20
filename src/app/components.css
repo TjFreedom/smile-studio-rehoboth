@@ -1660,3 +1660,81 @@
   border: 1px solid var(--line);
   filter: saturate(0.94);
 }
+
+/* Progress-at-a-glance: the branded five-stage graphic beside a text version
+   of the same five stages, so the information is available to a screen reader
+   and not locked inside an image. */
+.glance {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.glance__figure {
+  margin: 0;
+}
+
+.glance__figure img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.glance__stages {
+  list-style: none;
+  padding: 0;
+  margin: var(--sp-6) 0 0;
+  display: grid;
+  gap: var(--sp-3);
+  counter-reset: none;
+}
+
+.glance__stages li {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: var(--sp-3);
+  align-items: start;
+  font-size: var(--fs-small);
+  line-height: 1.55;
+}
+
+.glance__num {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.glance__stages strong {
+  color: var(--navy);
+}
+
+.glance__note {
+  margin-top: var(--sp-5);
+  padding: var(--sp-3) var(--sp-4);
+  border-left: 3px solid var(--sand);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--sand-100);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--navy);
+}
+
+@media (max-width: 860px) {
+  .glance {
+    grid-template-columns: 1fr;
+  }
+  .glance__figure {
+    max-width: 460px;
+    margin-inline: auto;
+  }
+}

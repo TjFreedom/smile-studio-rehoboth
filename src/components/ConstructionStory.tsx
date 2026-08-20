@@ -55,8 +55,10 @@ function Chapter({
       <div className="story-chapter__body">
         <div className="story-chapter__head">
           <span className="eyebrow">
-            {/* Numeric position is announced as text, not implied by the dot. */}
-            Step {index + 1} of {total}
+            {/* Prefer the official stage name from the progress graphic so the
+                site and the social posts use one vocabulary. Falls back to a
+                plain counter for sections outside the five-stage sequence. */}
+            {chapter.stage ?? `Step ${index + 1} of ${total}`}
             {chapter.date ? ` · ${chapter.date}` : ''}
           </span>
           <h3 id={headingId}>{chapter.title}</h3>

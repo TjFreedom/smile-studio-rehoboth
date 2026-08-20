@@ -4,7 +4,7 @@ import { CtaBand, Timeline } from '@/components/Blocks'
 import { ConstructionStory, StoryNav } from '@/components/ConstructionStory'
 import { webPageSchema } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
-import { sortedUpdates, totalStoryPhotos } from '@/content/construction'
+import { sortedUpdates, totalStoryPhotos, progressGraphic } from '@/content/construction'
 import { formatDate } from '@/content/blog'
 import { openingQualifier } from '@/config/practice'
 
@@ -13,7 +13,14 @@ const DESCRIPTION =
   'Follow the build of Smile Studio of Rehoboth at 19411 Plantations Road, Rehoboth Beach, DE, from trenching the underground plumbing to the concrete floor.'
 const PATH = '/our-new-office/construction-updates'
 
-export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: PATH })
+export const metadata: Metadata = pageMetadata({
+  title: TITLE,
+  description: DESCRIPTION,
+  path: PATH,
+  // Sharing this page shows the branded five-stage progress graphic rather
+  // than the generic site card.
+  ogImage: progressGraphic.og,
+})
 
 export default function Page() {
   const crumbs = [
@@ -39,6 +46,55 @@ export default function Page() {
           </Button>
         </div>
       </PageHero>
+
+      {/* ---------------------------------------------------------------- *
+       * PROGRESS AT A GLANCE
+       * ---------------------------------------------------------------- */}
+      <section className="section section--sm section--soft">
+        <div className="container">
+          <div className="glance">
+            <figure className="glance__figure">
+              {/* eslint-disable-next-line @next/next/no-img-element -- pre-optimised static JPEG */}
+              <img
+                src={progressGraphic.square}
+                alt={progressGraphic.alt}
+                width={1200}
+                height={1200}
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+
+            <div className="glance__body">
+              <span className="eyebrow">Progress at a glance</span>
+              <h2>Five Stages, One Floor</h2>
+              <p className="lede" style={{ marginTop: 'var(--sp-4)' }}>
+                Everything below the concrete happens in a fixed order, and each stage has to pass
+                before the next can start. Here is where the build stands today.
+              </p>
+
+              {/* The list is the accessible version of the graphic: a screen
+                  reader gets the same five stages as text, not just alt text. */}
+              <ol className="glance__stages">
+                {progressGraphic.stages.map((st) => (
+                  <li key={st.n}>
+                    <span className="glance__num" aria-hidden="true">
+                      {st.n}
+                    </span>
+                    <span>
+                      <strong>{st.name}.</strong> {st.detail}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+
+              <p className="glance__note">
+                All five are complete. The concrete pour is next.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ---------------------------------------------------------------- *
        * THE PHOTO STORY

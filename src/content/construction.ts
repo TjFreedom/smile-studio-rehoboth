@@ -98,6 +98,14 @@ export interface StoryPhoto {
 
 export interface StoryChapter {
   id: string
+  /**
+   * Official stage label, matching the "New Office Construction Progress"
+   * graphic used on social and in print. Keeping one vocabulary across the
+   * website, the graphic, and any printed update means a patient who sees the
+   * post and then visits the site recognises the same five steps.
+   * Null for sections that sit outside the five-stage sequence.
+   */
+  stage: string | null
   /** Short label for the timeline rail. */
   label: string
   title: string
@@ -118,6 +126,7 @@ const P2 = { w: 1600, h: 2133 }
 export const storyChapters: StoryChapter[] = [
   {
     id: 'setting-out',
+    stage: 'Before Stage 1 · Setting out',
     label: 'Setting out',
     title: 'It Starts With String and a Tape Measure',
     date: null,
@@ -140,6 +149,7 @@ export const storyChapters: StoryChapter[] = [
   },
   {
     id: 'trenching',
+    stage: 'Stage 1 of 5 · Trenching',
     label: 'Trenching',
     title: 'Cutting the Trenches',
     date: null,
@@ -178,8 +188,9 @@ export const storyChapters: StoryChapter[] = [
     ],
   },
   {
-    id: 'labelled',
-    label: 'Labelled',
+    id: 'plumbing-rough-in',
+    stage: 'Stage 2 of 5 · Plumbing rough-in',
+    label: 'Plumbing rough-in',
     title: 'Every Pipe Has a Name',
     date: null,
     intro:
@@ -199,6 +210,7 @@ export const storyChapters: StoryChapter[] = [
   },
   {
     id: 'backfill',
+    stage: 'Stage 3 of 5 · Backfill',
     label: 'Backfill',
     title: 'Buried, Compacted, and Graded',
     date: null,
@@ -236,6 +248,7 @@ export const storyChapters: StoryChapter[] = [
   },
   {
     id: 'vapor-barrier',
+    stage: 'Stages 4 and 5 of 5 · Vapor barrier, ready for concrete',
     label: 'Vapor barrier',
     title: 'Sealed, and Ready for Concrete',
     date: null,
@@ -270,6 +283,9 @@ export const storyChapters: StoryChapter[] = [
   },
   {
     id: 'outside',
+    // Not part of the five-stage sequence, so it gets its own label rather
+    // than a step counter that would read oddly beside the stage names.
+    stage: 'Outside the building',
     label: 'Outside',
     title: 'Where to Find Us',
     date: null,
@@ -359,6 +375,25 @@ export function getUpdate(slug: string): ConstructionUpdate | undefined {
 }
 
 export const sortedUpdates = [...constructionUpdates].sort((a, b) => b.date.localeCompare(a.date))
+
+/**
+ * The "New Office Construction Progress" graphic, in the brand's own five-stage
+ * framing. Square for on-page and social feed, portrait 4:5 for stories and
+ * print, and a 1.91:1 card for og:image.
+ */
+export const progressGraphic = {
+  square: '/images/construction/progress-graphic-square.jpg',
+  portrait: '/images/construction/progress-graphic-portrait.jpg',
+  og: '/images/construction/progress-og.jpg',
+  alt: 'Smile Studio of Rehoboth new office construction progress graphic, showing five stages with site photographs: trenching, plumbing rough-in, backfill, vapor barrier, and ready for concrete.',
+  stages: [
+    { n: 1, name: 'Trenching', detail: 'Footings and utility trenches excavated and laid out.' },
+    { n: 2, name: 'Plumbing rough-in', detail: 'Underground plumbing lines installed.' },
+    { n: 3, name: 'Backfill', detail: 'Trenches backfilled and compacted.' },
+    { n: 4, name: 'Vapor barrier', detail: 'Vapor barrier installed for slab prep.' },
+    { n: 5, name: 'Ready for concrete', detail: 'Site prepared for concrete placement.' },
+  ],
+} as const
 
 /** Cover image for the story, used in previews. */
 export const storyCover = storyChapters[4]?.photos[0] ?? storyChapters[0]?.photos[0]
