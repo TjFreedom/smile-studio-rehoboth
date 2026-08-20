@@ -12,3 +12,6 @@ next-env.d.ts
 
 # Local Netlify folder
 .netlify
+
+# PDFs in marketing/ are build output but small and worth versioning,
+# so they are intentionally NOT ignored.

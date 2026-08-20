@@ -8,9 +8,42 @@ folder is served by Next.js.
 Print-ready 8.5 x 11 portrait flyer. Self-contained: the logo and the QR code
 are inlined as SVG, so the only external request is Google Fonts.
 
-**To produce a PDF:** open in a browser, Print, then choose Letter, Portrait,
-Margins "None", and tick "Background graphics" so the navy field prints. The
-on-screen instruction note is hidden by the print stylesheet.
+## Smile-Studio-Rehoboth-Coming-Soon-Flyer.pdf
+
+The print-ready PDF, generated from the HTML. **This is the file to send a
+printer or attach to an email.**
+
+Verified: 1 page, exactly 8.5in x 11in (MediaBox 612 x 792pt), all four brand
+colours drawn so the navy field actually prints, the logo and QR still vector
+(zero raster images, so they stay crisp at any size), and the text selectable
+and searchable.
+
+### Regenerating the PDF
+
+```bash
+chrome --headless=new --disable-gpu --no-pdf-header-footer   --virtual-time-budget=20000 --run-all-compositor-stages-before-draw   --print-to-pdf="marketing/Smile-Studio-Rehoboth-Coming-Soon-Flyer.pdf"   "file:///<abs-path>/marketing/coming-soon-flyer.html"
+```
+
+`--no-pdf-header-footer` matters: without it Chrome stamps the URL, date, and
+page number onto the sheet.
+
+### One note for a commercial print run
+
+Chrome's PDF backend writes the type as **Type3 fonts**: the correct Cormorant
+and Montserrat glyph shapes, stored as vector outlines rather than as embedded
+font programs. It renders and prints identically everywhere, and it stays sharp
+at any size, but strict preflight tools (Acrobat Preflight, PitStop, PDF/X
+validation) often flag Type3.
+
+Serving the fonts as local TrueType instead of via the Google Fonts API was
+tried and made no difference; Skia emits Type3 either way. If a commercial
+printer objects, the fix is to open the PDF in Illustrator or InDesign and
+re-export, or to rebuild the piece in a print application. For an office
+printer, a copy shop, email, or digital sharing, the file as generated is fine.
+
+**To print from the HTML instead:** open it in a browser, Print, then choose
+Letter, Portrait, Margins "None", and tick "Background graphics" so the navy
+field prints. The on-screen instruction note is hidden by the print stylesheet.
 
 ### What it contains
 - Vertical reversed lockup, at 2.15in (Brand Guide §2 minimum for vertical is 1.0in print, comfortably clear)
