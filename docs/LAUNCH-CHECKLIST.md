@@ -10,6 +10,26 @@ must be done before the domain is pointed at the site.
 Next.js cannot redirect a hostname it never receives. **These must be configured
 at the DNS or hosting layer**, not in application code.
 
+> **Measured 2026-08-20, and currently wrong in two ways:**
+>
+> ```
+> https://www.rehobothsmiles.com/  ->  301  ->  https://rehobothsmiles.com/
+> https://rehobothsmiles.com/      ->  200  ->  a domain parking page
+> ```
+>
+> 1. **The redirect runs the wrong way.** The whole site is built with `www` as
+>    canonical: every canonical tag, the sitemap, the structured data, and the
+>    Google Business Profile plan all use `https://www.rehobothsmiles.com`.
+>    Today the host redirects `www` to the apex, which is the reverse. Left as
+>    is, every canonical on the site points at a URL that 301s away.
+> 2. **The domain is parked**, not pointing at the site. Anyone typing the
+>    address from a flyer, a business card, or the exterior signage reaches a
+>    holding page.
+>
+> Fix the direction (apex to `www`, not `www` to apex) at the same time as
+> pointing DNS at Netlify. **This blocks any printed material that carries the
+> URL**, including `marketing/coming-soon-flyer.html` and its QR code.
+
 - [ ] `http://rehobothsmiles.com` → `https://www.rehobothsmiles.com` (301)
 - [ ] `http://www.rehobothsmiles.com` → `https://www.rehobothsmiles.com` (301)
 - [ ] `https://rehobothsmiles.com` → `https://www.rehobothsmiles.com` (301)
