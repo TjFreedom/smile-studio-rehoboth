@@ -85,11 +85,11 @@ export default function Page() {
                 percentage or a milestone date we have not been given. {openingQualifier}
               </p>
 
-              <PlaceholderNote label="Placeholder: construction photography and renderings">
-                No approved renderings or construction photographs exist yet. See
-                docs/PHOTOGRAPHY-SHOT-LIST.md for the pre-opening shot list, including exterior,
-                entrance, reception build-out, operatory framing, cabinetry installation, and
-                signage. Add approved images to src/content/construction.ts.
+              <PlaceholderNote label="Still needed: renderings and later-stage photography">
+                Site photography through the slab preparation stage is published on the
+                construction story. Still outstanding: approved architectural renderings, and
+                photography of the concrete pour, interior build-out, cabinetry, operatories, and
+                completed signage. See docs/PHOTOGRAPHY-SHOT-LIST.md.
               </PlaceholderNote>
             </div>
 

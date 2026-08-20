@@ -125,12 +125,13 @@ export default function HomePage() {
       </section>
 
       <div className="container" style={{ paddingTop: 'var(--sp-5)' }}>
-        <PlaceholderNote label="Placeholder: hero visual">
-          Replace with an approved architectural rendering or a construction-progress photograph of
-          19411 Plantations Road. Required: desktop 16:9 or 3:2 at 2400px wide, mobile 4:5 at
-          1200px wide, AVIF or WebP. Draft alt text: &ldquo;Construction progress at the future
-          Smile Studio of Rehoboth office on Plantations Road.&rdquo; Do not substitute stock
-          photography of an unrelated dental office.
+        <PlaceholderNote label="Decision: hero visual">
+          The hero currently uses the full vertical lockup on a branded panel, by request. Genuine
+          site photography is now available and is used on the construction story instead. If the
+          hero should switch to a photograph, the strongest candidates are the vapor-barrier wide
+          shot or the trench layout. Required then: desktop 16:9 or 3:2 at 2400px wide, mobile 4:5
+          at 1200px. An approved architectural rendering would be stronger still. Never substitute
+          stock photography of an unrelated dental office.
         </PlaceholderNote>
       </div>
 
@@ -234,20 +235,58 @@ export default function HomePage() {
               <span className="eyebrow">Construction progress</span>
               <h2>Watch the Office Take Shape</h2>
               <p className="lede" style={{ marginTop: 'var(--sp-4)' }}>
-                We will post real progress as it happens, and we will not post progress that has not
-                happened. Only completed milestones are marked complete.
+                Most people meet a dental practice on the day it opens. You get to watch this one go
+                in from the dirt up. The underground plumbing is complete and the floor is ready for
+                concrete.
               </p>
 
               <div style={{ marginTop: 'var(--sp-7)' }}>
                 <Timeline />
               </div>
 
-              <PlaceholderNote label="Placeholder: construction photography">
-                No approved construction photography exists yet. See
-                docs/PHOTOGRAPHY-SHOT-LIST.md for the pre-opening shot list. Add images to
-                src/content/construction.ts as they are captured and approved. Do not populate this
-                section with stock imagery.
-              </PlaceholderNote>
+              {/* Real site photography. Four stages, linking through to the
+                  full story. Lazy loaded: this sits well below the fold. */}
+              <div className="story-preview" style={{ marginTop: 'var(--sp-7)' }}>
+                {[
+                  {
+                    slug: '02-trenches-wide',
+                    alt: 'Open trenches cut across the dirt floor with white PVC drain lines laid in them and string lines stretched overhead.',
+                  },
+                  {
+                    slug: '06-labeled-stubups',
+                    alt: 'Close-up of capped PVC stub-ups hand-labelled in marker beside a trench with a drain line.',
+                  },
+                  {
+                    slug: '09-graded-compacted',
+                    alt: 'Compacted dirt floor showing roller tracks, with capped plumbing stub-ups spaced across it.',
+                  },
+                  {
+                    slug: '11-vapor-barrier-wide',
+                    alt: 'Black vapor barrier laid across the full floor with plumbing stub-ups sleeved through it, ready for concrete.',
+                  },
+                ].map((img) => (
+                  /* eslint-disable-next-line @next/next/no-img-element -- pre-optimised static JPEG */
+                  <img
+                    key={img.slug}
+                    src={`/images/construction/${img.slug}-800.jpg`}
+                    alt={img.alt}
+                    width={800}
+                    height={600}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ))}
+              </div>
+
+              <div className="btn-row" style={{ marginTop: 'var(--sp-6)' }}>
+                <Button
+                  href="/our-new-office/construction-updates"
+                  variant="outline"
+                  event="construction_update_view"
+                >
+                  See the Full Build Story
+                </Button>
+              </div>
             </div>
 
             <aside className="split__aside">

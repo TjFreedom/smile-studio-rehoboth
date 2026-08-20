@@ -1445,3 +1445,218 @@
   color: var(--seaglass);
   font-weight: 600;
 }
+
+/* --------------------------------------------------------------------------
+   CONSTRUCTION STORY
+   Server-rendered photo timeline. No JavaScript: the connecting rail is drawn
+   with CSS, and the sequence is a semantic ordered list.
+   -------------------------------------------------------------------------- */
+
+.story-nav {
+  margin-bottom: var(--sp-8);
+}
+
+.story-nav ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: none;
+}
+
+.story-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 40px;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.story-nav a:hover {
+  border-color: var(--seaglass);
+  background: var(--blue-050);
+  color: var(--blue);
+}
+
+.story-nav a > span {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.story__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-9);
+}
+
+.story-chapter {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: var(--sp-5);
+  scroll-margin-top: calc(var(--header-h) + 2rem);
+}
+
+/* The rail: a vertical line with a numbered node, drawn entirely in CSS. */
+.story-chapter__rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.story-chapter__rail::before {
+  content: '';
+  position: absolute;
+  top: 44px;
+  bottom: calc(var(--sp-9) * -1);
+  width: 2px;
+  background: linear-gradient(180deg, var(--seaglass), var(--line));
+}
+
+.story-chapter:last-child .story-chapter__rail::before {
+  display: none;
+}
+
+.story-chapter__dot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: 0 0 0 5px var(--bg-soft);
+}
+
+.story-chapter__head {
+  max-width: 68ch;
+}
+
+.story-chapter__head h3 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--navy);
+}
+
+.story-chapter__intro {
+  margin-top: var(--sp-4);
+}
+
+.story-chapter__para {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+}
+
+.story-gallery {
+  display: grid;
+  gap: var(--sp-4);
+  margin-top: var(--sp-6);
+}
+
+.story-gallery--grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+.story-gallery--single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 760px;
+}
+
+.story-photo {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.story-photo__img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  /* Photographs of a construction site are busy. A slight desaturation and a
+     lift in the shadows keeps them consistent with the brand's bright,
+     cool-neutral treatment without looking filtered. */
+  filter: saturate(0.94);
+}
+
+.story-photo figcaption {
+  font-size: var(--fs-caption);
+  color: var(--text-soft);
+  line-height: 1.5;
+  max-width: 52ch;
+}
+
+/* The patient-facing takeaway. Sand rule is the approved pull-quote treatment. */
+.story-chapter__why {
+  margin-top: var(--sp-6);
+  padding: var(--sp-4) var(--sp-5);
+  border-left: 3px solid var(--sand);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--sand-100);
+  font-family: var(--font-serif);
+  font-size: var(--fs-h3);
+  line-height: 1.4;
+  color: var(--navy);
+  max-width: 62ch;
+}
+
+@media (max-width: 640px) {
+  .story-chapter {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: var(--sp-4);
+  }
+  .story-chapter__dot {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+  }
+  .story-chapter__rail::before {
+    top: 34px;
+  }
+}
+
+/* Compact preview used on the home page. */
+.story-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--sp-3);
+}
+
+.story-preview img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  filter: saturate(0.94);
+}

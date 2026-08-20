@@ -26,7 +26,7 @@ in production.
 
 | # | Item | Owner | Notes |
 |---|---|---|---|
-| 8 | Suite number | Operations | `address.line2`. Affects NAP consistency everywhere. |
+| 8 | **Suite number, and the name on the exterior signage** | Operations + Marketing | The building directory photographed on site lists **Suite 1** under the name **"Freedom Dental"**, while this website is branded **Smile Studio of Rehoboth**. Two things to settle: (a) confirm the suite number so it can be set in `address.line2`, and (b) decide which name goes on the exterior sign and the directory. A patient who searches for Smile Studio of Rehoboth and arrives at a sign reading Freedom Dental will think they are in the wrong place. Affects NAP consistency, Google Business Profile, and wayfinding. |
 | 9 | Insurance participation, executed contracts only | Operations | Never publish a plan name before the contract is signed |
 | 10 | Financing options and any membership plan | Operations | |
 | 11 | Patient forms + intake system with a signed BAA | Operations + Compliance | |
@@ -36,7 +36,7 @@ in production.
 | 15 | Parking details | Operations, by site walk | Space count, accessible spaces, distance to door |
 | 16 | Accessibility details | Operations, by site walk | Step-free entry, door widths, restroom, operatory access |
 | 17 | Confirmed office hours, including any lunch closure | Operations | Weekend hours only if actually offered |
-| 18 | Completed-office photography | Marketing | See `docs/PHOTOGRAPHY-SHOT-LIST.md` §B |
+| 18 | Completed-office photography | Marketing | See `docs/PHOTOGRAPHY-SHOT-LIST.md` §B. Construction photography through slab prep is now published. **Next priority: photograph the concrete pour, and repeat the vapor-barrier wide shot from the same position afterwards for a before-and-after pair.** |
 | 19 | Provider headshots | Marketing | Brand Guide §5 standard |
 | 20 | Google Business Profile | Marketing | Only within Google's eligibility window |
 | 21 | Verified Google Maps pin | Marketing | Enables `geo` and `hasMap` in schema |
@@ -64,7 +64,7 @@ These are genuine inconsistencies between the source documents, not build gaps.
 | Item | Detail | Action |
 |---|---|---|
 | **Domain** | Brand Guide v1.0 prints `www.smilestudiorehoboth.com` in its own page footers and boilerplate, and marks the final domain `[TO CONFIRM]`. The build uses `www.rehobothsmiles.com` per the brief. | Confirm which is correct. If the brand guide's domain wins, it is one config value here, but the guide's own collateral and any printed material must change too. |
-| **Practice name** | Resolved: **Smile Studio of Rehoboth**, per Brand Guide p.23 which explicitly prohibits "Rehoboth Smile Studio". Confirmed 2026-08-19. | Ensure all other channels use the same form. |
+| **Practice name** | Resolved for the website: **Smile Studio of Rehoboth**, per Brand Guide p.23 which explicitly prohibits "Rehoboth Smile Studio". Confirmed 2026-08-19. **However, the exterior building directory at the site reads "Freedom Dental".** | Reconcile the physical signage with the website branding, or vice versa. This is now a live inconsistency a patient can see, not a theoretical one. |
 | **Parent org attribution** | Site uses "A Freedom Dental Health Practice" per the brief. Brand Guide boilerplate uses "Freedom Dental Health System" and marks the attribution `[TO CONFIRM]`. | Ratify one form and apply it everywhere. |
 | **Mist Gray accessibility** | `#7A8899` fails the 4.5:1 minimum the guide itself commits to. Site uses `#657384`. | Adopt into Brand Guide v1.1. |
 | **Eyebrow weight** | Guide nominates Montserrat Light 300 for eyebrows, but also forbids Light below 16pt. Eyebrows render at 12px. Site uses SemiBold. | Clarify in v1.1. |

@@ -137,17 +137,52 @@ catchment, not a generic dental stock library.
 
 ---
 
-## D. Current placeholder inventory
+## D. Photography now on the site
+
+Fifteen genuine site photographs are published as a phase-ordered story at
+`/our-new-office/construction-updates`, and four appear as a preview on the home
+page. Source files are in `public/images/construction/`, each at 1600px and
+800px, with descriptive alt text in `src/content/construction.ts`.
+
+Covered so far, against list A above:
+A1 exterior and site (partial: parking, directory, approach) ·
+A2 construction progress (strong: layout, trenching, drain lines, backfill,
+grading, vapor barrier).
+
+**Not yet covered, and still worth capturing:**
+
+- **The concrete pour itself.** This is the next milestone and the most visually satisfying moment of the whole build. Shoot it.
+- Interior build-out: partition walls going up, operatory framing, cabinetry installation
+- Equipment delivery and installation
+- Exterior signage installation, before and after
+- Provider or leadership site visits
+- Approved architectural renderings
+- The full completed-office list in section B
+
+> **Repeat the vapor-barrier wide shot from the same position once the concrete
+> is down.** That single before-and-after pair will be the strongest image on
+> the site, and it costs one photograph taken from a spot you have already
+> stood in.
+
+### A note on dates
+
+The photographs supplied arrived with EXIF timestamps stripped, so the story is
+ordered by construction phase and **no dates have been invented**. Confirm the
+real dates with the construction manager and set the `date` field on each
+chapter. For future batches, send originals rather than images that have passed
+through messaging apps, which strip metadata.
+
+## E. Remaining placeholder inventory
 
 Every location awaiting real photography, with the replacement required. All are
 marked in code with `<PlaceholderNote>` and are visible on staging.
 
 | Location | Needed |
 |---|---|
-| Home hero | Rendering or construction photograph. Currently a branded visual treatment using the icon mark, which is honest: it does not pretend to be a photograph of anything. |
-| Home §7, construction progress | Progress photography |
-| `/our-new-office` | Renderings and progress photography |
-| `/our-new-office/construction-updates` | Per-update images in `src/content/construction.ts` |
+| Home hero | Now the full vertical lockup on a branded panel, by request. Optional upgrade: an approved rendering, or the vapor-barrier wide shot. |
+| Home §7, construction progress | ✅ Four-photo preview published, linking to the full story. |
+| `/our-new-office` | Renderings still needed. Progress photography now published on the story page. |
+| `/our-new-office/construction-updates` | ✅ Full 15-photo story published. Next: the concrete pour. |
 | `/our-new-office/office-features` | Completed-office photography |
 | `/team` | Provider headshots. Page is hidden until they exist. |
 | Service pages | Optional supporting imagery |
