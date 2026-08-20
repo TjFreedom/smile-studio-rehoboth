@@ -1,0 +1,343 @@
+<title>Rehoboth Coming Soon Flyer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600&display=swap">
+
+<style>
+/* ==========================================================================
+   COMING SOON FLYER  ·  Smile Studio of Rehoboth
+   Applies the project's existing design system (Brand Guidelines v1.0). It
+   does not invent a new one: every colour and typeface below is from the guide.
+
+   Deliberately single-theme. This is a print piece with one committed visual
+   world, so there is no light/dark switching, and every colour is painted
+   explicitly, including the body ground, so the page holds on either host.
+   ========================================================================== */
+
+:root {
+  --navy:      #0B2859;  /* Harbor Navy     */
+  --blue:      #175789;  /* Coastal Blue    */
+  --sand:      #AD8B6A;  /* Beacon Sand     */
+  --shoreline: #F4F7FA;  /* Shoreline White */
+  --charcoal:  #1F2933;  /* body copy       */
+  --seaglass:  #A8C6D8;  /* on navy only    */
+  --muted:     #5C6B7C;
+  --rule:      #DBE4EC;
+
+  --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, 'Times New Roman', serif;
+  --sans:  'Montserrat', Lato, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Screen-preview surround, biased toward the navy so it reads as chosen
+     rather than as a default grey. */
+  --surround: #E7EBF1;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 28px 16px 56px;
+  background: var(--surround);
+  font-family: var(--sans);
+  color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.hint {
+  max-width: 8.5in;
+  width: 100%;
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #4A5766;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--sand);
+  border-radius: 4px;
+  padding: 12px 16px;
+}
+.hint strong { color: var(--navy); }
+
+/* --- The sheet ---------------------------------------------------------- */
+
+.sheet {
+  width: 8.5in;
+  height: 11in;
+  background: var(--shoreline);
+  box-shadow: 0 10px 40px rgba(11, 40, 89, .18);
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  overflow: hidden;
+}
+
+/* --- Navy field --------------------------------------------------------- */
+
+.field {
+  background: var(--navy);
+  padding: 0.5in 0.75in 0.32in;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.lockup { width: 2.15in; height: auto; display: block; }
+
+.announce {
+  margin: 0.26in 0 0;
+  font-weight: 600;
+  font-size: 11pt;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: var(--sand);
+  /* Sand on Harbor Navy measures 4.6:1, which is the guide's one approved way
+     to set Beacon Sand as type. Never sand on white. */
+}
+
+.headline {
+  margin: 0.12in 0 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 29pt;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  color: #fff;
+  max-width: 9.5em;
+  text-wrap: balance;
+}
+
+.sub {
+  margin: 0.15in 0 0;
+  font-size: 11.5pt;              /* guide: 11-12pt default for a 60+ readership */
+  line-height: 1.5;
+  color: var(--seaglass);
+  max-width: 30em;
+}
+.qual {
+  display: block;
+  margin-top: 0.5em;
+  font-size: 10.5pt;
+  color: #93A9C0;
+}
+
+/* --- The wave rule. The brand's signature device, one per composition. --- */
+
+.wave {
+  display: block;
+  width: 100%;
+  height: 0.4in;
+  color: var(--navy);
+  margin-top: -1px;
+}
+
+/* --- Contact field ------------------------------------------------------ */
+
+.contact {
+  padding: 0.24in 0.75in 0.1in;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.label {
+  margin: 0;
+  font-size: 8.5pt;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* The three things a reader acts on, set large, on white, never reversed. */
+.details {
+  margin-top: 0.13in;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1in;
+  align-items: center;
+}
+
+.phone {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 28pt;
+  line-height: 1;
+  color: var(--navy);
+  text-decoration: none;
+  /* Cormorant defaults to oldstyle figures, where 3, 4, 7, and 9 drop below
+     the baseline. Elegant in running text, slower to read in a number someone
+     has to dial, and this readership skews over 60. Force lining figures. */
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: 'lnum' 1, 'tnum' 1;
+}
+
+.web {
+  font-size: 15pt;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.email {
+  font-size: 12.5pt;
+  font-weight: 500;
+  color: var(--charcoal);
+}
+
+.divider {
+  width: 1.1in;
+  height: 2px;
+  background: var(--sand);
+  margin: 0.19in 0;
+}
+
+/* --- Address and QR ----------------------------------------------------- */
+
+.find {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4in;
+  align-items: center;
+  width: 100%;
+  max-width: 6.1in;
+  text-align: left;
+}
+
+.addr {
+  font-size: 12pt;
+  line-height: 1.55;
+  color: var(--charcoal);
+  font-style: normal;
+}
+.addr .name {
+  display: block;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.05in;
+}
+.addr .park {
+  display: block;
+  margin-top: 0.05in;
+  font-size: 10.5pt;
+  color: var(--muted);
+}
+
+.qr { margin: 0; text-align: center; }
+.qr svg { width: 1.2in; height: 1.2in; display: block; }
+.qr figcaption {
+  margin-top: 0.07in;
+  font-size: 7.5pt;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* --- Footer ------------------------------------------------------------- */
+
+.foot {
+  margin: 0;
+  background: var(--navy);
+  color: var(--seaglass);
+  padding: 0.2in 0.75in;
+  text-align: center;
+  font-size: 9pt;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* --- Print -------------------------------------------------------------- */
+
+@page { size: letter portrait; margin: 0; }
+
+@media print {
+  body { padding: 0; background: #fff; display: block; }
+  .hint { display: none; }
+  .sheet { box-shadow: none; width: 8.5in; height: 11in; }
+  /* Without this the navy fields drop out to white on most browsers. */
+  .field, .foot, .wave {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* --- Narrow screens: scale the sheet rather than let it overflow --------- */
+
+@media (max-width: 900px) {
+  .sheet { width: 100%; height: auto; aspect-ratio: 8.5 / 11; }
+  .lockup { width: 33%; }
+  .headline { font-size: 5vw; }
+  .announce { font-size: 1.7vw; }
+  .phone { font-size: 4.8vw; }
+  .web { font-size: 2.4vw; }
+  .email, .sub, .addr { font-size: 2vw; }
+  .qual, .addr .park { font-size: 1.7vw; }
+  .qr svg { width: 15vw; height: 15vw; }
+  .find { gap: 4%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+
+<p class="hint">
+  <strong>To print or save as PDF:</strong> use your browser&rsquo;s Print command, then choose
+  Letter, Portrait, Margins &ldquo;None&rdquo;, and tick &ldquo;Background graphics&rdquo; so the
+  navy prints. This note does not appear on the printed sheet.
+</p>
+
+<div class="sheet">
+
+  <div class="field">
+    __LOGO__
+    <p class="announce">Coming Soon</p>
+    <h1 class="headline">Modern Dental Care Is Coming to Rehoboth Beach</h1>
+    <p class="sub">
+      A new dental practice is being built at Plantations Professional Park, bringing
+      comprehensive, patient-centered care to families, year-round residents, and visitors to the
+      Delaware shore.
+      <span class="qual">
+        Anticipated opening late November or early December 2026. Construction schedules can change.
+      </span>
+    </p>
+  </div>
+
+  <svg class="wave" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M0 0h1200v10c-120 26-220 26-330-4-96-26-178-30-268-10-92 20-168 22-262 4C256-16 150-14 0 18Z" fill="currentColor" opacity=".45"/>
+    <path d="M0 0h1200v22c-150 28-254 24-358-6-92-26-176-28-262-8-96 22-176 20-276-2C230-10 126-6 0 22Z" fill="currentColor"/>
+  </svg>
+
+  <div class="contact">
+    <p class="label">Questions? Get in touch</p>
+
+    <div class="details">
+      <a class="phone" href="tel:+13027150020">(302) 715-0020</a>
+      <span class="web">www.rehobothsmiles.com</span>
+      <span class="email">info@rehobothsmiles.com</span>
+    </div>
+
+    <span class="divider" aria-hidden="true"></span>
+
+    <div class="find">
+      <address class="addr">
+        <span class="name">Smile Studio of Rehoboth Dentistry</span>
+        19411 Plantations Road<br>
+        Rehoboth Beach, DE 19971
+        <span class="park">Plantations Professional Park</span>
+      </address>
+
+      <figure class="qr">
+        __QR__
+        <figcaption>Scan for updates</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <p class="foot">A Freedom Dental Health Practice</p>
+</div>
