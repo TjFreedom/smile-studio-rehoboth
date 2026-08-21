@@ -35,8 +35,12 @@ export interface DayHours {
  * DECISION LOG: Brand Guidelines v1.0 p.23 (Style Quick Reference) mandates
  * "Smile Studio of Rehoboth" and explicitly prohibits "Rehoboth Smile Studio".
  * The finalized logo lockups read SMILE STUDIO of REHOBOTH DENTISTRY.
- * Confirmed with the requester on 2026-08-19. Changing this one value renames
- * the practice across every page, meta tag, and structured-data block.
+ * The original brief specified "Rehoboth Smile Studio", which the brand guide
+ * forbids by name. Resolved in favour of the brand guide and the finalized
+ * logo artwork, since both are later and more specific than the brief.
+ * NOT YET RATIFIED BY THE PRACTICE — see docs/REQUIRED-BEFORE-OPENING.md.
+ * Changing this one value renames the practice across every page, meta tag,
+ * and structured-data block.
  */
 export const practiceName = 'Smile Studio of Rehoboth'
 

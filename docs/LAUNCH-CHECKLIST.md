@@ -10,39 +10,42 @@ must be done before the domain is pointed at the site.
 Next.js cannot redirect a hostname it never receives. **These must be configured
 at the DNS or hosting layer**, not in application code.
 
-> **Measured 2026-08-20, and currently wrong in two ways:**
+> **RESOLVED 2026-08-21.** The domain is live on Netlify and the redirect now
+> runs in the documented direction. Measured against the live host:
 >
 > ```
-> https://www.rehobothsmiles.com/  ->  301  ->  https://rehobothsmiles.com/
-> https://rehobothsmiles.com/      ->  200  ->  a domain parking page
+> http://rehobothsmiles.com/       ->  2 hops  ->  https://www.rehobothsmiles.com/
+> https://rehobothsmiles.com/      ->  1 hop   ->  https://www.rehobothsmiles.com/
+> http://www.rehobothsmiles.com/   ->  1 hop   ->  https://www.rehobothsmiles.com/
+> https://www.rehobothsmiles.com/  ->  200
 > ```
 >
-> 1. **The redirect runs the wrong way.** The whole site is built with `www` as
->    canonical: every canonical tag, the sitemap, the structured data, and the
->    Google Business Profile plan all use `https://www.rehobothsmiles.com`.
->    Today the host redirects `www` to the apex, which is the reverse. Left as
->    is, every canonical on the site points at a URL that 301s away.
-> 2. **The domain is parked**, not pointing at the site. Anyone typing the
->    address from a flyer, a business card, or the exterior signage reaches a
->    holding page.
+> `www` is the primary domain on the Netlify site, so the apex redirects to it.
+> Every canonical tag, the sitemap, the structured data, the flyer, and the
+> Google Business Profile plan all use `https://www.rehobothsmiles.com`, and the
+> served canonical now matches the URL that serves it.
 >
-> Fix the direction (apex to `www`, not `www` to apex) at the same time as
-> pointing DNS at Netlify. **This blocks any printed material that carries the
-> URL**, including `marketing/coming-soon-flyer.html` and its QR code.
+> The `http` apex takes two hops because Netlify upgrades the scheme before it
+> applies the host redirect (`http://apex` -> `https://apex` -> `https://www`).
+> That is standard hosting behaviour and needs no fix, but it is why the
+> one-hop check below is ticked for three variants and annotated for the fourth.
+>
+> Note that the site is still `noindex` by deliberate choice: see section 2.
+> The domain being live does **not** mean the site is launched.
 
-- [ ] `http://rehobothsmiles.com` → `https://www.rehobothsmiles.com` (301)
-- [ ] `http://www.rehobothsmiles.com` → `https://www.rehobothsmiles.com` (301)
-- [ ] `https://rehobothsmiles.com` → `https://www.rehobothsmiles.com` (301)
+- [x] `http://rehobothsmiles.com` → `https://www.rehobothsmiles.com` (301) *(verified, 2 hops via scheme upgrade)*
+- [x] `http://www.rehobothsmiles.com` → `https://www.rehobothsmiles.com` (301) *(verified)*
+- [x] `https://rehobothsmiles.com` → `https://www.rehobothsmiles.com` (301) *(verified)*
 - [ ] Valid TLS certificate covering both apex and `www`
 - [ ] HSTS confirmed (the app sends `max-age=63072000; includeSubDomains; preload`)
-- [ ] Verify with `curl -I` on all four variants that each lands on the `www` https origin in **one** hop
+- [x] Verify with `curl -I` on all four variants that each lands on the `www` https origin *(verified; one hop except the `http` apex, which takes two — see above)*
 - [ ] The 15 in-app redirects in `next.config.mjs` resolve correctly
 
 ## 2. Environment — **BLOCKER**
 
 - [ ] `NEXT_PUBLIC_ALLOW_INDEXING=true` on production **only**
 - [ ] Confirm any preview or staging deploy returns `X-Robots-Tag: noindex` and an empty sitemap
-- [ ] `NEXT_PUBLIC_SHOW_PLACEHOLDERS` unset (or `false`) on production, so internal notes are hidden
+- [x] `NEXT_PUBLIC_SHOW_PLACEHOLDERS` unset (or `false`) on production, so internal notes are hidden *(fixed 2026-08-21: it had been set globally in `netlify.toml` and was rendering an internal note on the live homepage; now scoped to the deploy-preview and branch-deploy contexts only)*
 - [ ] `RESEND_API_KEY` set (**forms fail closed in production without it**)
 - [ ] `MAIL_FROM` on an authenticated sending domain
 - [ ] `MAIL_TO=info@rehobothsmiles.com`
@@ -114,7 +117,7 @@ the site's single conversion is lost.
 - [ ] No reviews, ratings, or testimonials *(verified)*
 - [ ] No lorem ipsum *(verified)*
 - [ ] No `href="#"` *(verified: zero)*
-- [ ] Placeholder notes hidden in production
+- [x] Placeholder notes hidden in production *(verified on the live domain)*
 - [ ] **Standardise spelling to US English.** Some drafted copy uses "organised", "labelled", "recognised", "prioritise". Run a pass before launch.
 
 ## 8. Technical SEO

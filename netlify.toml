@@ -26,10 +26,10 @@
 
 [build.environment]
   NODE_VERSION = "22"
-  # Show the amber internal placeholder blocks on this review deploy, so
-  # reviewers can see exactly what content is still outstanding.
-  # Set to "false" before the public launch.
-  NEXT_PUBLIC_SHOW_PLACEHOLDERS = "true"
+  # NEXT_PUBLIC_SHOW_PLACEHOLDERS is deliberately NOT set here. Production must
+  # never render the amber internal notes: www.rehobothsmiles.com is printed on
+  # the coming-soon flyer and encoded in its QR code, so a patient can reach
+  # this site at any time. Internal notes are scoped to preview contexts below.
 
 # Netlify's Next.js Runtime. Handles the App Router, route handlers,
 # static prerendering, and the image CDN.
@@ -40,9 +40,12 @@
 # second belt on top of the application-level gate above.
 [context.deploy-preview.build.environment]
   NEXT_PUBLIC_ALLOW_INDEXING = "false"
+  # Reviewers on a preview URL should see what content is still outstanding.
+  NEXT_PUBLIC_SHOW_PLACEHOLDERS = "true"
 
 [context.branch-deploy.build.environment]
   NEXT_PUBLIC_ALLOW_INDEXING = "false"
+  NEXT_PUBLIC_SHOW_PLACEHOLDERS = "true"
 
 # Security headers are set by the application in next.config.mjs so that they
 # apply identically in local dev, on Netlify, and anywhere else this is hosted.
