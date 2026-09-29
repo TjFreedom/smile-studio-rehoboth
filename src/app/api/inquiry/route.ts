@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { fieldErrors, inquirySchema, type FormResponse } from '@/lib/forms'
 import { clientKey, hit } from '@/lib/rate-limit'
 import { sendNotification } from '@/lib/mailer'
+import { captureSubmission, deployContext } from '@/lib/netlify-forms'
 import { practiceName } from '@/config/practice'
 
 export const runtime = 'nodejs'
@@ -39,21 +40,45 @@ export async function POST(request: Request): Promise<NextResponse<FormResponse>
     return NextResponse.json({ ok: true })
   }
 
-  const sent = await sendNotification({
-    subject: `Website inquiry (${data.category}): ${data.firstName} ${data.lastName}`,
-    intro: `A visitor submitted a general inquiry through the ${practiceName} website.`,
-    replyTo: data.email,
-    fields: [
-      ['Name', `${data.firstName} ${data.lastName}`],
-      ['Email', data.email],
-      ['Phone', data.phone],
-      ['Category', data.category],
-      ['Message', data.message],
-      ['Submitted', new Date().toISOString()],
-    ],
-  })
+  // Deliver through both channels at once: Netlify Forms (stored, and fans out
+  // to the notifications configured in the Netlify UI) and the Resend email
+  // when it is configured. The visitor only sees an error if BOTH fail.
+  const submittedAt = new Date().toISOString()
+  const subject = `Website inquiry (${data.category}): ${data.firstName} ${data.lastName}`
 
-  if (!sent) {
+  const [captured, mailed] = await Promise.all([
+    captureSubmission(
+      'inquiry',
+      {
+        subject,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        category: data.category,
+        message: data.message,
+        submittedAt,
+        deployContext: deployContext(request),
+        website: '',
+      },
+      request,
+    ),
+    sendNotification({
+      subject,
+      intro: `A visitor submitted a general inquiry through the ${practiceName} website.`,
+      replyTo: data.email,
+      fields: [
+        ['Name', `${data.firstName} ${data.lastName}`],
+        ['Email', data.email],
+        ['Phone', data.phone],
+        ['Category', data.category],
+        ['Message', data.message],
+        ['Submitted', submittedAt],
+      ],
+    }),
+  ])
+
+  if (!captured && !mailed) {
     return NextResponse.json(
       {
         ok: false,

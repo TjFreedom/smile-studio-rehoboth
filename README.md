@@ -33,7 +33,7 @@ npm run lint
 | Styling | Plain CSS with design tokens. No utility framework, no page builder. |
 | Fonts | Cormorant Garamond + Montserrat, self-hosted via `next/font` |
 | Validation | zod, **server-side only** |
-| Mail | Resend, behind a swappable adapter |
+| Lead capture | Netlify Forms, with a `submission-created` function that posts each lead to the Freedom Dental Health CRM, plus an optional Resend email notification behind a swappable adapter |
 | Rendering | Every page prerendered as static HTML. Two dynamic API routes. |
 
 50 routes, 42 indexable. Zero runtime dependencies beyond React, Next, and zod.
@@ -113,7 +113,7 @@ These are not editorial conventions; they are structural.
 ## Security
 
 - Strict CSP, HSTS, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy`, `Permissions-Policy`
-- No external script or font origins in production
+- The only external script origins are Google's tag host and Microsoft Clarity, each added to the CSP only when its ID is configured at build time
 - Server-side validation on every submission; the client's validation is a convenience only
 - Honeypot + timing trap, both returning a generic success so bots learn nothing
 - Per-IP rate limiting
@@ -157,20 +157,18 @@ Hosted on **Netlify**, under the Freedom team.
 |---|---|
 | Review URL | https://smile-studio-rehoboth.netlify.app |
 | Netlify admin | https://app.netlify.com/projects/smile-studio-rehoboth |
-| Production domain | `https://www.rehobothsmiles.com` *(not yet connected)* |
+| Production domain | `https://www.rehobothsmiles.com` |
 
-### Indexing is deliberately OFF on Netlify
+### Indexing
 
-`NEXT_PUBLIC_ALLOW_INDEXING` is **not** set on this deploy, so every Netlify URL
-serves `noindex, nofollow` via both the meta tag and the `X-Robots-Tag` header,
-an empty `sitemap.xml`, and a `robots.txt` of `Disallow: /`.
+`NEXT_PUBLIC_ALLOW_INDEXING=true` is set in the Netlify dashboard for the
+**production context only** (since 2026-09-17). Production serves
+`index, follow`, the full `sitemap.xml`, and a permissive `robots.txt`.
 
-That is intentional. A pre-opening dental practice indexed at a `netlify.app`
-address would compete with `www.rehobothsmiles.com` for its own brand terms and
-put a temporary URL in front of patients searching for the practice.
-
-**Turn indexing on only after the real domain is connected**, and scope it to
-production. See `docs/LAUNCH-CHECKLIST.md` §1 and §2.
+Deploy previews and branch deploys are pinned to `false` in `netlify.toml`, so
+they serve `noindex, nofollow` in both the meta tag and the `X-Robots-Tag`
+header, an empty sitemap, and `Disallow: /`. Keep it that way: a preview URL
+indexed for the practice's own brand terms would compete with the real domain.
 
 ### Redeploying
 
@@ -186,15 +184,33 @@ pinned to `noindex` in `netlify.toml`.
 
 | Variable | When | Notes |
 |---|---|---|
-| `RESEND_API_KEY` | Before forms are relied on | **Without it the forms fail closed in production** and return an error asking the visitor to email instead. |
+| `RESEND_API_KEY` | Optional | Adds a direct email notification on top of Netlify Forms. Without it, submissions are still stored in Netlify Forms and delivered by the notifications configured there. The visitor only sees an error if both channels fail. |
 | `MAIL_FROM` | With the above | Must be on an SPF/DKIM/DMARC-authenticated domain |
 | `MAIL_TO` | With the above | Defaults to `info@rehobothsmiles.com` |
-| `NEXT_PUBLIC_ALLOW_INDEXING` | **Only at real launch** | Production context only |
-| `NEXT_PUBLIC_SHOW_PLACEHOLDERS` | Currently `true` | Shows the amber outstanding-content notes for reviewers. Set to `false` before public launch. |
-| `NEXT_PUBLIC_GTM_ID` | When Marketing supplies it | Nothing tracking-related loads until this exists |
+| `CRM_WEBHOOK_SECRET` | Before launch | Authenticates the CRM hand-off. Same value as the DCAD site. Without it the lead stays in Netlify Forms and is not sent to the CRM. |
+| `CRM_LOCATION_ID` | Before launch | The CRM's numeric location id for this practice. Must come from the CRM administrator. |
+| `NEXT_PUBLIC_ALLOW_INDEXING` | Set | `true` on the production context only, since 2026-09-17 |
+| `NEXT_PUBLIC_SHOW_PLACEHOLDERS` | Previews only | Shows the amber outstanding-content notes for reviewers. Pinned to preview and branch contexts in `netlify.toml`; never set it on production. |
+| `NEXT_PUBLIC_GA4_ID` | Set | `G-BMGTYZL0KJ` on the production context only, since 2026-09-17. Loads gtag.js directly. |
+| `NEXT_PUBLIC_GTM_ID` | Optional | If set, GTM loads instead of the direct GA4 tag and GA4 should be managed inside the container. |
+| `NEXT_PUBLIC_CLARITY_ID` | Set | `ypyhcnujep` on the production context only, since 2026-09-29. Microsoft Clarity session recordings. |
+
+### Forms and the CRM
+
+Every validated submission is posted server-side to Netlify Forms (form names
+`opening-list` and `inquiry`, declared in `public/__forms.html`) and, when
+`RESEND_API_KEY` is set, emailed through Resend as well. Netlify Forms is the
+system of record: submissions are listed at
+https://app.netlify.com/projects/smile-studio-rehoboth/forms, and each form's
+**Form notifications** settings there control email alerts.
+
+The CRM hand-off is `netlify/functions/submission-created.ts`. Netlify runs it
+on every verified submission and it posts the lead to the Freedom Dental
+Health CRM, the same way the DCAD site does. It needs `CRM_WEBHOOK_SECRET` and
+`CRM_LOCATION_ID`. See `docs/CONVERSION-AND-FORMS.md` section 5.
 
 ## Before you deploy
 
-Read `docs/LAUNCH-CHECKLIST.md`. The blockers are: the four domain redirects
-(which must be configured at the host, not here), `NEXT_PUBLIC_ALLOW_INDEXING`,
-SPF/DKIM/DMARC for form delivery, and legal review of the four policy pages.
+Read `docs/LAUNCH-CHECKLIST.md`. The domain redirects, indexing, and lead
+delivery to the CRM are done. The remaining blocker is legal review of the
+four policy pages.

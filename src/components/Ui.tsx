@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
-import { absoluteUrl } from '@/config/practice'
 import { breadcrumbSchema, buildGraph, type Crumb } from '@/lib/schema'
 import { CheckIcon } from './Icons'
 

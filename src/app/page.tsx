@@ -21,7 +21,6 @@ import {
   affiliationLabel,
   anticipatedOpening,
   cta,
-  directionsUrl,
   email,
   hoursLabel,
   mailtoUrl,

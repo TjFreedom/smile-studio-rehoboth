@@ -43,19 +43,30 @@ at the DNS or hosting layer**, not in application code.
 
 ## 2. Environment — **BLOCKER**
 
-- [ ] `NEXT_PUBLIC_ALLOW_INDEXING=true` on production **only**
+- [x] `NEXT_PUBLIC_ALLOW_INDEXING=true` on production **only** *(set 2026-09-17 in the Netlify dashboard, production context)*
 - [ ] Confirm any preview or staging deploy returns `X-Robots-Tag: noindex` and an empty sitemap
 - [x] `NEXT_PUBLIC_SHOW_PLACEHOLDERS` unset (or `false`) on production, so internal notes are hidden *(fixed 2026-08-21: it had been set globally in `netlify.toml` and was rendering an internal note on the live homepage; now scoped to the deploy-preview and branch-deploy contexts only)*
-- [ ] `RESEND_API_KEY` set (**forms fail closed in production without it**)
-- [ ] `MAIL_FROM` on an authenticated sending domain
-- [ ] `MAIL_TO=info@rehobothsmiles.com`
+- [ ] `RESEND_API_KEY` set, if the direct email notification is wanted on top of Netlify Forms *(optional since 2026-09-16. It was never set on production, and every live submission returned a 502 until Netlify Forms capture was added)*
+- [ ] `MAIL_FROM` on an authenticated sending domain, if Resend is used
+- [ ] `MAIL_TO=info@rehobothsmiles.com`, if Resend is used
 - [ ] No secret carries a `NEXT_PUBLIC_` prefix
 - [ ] `.env` files are not committed
 
-## 3. Email deliverability — **BLOCKER**
+## 3. Lead delivery — **BLOCKER**
 
-Form notifications are the only lead channel that exists. If they silently fail,
+Form submissions are the only lead channel that exists. If they silently fail,
 the site's single conversion is lost.
+
+**Netlify Forms (system of record)**
+
+- [ ] Both forms (`opening-list`, `inquiry`) are listed under Forms in the Netlify UI after the deploy that added `public/__forms.html`
+- [ ] **Email notification** configured on each form, to `info@rehobothsmiles.com`
+- [ ] `CRM_WEBHOOK_SECRET` set in the Netlify dashboard (same value as the DCAD site)
+- [ ] `CRM_LOCATION_ID` set to Smile Studio of Rehoboth's id in the FDH CRM *(DCAD Wilmington is 12; Rehoboth's id must come from the CRM administrator)*
+- [ ] `submission-created` appears under Functions in the Netlify UI after deploy
+- [ ] Send a live test through both forms; confirm each appears under Verified submissions, not Spam, that the email notification arrives, and that the lead shows up in the CRM under the right location
+
+**Resend email (optional, additive)**
 
 - [ ] SPF record published for the sending domain
 - [ ] DKIM configured and verified
@@ -76,8 +87,9 @@ the site's single conversion is lost.
 
 ## 5. Forms
 
-- [ ] Opening-list form submits and arrives
-- [ ] Inquiry form submits and arrives
+- [ ] Opening-list form submits and appears in Netlify Forms
+- [ ] Inquiry form submits and appears in Netlify Forms
+- [ ] `/__forms.html` is served by the deploy (form detection needs it) and is disallowed in `robots.txt` *(verified locally)*
 - [ ] Validation errors display, are announced by a screen reader, and are linked to their fields
 - [ ] Consent checkbox is required and **not pre-selected**
 - [ ] SMS consent is separate and optional

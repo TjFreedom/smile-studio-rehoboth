@@ -1,8 +1,10 @@
 # Analytics, Tracking, and Consent Plan
 
 Implemented in `src/components/Analytics.tsx`. Nothing loads unless
-`NEXT_PUBLIC_GTM_ID` or `NEXT_PUBLIC_GA4_ID` is set, so the site runs
-tracker-free until Marketing supplies the IDs.
+`NEXT_PUBLIC_GTM_ID` or `NEXT_PUBLIC_GA4_ID` is set. With only the GA4 ID set
+(the current production state), gtag.js loads directly and custom events go
+through `gtag('event', …)`. With a GTM ID set, GTM loads instead and events
+are pushed to the dataLayer for the container to route.
 
 ---
 
@@ -96,12 +98,12 @@ disagree, something is wrong with the event layer.
 
 | Platform | Status | Notes |
 |---|---|---|
-| Google Analytics 4 | Prepared | Set `NEXT_PUBLIC_GA4_ID`, or manage via GTM. |
-| Google Tag Manager | Prepared | Set `NEXT_PUBLIC_GTM_ID`. Preferred, so tags are managed without deploys. |
+| Google Analytics 4 | **Live** | `G-BMGTYZL0KJ`, set as `NEXT_PUBLIC_GA4_ID` on the production context only (2026-09-17). Loaded directly via gtag.js. |
+| Google Tag Manager | Prepared | Set `NEXT_PUBLIC_GTM_ID`. If added later, GTM replaces the direct GA4 loader and GA4 should be configured inside the container. |
 | Google Search Console | **Required at launch** | Verify the `www` property, submit the sitemap. |
 | Google Ads | Not yet | No campaigns should run before there is something to convert on. |
 | Meta Pixel | Not yet | Requires approval, and a consent decision. |
-| Microsoft Clarity | Optional | Useful pre-opening for scroll and rage-click behaviour. Must respect consent. |
+| Microsoft Clarity | **Live** | Project `ypyhcnujep`, set as `NEXT_PUBLIC_CLARITY_ID` on the production context only (2026-09-29). Enable "Google Consent Mode" in the Clarity project settings so it honours the denied default. |
 | Consent Mode v2 | **Implemented** | Denied by default. |
 
 ## 7. UTM conventions

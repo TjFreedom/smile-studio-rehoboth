@@ -94,10 +94,11 @@ export async function sendNotification(input: NotificationInput): Promise<boolea
   }
 
   if (!RESEND_API_KEY) {
-    // No provider configured. Log and report success so local development and
-    // preview builds do not break, but never in production.
+    // No provider configured. In production this is not fatal on its own: the
+    // route handler also stores every submission in Netlify Forms, which sends
+    // its own notifications. Log it so the gap stays visible.
     if (process.env.NODE_ENV === 'production') {
-      console.error('[mailer] RESEND_API_KEY is not set. Notification was NOT sent.')
+      console.warn('[mailer] RESEND_API_KEY is not set. Email notification skipped.')
       return false
     }
     console.info('[mailer] dev mode, notification not sent:\n', payload.text)

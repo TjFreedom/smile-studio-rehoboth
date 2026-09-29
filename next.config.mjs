@@ -1,8 +1,27 @@
 /** @type {import('next').NextConfig} */
 
 // Security headers. Applied to every route.
-// CSP is intentionally strict: no external script hosts. Analytics loaders are
-// added here (not inline) when GTM is enabled, so the policy stays auditable.
+// CSP is intentionally strict: no external script hosts, except Google's tag
+// host, which is added only when an analytics ID is configured at build time.
+// The loaders themselves live in src/components/Analytics.tsx.
+const analyticsEnabled = Boolean(process.env.NEXT_PUBLIC_GTM_ID || process.env.NEXT_PUBLIC_GA4_ID)
+const clarityEnabled = Boolean(process.env.NEXT_PUBLIC_CLARITY_ID)
+
+// Hosts gtag.js and GTM talk to. Regional collection endpoints are
+// subdomains of google-analytics.com and analytics.google.com.
+// Microsoft Clarity serves its tag from www.clarity.ms and uploads session
+// data to per-region subdomains; c.bing.com is its cookie-sync endpoint.
+const analyticsScriptHosts =
+  (analyticsEnabled ? ' https://www.googletagmanager.com' : '') +
+  (clarityEnabled ? ' https://www.clarity.ms https://*.clarity.ms' : '')
+const analyticsConnectHosts =
+  (analyticsEnabled
+    ? ' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com'
+    : '') + (clarityEnabled ? ' https://*.clarity.ms https://c.bing.com' : '')
+const analyticsImageHosts =
+  (analyticsEnabled ? ' https://www.googletagmanager.com https://*.google-analytics.com' : '') +
+  (clarityEnabled ? ' https://*.clarity.ms https://c.bing.com' : '')
+
 const ContentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -12,14 +31,14 @@ const ContentSecurityPolicy = [
   // 'unsafe-inline' is required for Next.js streaming/hydration style injection.
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
-  "img-src 'self' data: blob: https://maps.googleapis.com https://maps.gstatic.com",
+  `img-src 'self' data: blob: https://maps.googleapis.com https://maps.gstatic.com${analyticsImageHosts}`,
   // Google Maps is loaded only after an explicit user click (see StaticMap).
   "frame-src 'self' https://www.google.com https://maps.google.com",
   // The dev server's HMR socket uses ws:, which 'self' does not cover.
-  `connect-src 'self'${process.env.NODE_ENV === 'development' ? ' ws: wss:' : ''}`,
+  `connect-src 'self'${analyticsConnectHosts}${process.env.NODE_ENV === 'development' ? ' ws: wss:' : ''}`,
   // React's dev overlay needs eval(). Production never does, so the
   // relaxation is scoped strictly to the dev server.
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
+  `script-src 'self' 'unsafe-inline'${analyticsScriptHosts}${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
   "upgrade-insecure-requests",
 ].join('; ')
 

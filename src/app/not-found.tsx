@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { Button } from '@/components/Ui'
 import { cta, mailtoUrl, email } from '@/config/practice'
 
@@ -40,19 +41,19 @@ export default function NotFound() {
             }}
           >
             <li>
-              <a href="/services">Planned Services</a>
+              <Link href="/services">Planned Services</Link>
             </li>
             <li>
-              <a href="/our-new-office">Our New Office</a>
+              <Link href="/our-new-office">Our New Office</Link>
             </li>
             <li>
-              <a href="/new-patients">New Patients</a>
+              <Link href="/new-patients">New Patients</Link>
             </li>
             <li>
-              <a href="/contact">Contact</a>
+              <Link href="/contact">Contact</Link>
             </li>
             <li>
-              <a href="/site-map">Site Map</a>
+              <Link href="/site-map">Site Map</Link>
             </li>
           </ul>
         </nav>

@@ -1,28 +1,38 @@
 # Netlify configuration — Smile Studio of Rehoboth
 #
-# INDEXING, READ THIS FIRST
-# =========================
-# NEXT_PUBLIC_ALLOW_INDEXING is deliberately NOT set here, which means every
-# Netlify deploy (including production on the *.netlify.app subdomain) serves:
+# INDEXING
+# ========
+# NEXT_PUBLIC_ALLOW_INDEXING is NOT set in this file on purpose. It lives in the
+# Netlify dashboard, set to "true" for the PRODUCTION context only (done
+# 2026-09-17, once www.rehobothsmiles.com was live and the CRM hand-off was
+# verified). Production therefore serves index,follow, a full sitemap.xml, and
+# a permissive robots.txt.
+#
+# Every other context is pinned to "false" below, so deploy previews and
+# branch deploys serve:
 #   · <meta name="robots" content="noindex, nofollow">
 #   · X-Robots-Tag: noindex, nofollow
 #   · an empty sitemap.xml
 #   · robots.txt with "Disallow: /"
-#
-# That is intentional and must stay this way until the real domain is
-# connected. A pre-opening dental practice getting indexed at a netlify.app
-# address would compete with www.rehobothsmiles.com for its own brand terms and
-# put a temporary URL in front of patients searching for the practice.
-#
-# TO GO LIVE on www.rehobothsmiles.com:
-#   1. Add the custom domain in Netlify and point DNS at it.
-#   2. Configure the apex -> www redirect (see docs/LAUNCH-CHECKLIST.md §1).
-#   3. THEN set NEXT_PUBLIC_ALLOW_INDEXING=true, scoped to production only.
-#   4. Redeploy and verify robots.txt and sitemap.xml on the live domain.
+# Keep it that way. A preview URL indexed for the practice's own brand terms
+# would compete with the real domain.
+
+# FORMS
+# =====
+# Netlify Forms is the system of record for both website forms. The forms are
+# rendered by React, so Netlify cannot see them; public/__forms.html declares
+# them statically so form detection registers "opening-list" and "inquiry" at
+# deploy time. The API routes post each validated submission there server-side.
+# Email notifications are configured per form in the Netlify UI under
+# Forms -> Form notifications. The CRM hand-off is code: Netlify invokes
+# netlify/functions/submission-created.ts on every verified submission, and it
+# posts the lead to the Freedom Dental Health CRM. It needs CRM_WEBHOOK_SECRET
+# and CRM_LOCATION_ID set in the Netlify dashboard.
 
 [build]
   command = "npm run build"
   publish = ".next"
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "22"

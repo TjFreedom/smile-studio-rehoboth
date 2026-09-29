@@ -70,8 +70,52 @@ library into the browser.
 ## 5. Delivery
 
 ```
-Browser → POST /api/{route} → rate limit → parse → zod → spam traps → sendNotification() → Resend → info@rehobothsmiles.com
+Browser → POST /api/{route} → rate limit → parse → zod → spam traps
+    ├→ captureSubmission() → Netlify Forms → email notification (Netlify UI)
+    │                                      └→ submission-created function → FDH CRM
+    └→ sendNotification()  → Resend → info@rehobothsmiles.com (only when RESEND_API_KEY is set)
 ```
+
+**Netlify Forms is the system of record.** Netlify only registers forms it finds
+in static HTML at deploy time, and these forms are React components, so
+`public/__forms.html` declares each form and its field names (the documented
+workaround for Next.js). `src/lib/netlify-forms.ts` posts the validated
+submission back to the receiving host as `form-name=opening-list` or
+`form-name=inquiry`. A field not declared in that file is silently dropped, so
+the two must stay in step.
+
+Forwarding from the server rather than the browser keeps the route handler as
+the single gate: nothing is stored until rate limiting, validation, the
+honeypot, and the timing trap have passed.
+
+Submissions appear at https://app.netlify.com/projects/smile-studio-rehoboth/forms.
+Per form, **Form notifications** in the Netlify UI configure the email
+notification to `info@rehobothsmiles.com` (and anyone else who should see
+leads), and Slack if the team wants it.
+
+**CRM hand-off.** `netlify/functions/submission-created.ts` is a Netlify
+event-triggered function: Netlify invokes it for every verified submission,
+after spam filtering. It maps each form to the CRM's lead shape
+(`first_name`, `last_name`, `phone`, `email`, `interest`, `location_id`) and
+posts it to `https://fdhscrm.azurewebsites.net/api/leads/webhook` with the
+`x-webhook-secret` header. This is the same endpoint, header, and payload the
+DCAD site uses, so both practices arrive in the CRM identically.
+
+- Opening-list signups carry the service interest, preferred contact method,
+  ZIP, and both consent answers in `interest`.
+- Inquiries carry the category and the message in `interest`.
+- Submissions tagged with a non-production `deployContext` are skipped, so a
+  reviewer's test on a deploy preview never becomes a CRM lead.
+- If `CRM_WEBHOOK_SECRET` or `CRM_LOCATION_ID` is missing, the function logs
+  and skips. The lead is still in Netlify Forms and still emailed; it just has
+  to be entered in the CRM by hand.
+
+The hidden `subject` field sets the subject line of Netlify's own notification
+email. `deployContext` records whether a submission came from production or a
+deploy preview, so reviewer tests are distinguishable from real leads.
+
+The Resend path is optional and additive. **The visitor only sees an error if
+both channels fail.**
 
 - `FROM` is always our own authenticated domain. **The visitor's address goes in `Reply-To`, never in `From`.** Spoofing the visitor is the fastest route to a spam folder and a DMARC failure.
 - HTML and plain-text bodies are both sent, set in Arial per Brand Guide §4 (which advises against serif headlines in email).
@@ -79,9 +123,11 @@ Browser → POST /api/{route} → rate limit → parse → zod → spam traps �
 - Failures log a **status code only**, never the response body, because provider errors can echo a visitor's contact details.
 - A send failure returns a `502` and a message telling the visitor to email directly, rather than silently losing the lead.
 
-**Required before launch:** SPF, DKIM, DMARC, and a verified sending domain.
-Without `RESEND_API_KEY`, production fails closed and logs an error; development
-logs the notification to the console instead.
+**Required before launch:** at least one Netlify form notification configured
+per form, and a live test through both forms confirmed in the Netlify Forms UI.
+If the Resend path is used, it also needs SPF, DKIM, DMARC, and a verified
+sending domain. Without `RESEND_API_KEY`, production logs a warning and relies
+on Netlify Forms; development logs both channels to the console.
 
 ## 6. Thank-you pages
 

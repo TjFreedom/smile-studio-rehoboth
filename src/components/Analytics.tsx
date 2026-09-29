@@ -20,16 +20,28 @@ import { enableClickToCall } from '@/config/practice'
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID
+const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID
 
 declare global {
   interface Window {
     dataLayer: unknown[]
+    gtag?: (...args: unknown[]) => void
   }
 }
 
-/** Push a named event with optional parameters. Safe before GTM loads. */
+/**
+ * Push a named event with optional parameters. Safe before any tag loads.
+ *
+ * GTM reads plain `{event, ...}` objects from the dataLayer. gtag.js does not:
+ * it only understands `gtag('event', name, params)` calls, so when GA4 is
+ * loaded directly the event goes through `gtag` instead.
+ */
 export function trackEvent(event: string, params: Record<string, unknown> = {}): void {
   if (typeof window === 'undefined') return
+  if (!GTM_ID && GA4_ID && typeof window.gtag === 'function') {
+    window.gtag('event', event, params)
+    return
+  }
   window.dataLayer = window.dataLayer || []
   window.dataLayer.push({ event, ...params })
 }
@@ -62,11 +74,14 @@ export function Analytics() {
     return () => document.removeEventListener('click', onClick)
   }, [])
 
-  if (!GTM_ID && !GA4_ID) return null
+  if (!GTM_ID && !GA4_ID && !CLARITY_ID) return null
 
   return (
     <>
-      {/* Consent defaults. Must execute before any tag that reads consent. */}
+      {/* Consent defaults. Must execute before any tag that reads consent.
+          beforeInteractive is permitted in the App Router root layout, which is
+          the only place this component is rendered (src/app/layout.tsx). */}
+      {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
       <Script id="consent-default" strategy="beforeInteractive">
         {`
 window.dataLayer = window.dataLayer || [];
@@ -92,6 +107,43 @@ gtag('set','url_passthrough', true);
 var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
 j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','${GTM_ID}');
+          `}
+        </Script>
+      ) : null}
+
+      {/* Direct GA4 (gtag.js), used only when there is no GTM container to
+          manage it. Loads after the consent defaults above, so the first hit
+          already carries the denied consent state. */}
+      {!GTM_ID && GA4_ID ? (
+        <>
+          <Script
+            id="ga4-loader"
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
+            strategy="afterInteractive"
+          />
+          <Script id="ga4-config" strategy="afterInteractive">
+            {`
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('js', new Date());
+gtag('config', '${GA4_ID}');
+            `}
+          </Script>
+        </>
+      ) : null}
+
+      {/* Microsoft Clarity session recordings and heatmaps. Loads after the
+          consent defaults above; Clarity reads Google Consent Mode when that
+          option is enabled in the Clarity project settings. */}
+      {CLARITY_ID ? (
+        <Script id="clarity" strategy="afterInteractive">
+          {`
+(function(c,l,a,r,i,t,y){
+  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "${CLARITY_ID}");
           `}
         </Script>
       ) : null}

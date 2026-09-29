@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { fieldErrors, openingListSchema, type FormResponse } from '@/lib/forms'
 import { clientKey, hit } from '@/lib/rate-limit'
 import { sendNotification } from '@/lib/mailer'
+import { captureSubmission, deployContext } from '@/lib/netlify-forms'
 import { practiceName } from '@/config/practice'
 
 export const runtime = 'nodejs'
@@ -47,25 +48,55 @@ export async function POST(request: Request): Promise<NextResponse<FormResponse>
     return NextResponse.json({ ok: true })
   }
 
-  // 5. Notify the practice.
-  const sent = await sendNotification({
-    subject: `Opening list signup: ${data.firstName} ${data.lastName}`,
-    intro: `A new visitor joined the ${practiceName} opening list.`,
-    replyTo: data.email,
-    fields: [
-      ['Name', `${data.firstName} ${data.lastName}`],
-      ['Email', data.email],
-      ['Phone', data.phone],
-      ['Preferred contact', data.preferredContact],
-      ['Service interest', data.serviceInterest],
-      ['ZIP code', data.zip],
-      ['Email updates consent', data.consentEmail ? 'Yes' : 'No'],
-      ['Text message consent', data.consentSms ? 'Yes' : 'No'],
-      ['Submitted', new Date().toISOString()],
-    ],
-  })
+  // 5. Deliver. Two independent channels, run together:
+  //      · Netlify Forms, which stores the lead and fires the notifications
+  //        configured in the Netlify UI (email, Slack, CRM webhook).
+  //      · The Resend email notification, when RESEND_API_KEY is configured.
+  //    The visitor only sees an error if BOTH fail.
+  const submittedAt = new Date().toISOString()
+  const subject = `Opening list signup: ${data.firstName} ${data.lastName}`
+  const consentEmail = data.consentEmail ? 'Yes' : 'No'
+  const consentSms = data.consentSms ? 'Yes' : 'No'
 
-  if (!sent) {
+  const [captured, mailed] = await Promise.all([
+    captureSubmission(
+      'opening-list',
+      {
+        subject,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        preferredContact: data.preferredContact,
+        serviceInterest: data.serviceInterest,
+        zip: data.zip,
+        consentEmail,
+        consentSms,
+        submittedAt,
+        deployContext: deployContext(request),
+        website: '',
+      },
+      request,
+    ),
+    sendNotification({
+      subject,
+      intro: `A new visitor joined the ${practiceName} opening list.`,
+      replyTo: data.email,
+      fields: [
+        ['Name', `${data.firstName} ${data.lastName}`],
+        ['Email', data.email],
+        ['Phone', data.phone],
+        ['Preferred contact', data.preferredContact],
+        ['Service interest', data.serviceInterest],
+        ['ZIP code', data.zip],
+        ['Email updates consent', consentEmail],
+        ['Text message consent', consentSms],
+        ['Submitted', submittedAt],
+      ],
+    }),
+  ])
+
+  if (!captured && !mailed) {
     return NextResponse.json(
       {
         ok: false,

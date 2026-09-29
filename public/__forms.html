@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Form definitions</title>
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body>
+    <!--
+      NETLIFY FORMS DEFINITIONS. NOT A PAGE ANYONE VISITS.
+
+      Netlify discovers forms by parsing static HTML at deploy time. The real
+      forms are React components rendered client-side, so Netlify never sees
+      them. This file declares the same forms with the same field names, which
+      is the documented workaround for Next.js and other SSR frameworks:
+      https://docs.netlify.com/manage/forms/setup/#forms-for-next-js-or-ssr-frameworks
+
+      Delivery path (see docs/CONVERSION-AND-FORMS.md §5):
+        browser -> POST /api/{route} (validate, rate limit, spam traps)
+                -> src/lib/netlify-forms.ts posts here as form-name=<name>
+                -> Netlify Forms stores it and fires the notifications configured
+                   in the Netlify UI (email, Slack, outgoing webhook to the CRM).
+
+      Field names must match what src/lib/netlify-forms.ts sends. A field that is
+      not declared here is silently dropped by Netlify.
+    -->
+
+    <form name="opening-list" data-netlify="true" netlify-honeypot="website" hidden>
+      <input type="hidden" name="subject" />
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="preferredContact" />
+      <input type="text" name="serviceInterest" />
+      <input type="text" name="zip" />
+      <input type="text" name="consentEmail" />
+      <input type="text" name="consentSms" />
+      <input type="text" name="submittedAt" />
+      <input type="text" name="deployContext" />
+      <input type="text" name="website" />
+    </form>
+
+    <form name="inquiry" data-netlify="true" netlify-honeypot="website" hidden>
+      <input type="hidden" name="subject" />
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="category" />
+      <textarea name="message"></textarea>
+      <input type="text" name="submittedAt" />
+      <input type="text" name="deployContext" />
+      <input type="text" name="website" />
+    </form>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { trackEvent } from './Analytics'
 // Imported from form-options, NOT from lib/forms: the latter pulls in zod,
@@ -152,8 +152,14 @@ function useFormSubmit(endpoint: string, redirectTo: string, eventPrefix: string
   const [status, setStatus] = useState<Status>('idle')
   const [message, setMessage] = useState<string>('')
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const mountedAt = useRef(Date.now())
+  // Stamped after mount rather than during render, so the value reflects when
+  // the visitor could first see the form and render stays pure.
+  const mountedAt = useRef(0)
   const started = useRef(false)
+
+  useEffect(() => {
+    mountedAt.current = Date.now()
+  }, [])
 
   /** Fires the *_form_start event once, on first interaction. */
   function onFirstInteraction() {

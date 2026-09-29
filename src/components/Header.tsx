@@ -24,11 +24,15 @@ export function Header() {
   const toggleRef = useRef<HTMLButtonElement>(null)
   const mobileId = useId()
 
-  // Close everything on navigation.
-  useEffect(() => {
+  // Close everything on navigation. Done by comparing against the previous
+  // pathname during render, which React recommends over a setState-in-effect
+  // because it avoids an extra committed frame with the drawer still open.
+  const [prevPathname, setPrevPathname] = useState(pathname)
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname)
     setMobileOpen(false)
     setOpenMenu(null)
-  }, [pathname])
+  }
 
   // Escape closes the open menu and returns focus to the trigger.
   useEffect(() => {
