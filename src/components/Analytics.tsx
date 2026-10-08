@@ -133,11 +133,20 @@ gtag('config', '${GA4_ID}');
         </>
       ) : null}
 
-      {/* Microsoft Clarity session recordings and heatmaps. Loads after the
-          consent defaults above; Clarity reads Google Consent Mode when that
-          option is enabled in the Clarity project settings. */}
+      {/* Microsoft Clarity session recordings and heatmaps. Rendered into the
+          server HTML (beforeInteractive) so Clarity's installation check, which
+          reads the page source, can find the snippet. It still runs after the
+          consent defaults above, and Clarity reads Google Consent Mode when
+          that option is enabled in the Clarity project settings.
+
+          The element id must NOT be "clarity". Browsers expose every element
+          with an id as a property on `window`, so a script tag with
+          id="clarity" makes `window.clarity` an HTMLScriptElement, the snippet's
+          `c[a] = c[a] || function...` keeps it, and Clarity's tag then throws
+          "a[c] is not a function" and never starts. */}
       {CLARITY_ID ? (
-        <Script id="clarity" strategy="afterInteractive">
+        // eslint-disable-next-line @next/next/no-before-interactive-script-outside-document
+        <Script id="ms-clarity-loader" strategy="beforeInteractive">
           {`
 (function(c,l,a,r,i,t,y){
   c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
