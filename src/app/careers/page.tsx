@@ -37,7 +37,7 @@ const blocks: Block[] = [
   { type: 'h2', text: 'What we are building' },
   {
     type: 'p',
-    text: 'A practice organised around the appointment rather than around throughput. Schedules with enough room in them that a normal visit stays on time. Treatment planning that is explained rather than presented. Clinical decisions made by the clinician in the room.',
+    text: 'A practice organized around the appointment rather than around throughput. Schedules with enough room in them that a normal visit stays on time. Treatment planning that is explained rather than presented. Clinical decisions made by the clinician in the room.',
   },
   {
     type: 'p',
@@ -82,7 +82,7 @@ const blocks: Block[] = [
   },
   {
     type: 'p',
-    text: `${practiceName} is ${affiliationLabel.toLowerCase()}. Some hiring is coordinated at the organisation level, so you may hear from a ${parentOrganization} colleague as well as from the practice.`,
+    text: `${practiceName} is ${affiliationLabel.toLowerCase()}. Some hiring is coordinated at the organization level, so you may hear from a ${parentOrganization} colleague as well as from the practice.`,
   },
 ]
 

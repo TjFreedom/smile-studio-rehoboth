@@ -37,7 +37,7 @@ const blocks: Block[] = [
   { type: 'h2', text: 'Accuracy of information' },
   {
     type: 'p',
-    text: 'We work to keep the site accurate and current, and content describing services, providers, hours, technology, and the opening timeline is subject to change. Content labelled as planned or to be confirmed describes an intention, not a commitment. The anticipated opening window is an estimate, and construction schedules can change.',
+    text: 'We work to keep the site accurate and current, and content describing services, providers, hours, technology, and the opening timeline is subject to change. Content labeled as planned or to be confirmed describes an intention, not a commitment. The anticipated opening window is an estimate, and construction schedules can change.',
   },
 
   { type: 'h2', text: 'Acceptable use' },

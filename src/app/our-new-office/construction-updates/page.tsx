@@ -54,7 +54,7 @@ export default function Page() {
         <div className="container">
           <div className="glance">
             <figure className="glance__figure">
-              {/* eslint-disable-next-line @next/next/no-img-element -- pre-optimised static JPEG */}
+              {/* eslint-disable-next-line @next/next/no-img-element -- pre-optimized static JPEG */}
               <img
                 src={progressGraphic.square}
                 alt={progressGraphic.alt}
@@ -133,7 +133,7 @@ export default function Page() {
 
                       {u.image ? (
                         <figure style={{ margin: 'var(--sp-4) 0 0' }}>
-                          {/* eslint-disable-next-line @next/next/no-img-element -- pre-optimised static JPEG */}
+                          {/* eslint-disable-next-line @next/next/no-img-element -- pre-optimized static JPEG */}
                           <img
                             src={u.image.src}
                             alt={u.image.alt}

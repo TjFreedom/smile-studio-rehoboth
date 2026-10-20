@@ -102,7 +102,7 @@ export interface StoryChapter {
    * Official stage label, matching the "New Office Construction Progress"
    * graphic used on social and in print. Keeping one vocabulary across the
    * website, the graphic, and any printed update means a patient who sees the
-   * post and then visits the site recognises the same five steps.
+   * post and then visits the site recognizes the same five steps.
    * Null for sections that sit outside the five-stage sequence.
    */
   stage: string | null
@@ -202,8 +202,8 @@ export const storyChapters: StoryChapter[] = [
     photos: [
       {
         slug: '06-labeled-stubups',
-        alt: 'Close-up of three capped PVC stub-ups rising from a dirt floor, hand-labelled in marker, next to a trench with a drain line and a wall filled with spray foam insulation.',
-        caption: 'Hand-labelled stub-ups: floor drain, sink, and cleanout.',
+        alt: 'Close-up of three capped PVC stub-ups rising from a dirt floor, hand-labeled in marker, next to a trench with a drain line and a wall filled with spray foam insulation.',
+        caption: 'Hand-labeled stub-ups: floor drain, sink, and cleanout.',
         ...L,
       },
     ],
@@ -269,7 +269,7 @@ export const storyChapters: StoryChapter[] = [
       },
       {
         slug: '12-vapor-barrier-screed',
-        alt: 'Vapor barrier covering the floor with labelled stub-ups standing through it, a timber screed board laid across the foreground, and windows looking out to parked vehicles.',
+        alt: 'Vapor barrier covering the floor with labeled stub-ups standing through it, a timber screed board laid across the foreground, and windows looking out to parked vehicles.',
         caption: 'A screed board set as the reference for the concrete pour.',
         ...L,
       },

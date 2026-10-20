@@ -961,6 +961,33 @@
   aspect-ratio: 16 / 10;
 }
 
+.map__details {
+  height: 100%;
+}
+
+/* Once the map is showing, the summary shrinks to a small control in the
+   corner so the map underneath is usable. It stays a <summary>, so Enter or
+   Space on it closes the panel again. */
+.map__toggle {
+  position: absolute;
+  top: var(--sp-3);
+  right: var(--sp-3);
+  z-index: 1;
+  list-style: none;
+  cursor: pointer;
+}
+
+.map__toggle::-webkit-details-marker {
+  display: none;
+}
+
+.map__toggle .btn {
+  background: var(--white);
+  padding: 0.45rem 0.9rem;
+  font-size: var(--fs-caption);
+  min-height: 0;
+}
+
 .map iframe {
   width: 100%;
   height: 100%;

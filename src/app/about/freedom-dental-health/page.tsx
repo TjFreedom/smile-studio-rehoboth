@@ -18,7 +18,7 @@ const blocks: Block[] = [
   },
   {
     type: 'p',
-    text: 'People are reasonably wary when they see that a dental practice belongs to a larger organisation. The concern is usually the same: will decisions about my care be made by someone I have never met, in a building I have never visited? It is a fair question and it deserves a direct answer.',
+    text: 'People are reasonably wary when they see that a dental practice belongs to a larger organization. The concern is usually the same: will decisions about my care be made by someone I have never met, in a building I have never visited? It is a fair question and it deserves a direct answer.',
   },
 
   { type: 'h2', text: 'The practice is the front door' },
@@ -40,7 +40,7 @@ const blocks: Block[] = [
       'Coordinated records and referrals between affiliated practices, so you are not retelling your history from scratch.',
       'Shared standards, continuing education, and clinical resources.',
       'The financial backing for a new practice to invest properly in its equipment and its team from the first day.',
-      'Continuity. A practice with organisational support behind it is more likely to still be here in ten years, which matters for something as long-term as dental care.',
+      'Continuity. A practice with organizational support behind it is more likely to still be here in ten years, which matters for something as long-term as dental care.',
     ],
   },
 
@@ -55,7 +55,7 @@ const blocks: Block[] = [
   },
   {
     type: 'note',
-    text: 'We will not advertise a service on this website that is not performed at the Rehoboth Beach office. Network services are labelled as network services, every time.',
+    text: 'We will not advertise a service on this website that is not performed at the Rehoboth Beach office. Network services are labeled as network services, every time.',
   },
 
   { type: 'h2', text: 'Specialty partners within the network' },
@@ -71,7 +71,7 @@ const blocks: Block[] = [
   { type: 'h2', text: 'Learn more' },
   {
     type: 'p',
-    text: `You can read about the wider organisation at ${parentOrganizationUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}. For anything about care in Rehoboth Beach, this website and this team are the right place to ask.`,
+    text: `You can read about the wider organization at ${parentOrganizationUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}. For anything about care in Rehoboth Beach, this website and this team are the right place to ask.`,
   },
 ]
 

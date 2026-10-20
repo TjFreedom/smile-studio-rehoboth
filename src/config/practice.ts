@@ -36,7 +36,7 @@ export interface DayHours {
  * "Smile Studio of Rehoboth" and explicitly prohibits "Rehoboth Smile Studio".
  * The finalized logo lockups read SMILE STUDIO of REHOBOTH DENTISTRY.
  * The original brief specified "Rehoboth Smile Studio", which the brand guide
- * forbids by name. Resolved in favour of the brand guide and the finalized
+ * forbids by name. Resolved in favor of the brand guide and the finalized
  * logo artwork, since both are later and more specific than the brief.
  * NOT YET RATIFIED BY THE PRACTICE — see docs/REQUIRED-BEFORE-OPENING.md.
  * Changing this one value renames the practice across every page, meta tag,
@@ -178,7 +178,7 @@ export const features = {
  * ------------------------------------------------------------------ */
 
 /**
- * PLANNED hours. Labelled "Planned Office Hours" everywhere while
+ * PLANNED hours. Labeled "Planned Office Hours" everywhere while
  * `isPreOpening` is true, and deliberately NOT emitted as `openingHours`
  * in structured data until the office is actually open.
  *

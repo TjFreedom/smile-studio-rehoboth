@@ -31,7 +31,7 @@ const blocks: Block[] = [
       'A skip-to-content link as the first focusable element on every page.',
       'Full keyboard operability, with a visible focus indicator that is never removed.',
       'Text contrast that meets or exceeds 4.5 to 1 for body text and 3 to 1 for large text and interface components.',
-      'No information conveyed by colour alone. Status and error messages carry text and an icon as well as colour.',
+      'No information conveyed by color alone. Status and error messages carry text and an icon as well as color.',
       'Form fields with persistent visible labels, programmatically associated hints, and errors announced through a live region and linked to the field they describe.',
       'Touch targets of at least 44 by 44 pixels, with primary buttons at 48 pixels or larger.',
       'Text that reflows without horizontal scrolling down to a 320 pixel viewport, and remains usable at 200 percent zoom.',

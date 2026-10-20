@@ -34,7 +34,7 @@ export default function ThankYouInquiry() {
             been confirmed, and a promise we cannot keep is worse than none. */}
         <p className="lede" style={{ marginTop: 'var(--sp-4)', marginInline: 'auto' }}>
           A member of our team will read it and reply by email. If your question is time-sensitive,
-          please say so in a follow-up and we will prioritise it.
+          please say so in a follow-up and we will prioritize it.
         </p>
         <p style={{ marginTop: 'var(--sp-4)', marginInline: 'auto', fontSize: 'var(--fs-small)', color: 'var(--mist)' }}>
           This form is not monitored for emergencies. If you are experiencing a life-threatening

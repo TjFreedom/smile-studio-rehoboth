@@ -101,7 +101,7 @@ export default function HomePage() {
                 Uses the full vertical lockup rather than the icon-only mark.
                 Brand Guide §2 restricts the icon mark to favicons, avatars,
                 embroidery, and wayfinding, and says to "lead with the full
-                lockup" until the mark is recognised locally on its own. The
+                lockup" until the mark is recognized locally on its own. The
                 panel is portrait, which is exactly what the vertical lockup is
                 for. Reversed variant, because it sits on Harbor Navy. */}
             <figure className="hero__visual" style={{ margin: 0 }}>
@@ -253,7 +253,7 @@ export default function HomePage() {
                   },
                   {
                     slug: '06-labeled-stubups',
-                    alt: 'Close-up of capped PVC stub-ups hand-labelled in marker beside a trench with a drain line.',
+                    alt: 'Close-up of capped PVC stub-ups hand-labeled in marker beside a trench with a drain line.',
                   },
                   {
                     slug: '09-graded-compacted',
@@ -264,7 +264,7 @@ export default function HomePage() {
                     alt: 'Black vapor barrier laid across the full floor with plumbing stub-ups sleeved through it, ready for concrete.',
                   },
                 ].map((img) => (
-                  /* eslint-disable-next-line @next/next/no-img-element -- pre-optimised static JPEG */
+                  /* eslint-disable-next-line @next/next/no-img-element -- pre-optimized static JPEG */
                   <img
                     key={img.slug}
                     src={`/images/construction/${img.slug}-800.jpg`}

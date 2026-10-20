@@ -16,7 +16,7 @@ function Photo({ photo, priority = false }: { photo: StoryPhoto; priority?: bool
   const base = `/images/construction/${photo.slug}`
   return (
     <figure className="story-photo">
-      {/* eslint-disable-next-line @next/next/no-img-element -- pre-optimised static JPEGs */}
+      {/* eslint-disable-next-line @next/next/no-img-element -- pre-optimized static JPEGs */}
       <img
         src={`${base}-800.jpg`}
         srcSet={`${base}-800.jpg 800w, ${base}.jpg 1600w`}

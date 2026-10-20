@@ -38,7 +38,7 @@ const blocks: Block[] = [
   { type: 'h2', text: 'How we intend to work with referring colleagues' },
   {
     type: 'p',
-    text: 'Referral relationships are built on a small number of unglamorous behaviours, and we intend to be reliable about all of them.',
+    text: 'Referral relationships are built on a small number of unglamorous behaviors, and we intend to be reliable about all of them.',
   },
   {
     type: 'ul',

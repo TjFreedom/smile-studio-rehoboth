@@ -60,8 +60,8 @@ export default function ServicesPage() {
         <div className="container">
           <SectionHead
             eyebrow="How to read this"
-            title="Three Categories, Labelled Honestly"
-            lede="Dental group websites often blur the line between what a location does and what the wider organisation does. We would rather be explicit about it."
+            title="Three Categories, Labeled Honestly"
+            lede="Dental group websites often blur the line between what a location does and what the wider organization does. We would rather be explicit about it."
           />
 
           <div className="grid grid-3">

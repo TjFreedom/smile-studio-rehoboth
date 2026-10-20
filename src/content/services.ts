@@ -2,13 +2,13 @@
  * SERVICE ARCHITECTURE
  * ====================
  * Three tiers, exactly as specified in the project brief. The tier controls
- * how a service is labelled, whether it gets a scheduling CTA, and whether it
+ * how a service is labeled, whether it gets a scheduling CTA, and whether it
  * is emitted as schema.org Service data.
  *
  *   'confirmed' — verified as performed at the Rehoboth office. Gets a direct
  *                 scheduling CTA once the practice opens, and Service schema.
  *   'planned'   — expected, but not yet confirmed by clinical leadership.
- *                 Labelled "Planned", never given a scheduling CTA, never
+ *                 Labeled "Planned", never given a scheduling CTA, never
  *                 emitted as schema. This is the correct tier for everything
  *                 until clinical leadership signs off.
  *   'network'   — available elsewhere in Freedom Dental Health, NOT at Rehoboth.

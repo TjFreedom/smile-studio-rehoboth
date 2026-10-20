@@ -1,7 +1,7 @@
 /**
  * Icon set.
  * Brand Guidelines §6: outlined, rounded terminals, 1.5 to 2px stroke at a
- * 24x24 reference, single colour, no mixing of outlined and filled in one view.
+ * 24x24 reference, single color, no mixing of outlined and filled in one view.
  * Drawn to match rather than pulled from a library, so stroke weight and
  * density stay consistent across every icon we use.
  */

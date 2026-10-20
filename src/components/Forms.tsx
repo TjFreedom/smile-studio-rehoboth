@@ -291,7 +291,7 @@ export function OpeningListForm() {
         label="What are you most interested in?"
         options={SERVICE_INTERESTS}
         defaultValue="I am not sure"
-        hint="This tells us what to prioritise in our updates. It does not confirm that a service will be offered, and it is not a request for treatment."
+        hint="This tells us what to prioritize in our updates. It does not confirm that a service will be offered, and it is not a request for treatment."
         error={errors.serviceInterest}
       />
 

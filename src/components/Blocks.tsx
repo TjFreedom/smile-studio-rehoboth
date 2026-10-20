@@ -132,7 +132,7 @@ export function Timeline({ items = milestones }: { items?: readonly Milestone[] 
           <div>
             <div className="timeline__title">
               <h3>{m.title}</h3>
-              {/* Status is given as text, never by colour alone. */}
+              {/* Status is given as text, never by color alone. */}
               <span className="timeline__status">{statusLabel[m.status]}</span>
             </div>
             <p className="timeline__desc">{m.description}</p>
@@ -152,49 +152,10 @@ export function Timeline({ items = milestones }: { items?: readonly Milestone[] 
  * Google cookies before the visitor asks for the map.
  */
 
-export function StaticMap() {
-  const embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(
-    `${address.line1}, ${address.city}, ${address.state} ${address.postalCode}`,
-  )}&output=embed`
-
-  return (
-    <div className="map">
-      <details className="map__details">
-        <summary className="map__preview">
-          <span className="map__previewInner">
-            <span className="map__pin" aria-hidden="true">
-              <PinIcon size={26} />
-            </span>
-            <span className="map__addr">
-              {addressLines.map((l) => (
-                <span key={l} style={{ display: 'block' }}>
-                  {l}
-                </span>
-              ))}
-            </span>
-            <span className="btn btn--outline" aria-hidden="true">
-              Load interactive map
-            </span>
-            <span className="map__note">
-              Loading the map connects to Google Maps and may set cookies.
-            </span>
-            <span className="sr-only">
-              Load an interactive Google map showing {address.line1}, {address.city}. This connects
-              to Google and may set cookies.
-            </span>
-          </span>
-        </summary>
-        <iframe
-          src={embedSrc}
-          title={`Map showing ${practiceName} at ${address.line1}, ${address.city}, ${address.state}`}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          allowFullScreen
-        />
-      </details>
-    </div>
-  )
-}
+// The map lives in its own client component so that the Google iframe is
+// only created after the visitor opts in. Re-exported here so existing
+// imports keep working.
+export { StaticMap } from './StaticMap'
 
 /* ------------------------------------------------------------------ *
  * LOCATION BLOCK

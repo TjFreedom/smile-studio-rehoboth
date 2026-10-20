@@ -130,7 +130,7 @@ the site's single conversion is lost.
 - [ ] No lorem ipsum *(verified)*
 - [ ] No `href="#"` *(verified: zero)*
 - [x] Placeholder notes hidden in production *(verified on the live domain)*
-- [ ] **Standardise spelling to US English.** Some drafted copy uses "organised", "labelled", "recognised", "prioritise". Run a pass before launch.
+- [x] **Standardize spelling to US English.** *(done 2026-10-20: organisation, programme, labelled, colour, recognised, behaviour, prioritise, optimised and their variants replaced across src/)*
 
 ## 8. Technical SEO
 

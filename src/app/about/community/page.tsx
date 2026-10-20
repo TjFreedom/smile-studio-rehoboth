@@ -53,10 +53,10 @@ const blocks: Block[] = [
     text: 'What we can say is the principle: support local causes and events steadily rather than opportunistically, lead with what we are contributing rather than what we are asking for, and be specific about the places we mean.',
   },
 
-  { type: 'h2', text: 'If you are a local organisation' },
+  { type: 'h2', text: 'If you are a local organization' },
   {
     type: 'p',
-    text: 'If you run a community organisation, a school programme, a nonprofit, or a local event and you would like to talk, please write to us. We are new here, and hearing what the community actually needs is more useful than deciding it ourselves.',
+    text: 'If you run a community organization, a school program, a nonprofit, or a local event and you would like to talk, please write to us. We are new here, and hearing what the community actually needs is more useful than deciding it ourselves.',
   },
 ]
 
@@ -75,8 +75,8 @@ export default function Page() {
       blocks={blocks}
       aside={
         <PlaceholderNote label="Required before publication: community commitments">
-          No sponsorships, partnerships, or community programmes have been confirmed. Do not add
-          named organisations, events, or donation claims to this page until each is agreed in
+          No sponsorships, partnerships, or community programs have been confirmed. Do not add
+          named organizations, events, or donation claims to this page until each is agreed in
           writing. Owner: Director of Marketing and Communications.
         </PlaceholderNote>
       }

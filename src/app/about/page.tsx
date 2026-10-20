@@ -106,7 +106,7 @@ export default function AboutPage() {
               </p>
               <p>
                 None of that is remarkable. It is simply what good dentistry looks like when the
-                practice is organised around the visit rather than around throughput, and it is
+                practice is organized around the visit rather than around throughput, and it is
                 easier to build in from the start than to retrofit later.
               </p>
 
