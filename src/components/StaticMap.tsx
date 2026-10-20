@@ -35,31 +35,33 @@ export function StaticMap() {
         <summary className={open ? 'map__toggle' : 'map__preview'}>
           {open ? (
             <span className="btn btn--outline">
-              Hide map<span className="sr-only"> and return to the address card</span>
+              Hide map
+              <span className="sr-only"> and return to the address card</span>
             </span>
-          ) : null}
-          <span className="map__previewInner" hidden={open}>
-            <span className="map__pin" aria-hidden="true">
-              <PinIcon size={26} />
+          ) : (
+            <span className="map__previewInner">
+              <span className="map__pin" aria-hidden="true">
+                <PinIcon size={26} />
+              </span>
+              <span className="map__addr">
+                {addressLines.map((l) => (
+                  <span key={l} style={{ display: 'block' }}>
+                    {l}
+                  </span>
+                ))}
+              </span>
+              <span className="btn btn--outline" aria-hidden="true">
+                Load interactive map
+              </span>
+              <span className="map__note">
+                Loading the map connects to Google Maps and may set cookies.
+              </span>
+              <span className="sr-only">
+                Load an interactive Google map showing {address.line1}, {address.city}. This
+                connects to Google and may set cookies.
+              </span>
             </span>
-            <span className="map__addr">
-              {addressLines.map((l) => (
-                <span key={l} style={{ display: 'block' }}>
-                  {l}
-                </span>
-              ))}
-            </span>
-            <span className="btn btn--outline" aria-hidden="true">
-              Load interactive map
-            </span>
-            <span className="map__note">
-              Loading the map connects to Google Maps and may set cookies.
-            </span>
-            <span className="sr-only">
-              Load an interactive Google map showing {address.line1}, {address.city}. This connects
-              to Google and may set cookies.
-            </span>
-          </span>
+          )}
         </summary>
         {open ? (
           <iframe
