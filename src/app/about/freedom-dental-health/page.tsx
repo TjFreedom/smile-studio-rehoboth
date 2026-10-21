@@ -91,7 +91,7 @@ export default function Page() {
       faqs={affiliationFaqs}
       related={[
         { label: 'About Smile Studio of Rehoboth', href: '/about' },
-        { label: 'Planned Services', href: '/services' },
+        { label: 'Our Services', href: '/services' },
         { label: 'Referring Providers', href: '/patient-resources/referring-providers' },
       ]}
     />

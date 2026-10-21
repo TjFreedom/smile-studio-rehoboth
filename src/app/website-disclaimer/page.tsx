@@ -1,7 +1,12 @@
 import type { Metadata } from 'next'
 import { ProsePage, type Block } from '@/components/ProsePage'
 import { pageMetadata } from '@/lib/seo'
-import { anticipatedOpening, email, practiceName } from '@/config/practice'
+import {
+  anticipatedOpening,
+  email,
+  isAcceptingAppointments,
+  practiceName,
+} from '@/config/practice'
 
 const TITLE = 'Website Disclaimer'
 const DESCRIPTION =
@@ -26,7 +31,9 @@ const blocks: Block[] = [
   { type: 'h2', text: 'The practice is not open' },
   {
     type: 'p',
-    text: `${practiceName} is under construction and is not open for patient care. We anticipate opening in ${anticipatedOpening}. Nothing on this website schedules an appointment, registers you as a patient, or establishes a clinical relationship.`,
+    text: isAcceptingAppointments
+      ? `${practiceName} is under construction and is not open for patient care. We anticipate opening in ${anticipatedOpening}. You can request an appointment for after we open, but submitting a request does not confirm a booking, does not register you as a patient, and does not establish a clinical relationship. An appointment exists only once a member of our team has confirmed it with you directly.`
+      : `${practiceName} is under construction and is not open for patient care. We anticipate opening in ${anticipatedOpening}. Nothing on this website schedules an appointment, registers you as a patient, or establishes a clinical relationship.`,
   },
   {
     type: 'p',

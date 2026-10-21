@@ -24,8 +24,17 @@ export interface Milestone {
 
 /**
  * [TO CONFIRM] Milestone statuses with the construction manager.
- * Underground plumbing and the vapor barrier are marked complete on the
- * evidence of the site photography below. Everything after that is unverified.
+ *
+ * Statuses through Interior Build-Out are set from the site photography in this
+ * file and nothing else. The October photographs show finished drywall, data
+ * cable pulled to the communications closet, mechanical and electrical rough-in
+ * overhead, and floor tile being laid, so the concrete is self-evidently down
+ * and build-out is underway. Equipment and the opening date remain unverified
+ * because no photograph or statement supports them yet.
+ *
+ * Provider Announcements and Early Scheduling are complete as a matter of
+ * record rather than inference: Dr. Cottone is published on /team, and the
+ * practice is taking appointments on a published phone number.
  */
 export const milestones: Milestone[] = [
   {
@@ -48,14 +57,15 @@ export const milestones: Milestone[] = [
   },
   {
     title: 'Concrete Floor',
-    status: 'current',
-    description: 'The slab that every operatory, chair, and cabinet will sit on.',
+    status: 'complete',
+    description:
+      'Poured and finished. The slab that every operatory, chair, and cabinet sits on is now the floor the tile is going down onto.',
   },
   {
     title: 'Interior Build-Out',
-    status: 'upcoming',
+    status: 'current',
     description:
-      'Interior walls, mechanical and electrical finish, cabinetry, and the operatories taking shape.',
+      'Underway. Interior walls are up and finished, mechanical, electrical and data are roughed in overhead, and floor tile is being laid. Cabinetry and the operatories come next.',
   },
   {
     title: 'Equipment and Technology',
@@ -64,15 +74,15 @@ export const milestones: Milestone[] = [
   },
   {
     title: 'Provider Announcements',
-    status: 'upcoming',
+    status: 'complete',
     description:
-      'Introductions to the dentists and clinical team who will care for patients in Rehoboth Beach.',
+      'Dr. Jonathon Cottone is introduced on our Meet the Team page. The rest of the clinical team will be announced there as hiring completes.',
   },
   {
     title: 'Early Scheduling Information',
-    status: 'upcoming',
+    status: 'complete',
     description:
-      'Opening list subscribers receive scheduling details before appointments open to the public.',
+      'Scheduling is open. You can call the office or request an appointment online, and our team will confirm a time with you.',
   },
   {
     title: 'Confirmed Opening Date',
@@ -94,6 +104,13 @@ export interface StoryPhoto {
   /** Rendered aspect, used to reserve layout space and prevent CLS. */
   w: number
   h: number
+  /**
+   * Width of the `-800.jpg` variant, when one exists. Omitted for photographs
+   * whose source was already small enough that a second, narrower file would
+   * be the same size or larger: those ship a single file and no srcset, rather
+   * than advertising a resolution the image does not have.
+   */
+  wSmall?: number
 }
 
 export interface StoryChapter {
@@ -119,9 +136,14 @@ export interface StoryChapter {
   whyItMatters?: string
 }
 
-const L = { w: 1600, h: 1200 } // landscape source
-const P = { w: 1600, h: 2134 } // portrait source
-const P2 = { w: 1600, h: 2133 }
+const L = { w: 1600, h: 1200, wSmall: 800 } // landscape source
+const P = { w: 1600, h: 2134, wSmall: 800 } // portrait source
+const P2 = { w: 1600, h: 2133, wSmall: 800 }
+
+/** Phone-sized 3:4 sources. Single file, no narrower variant. */
+const PS = { w: 768, h: 1024 }
+/** Larger 3:4 sources, big enough to warrant an 800w variant. */
+const PL = { w: 1500, h: 2000, wSmall: 800 }
 
 export const storyChapters: StoryChapter[] = [
   {
@@ -133,7 +155,7 @@ export const storyChapters: StoryChapter[] = [
     intro:
       'Before anything is dug, the whole practice gets drawn on the ground. Those string lines are the floor plan at full size.',
     body: [
-      'Every white pipe you can see marks a fixture that will exist in the finished office. A sink in a treatment room. A floor drain. The plumbing for a sterilisation area. Each one has to be within an inch or two of where the cabinetry will eventually sit, because once the concrete goes down, moving it means cutting the floor open.',
+      'Every white pipe you can see marks a fixture that will exist in the finished office. A sink in a treatment room. A floor drain. The plumbing for a sterilization area. Each one has to be within an inch or two of where the cabinetry will eventually sit, because once the concrete goes down, moving it means cutting the floor open.',
       'This is the least photogenic day of the entire build, and it is the one that decides whether everything downstream lines up.',
     ],
     whyItMatters:
@@ -282,6 +304,83 @@ export const storyChapters: StoryChapter[] = [
     ],
   },
   {
+    id: 'walls-and-rooms',
+    // Past the five-stage slab sequence, so no step counter: using one here
+    // would imply a sixth stage the progress graphic does not have.
+    stage: 'After the concrete',
+    label: 'Walls and rooms',
+    title: 'The Floor Plan Stands Up',
+    date: null,
+    intro:
+      'The pipes that were marked out in dirt now have rooms around them. This corridor runs the length of the practice, and every opening off it is a treatment room, an office, or a utility space.',
+    body: [
+      'The ceiling is deliberately still open. Everything the building needs runs through that space: ductwork for heating and cooling, electrical conduit, water lines, and the blue data cable that will carry images from the X-ray sensors to the screen in front of you. It stays open until every one of those has been inspected, because once the ceiling closes, getting back to any of it means taking it down again.',
+      'The doorways look narrow from this angle. They are not, and the finished openings are wider than the framing suggests.',
+    ],
+    whyItMatters:
+      'If you have ever been in a dental office where you could hear the room next door, the reason was decided at this stage, in how the walls were built.',
+    photos: [
+      {
+        slug: '16-corridor-rough-in',
+        alt: 'Long corridor with drywall hung and taped, framed door openings on both sides, and an open ceiling carrying insulated ductwork, electrical conduit, and bundled blue data cable.',
+        caption: 'The main corridor, with the ceiling still open for inspection.',
+        ...PS,
+      },
+      {
+        slug: '18-corridor-finished',
+        alt: 'The same style of corridor with drywall finished smooth and primed white, door openings cut and trimmed, and services still visible in the open ceiling above.',
+        caption: 'Further along: drywall finished, services still accessible overhead.',
+        ...PL,
+      },
+    ],
+  },
+  {
+    id: 'behind-the-walls',
+    stage: 'After the concrete',
+    label: 'Data and services',
+    title: 'The Part You Will Never See',
+    date: null,
+    intro:
+      'This is the communications closet. Every blue cable hanging in it runs to one specific point in the practice, and together they are the nervous system of a modern dental office.',
+    body: [
+      'Digital X-rays, intraoral cameras, the screens used to show you what we are looking at, the practice management system, and the phones all depend on this one cupboard. Running the cable now, before the walls close, is the difference between a practice that can add a chair later and one that has to open the ceiling to do it.',
+      'There is no glamour in a photograph of cables. There is a great deal of difference between a building that was wired generously at this stage and one that was wired to the minimum.',
+    ],
+    whyItMatters:
+      'It is why your X-ray will appear on a screen beside you in a couple of seconds rather than being carried somewhere to be processed.',
+    photos: [
+      {
+        slug: '17-data-closet-cabling',
+        alt: 'Framed and drywalled communications closet with a dense bundle of blue network cables hanging from the ceiling to the floor, and a single outlet box low on the back wall.',
+        caption: 'Network cable pulled to the communications closet, waiting to be terminated.',
+        ...PS,
+      },
+    ],
+  },
+  {
+    id: 'finishes',
+    stage: 'After the concrete',
+    label: 'Finishes',
+    title: 'Tile, and the First Surface You Will Actually Touch',
+    date: null,
+    intro:
+      'Everything until now has been structure and services. Tile is the first thing going in that you will see, stand on, and judge the place by.',
+    body: [
+      'The yellow and red clips are leveling spacers. They hold neighboring tiles flush with one another while the adhesive cures, so you do not end up with the slightly proud edge that catches a shoe or a chair castor. They are snapped off and thrown away once the floor has set, which is why no finished floor has ever had them in it.',
+      'A dental office floor has to take rolling equipment, be cleaned hard and often, and still look like somewhere you would want to sit. That rules out a lot of flooring, and it is the reason this is tile rather than something softer underfoot.',
+    ],
+    whyItMatters:
+      'Floors in a dental practice get disinfected daily. This one is built to survive that and still look new in five years.',
+    photos: [
+      {
+        slug: '19-floor-tile',
+        alt: 'Large-format grey floor tiles laid in a room, with yellow and red leveling clips standing at every joint while the adhesive cures, and a white pipe stub rising at the far wall.',
+        caption: 'Leveling clips holding each tile flush until the adhesive sets.',
+        ...PL,
+      },
+    ],
+  },
+  {
     id: 'outside',
     // Not part of the five-stage sequence, so it gets its own label rather
     // than a step counter that would read oddly beside the stage names.
@@ -290,13 +389,27 @@ export const storyChapters: StoryChapter[] = [
     title: 'Where to Find Us',
     date: null,
     intro:
-      'Outside, the building, the parking, and the approach from Plantations Road are already finished and in use by the neighbouring suites.',
-    // [TO CONFIRM] Suite number, and the name that will appear on the exterior
-    // directory. See the note on the directory photograph below.
+      'Our sign is up. The building, the parking, and the approach from Plantations Road are already finished and in use by the neighboring suites, and we are in Suite 1.',
+    // Suite 1 confirmed 2026-10-21 by the practice's FINAL postcard.
+    // [TO CONFIRM] still: which name goes on the exterior directory. See the
+    // note on the directory photograph below.
     body: [
+      'If you have driven past recently you may already have seen it. The sign at the road carries the practice name, the website, and the phone number, which makes it the first thing most people will meet us through.',
       'The parking sits directly in front of the building, on one level, a short and flat walk from the door. We will publish the confirmed accessibility details, including accessible spaces and step-free entry, once we can describe them from a completed site rather than from a plan.',
     ],
     photos: [
+      {
+        slug: '20-coming-soon-sign',
+        alt: 'A contractor installing the Smile Studio of Rehoboth coming-soon sign beside the road, reading COMING SOON above the lighthouse-and-tooth logo, with the website address and phone number below.',
+        caption: 'The sign going in at the road.',
+        ...PS,
+      },
+      {
+        slug: '21-building-front',
+        alt: 'Front of the grey shingled professional building with white trim, five ground-floor storefront entrances under a covered walkway, and signs for the neighboring suites above.',
+        caption: 'The front of the building, from the parking lot.',
+        ...PS,
+      },
       {
         slug: '14-exterior-parking',
         alt: 'Parking lot in front of the Plantations Professional Park building at golden hour, with marked spaces, wheel stops, a lamp post, and the building directory sign at the left.',
@@ -307,13 +420,15 @@ export const storyChapters: StoryChapter[] = [
         slug: '15-suite-directory-sign',
         alt: 'Building directory sign for building 4 at Plantations Professional Park listing three suites, with the grey shingled building behind it.',
         /**
-         * [TO CONFIRM] Caption deliberately does not claim a suite number.
-         * The directory lists Suite 1 under the Freedom Dental name, while this
-         * site is branded Smile Studio of Rehoboth. Confirm both the suite
-         * number and which name goes on the sign before asserting either here,
-         * because patients use this for wayfinding and it feeds NAP data.
+         * The suite number is now confirmed as Suite 1, but the name on this
+         * directory is NOT. It currently reads "Freedom Dental" against Suite 1
+         * while every patient-facing piece says Smile Studio of Rehoboth. The
+         * caption therefore points at the suite, which is true and useful for
+         * wayfinding, and makes no claim about the name on the board. Resolve
+         * the signage before this becomes the thing a patient sees after
+         * following a postcard. See docs/REQUIRED-BEFORE-OPENING.md.
          */
-        caption: 'The directory at the entrance to building 4.',
+        caption: 'The directory at the entrance to building 4. We are Suite 1.',
         ...P2,
       },
     ],
@@ -344,7 +459,7 @@ export const constructionUpdates: ConstructionUpdate[] = [
     body: [
       'The part of the build that nobody will ever see again is finished.',
       'Over the last stretch of work, the floor of the suite was set out with string lines, opened up with trenches, fitted with drain lines set to a deliberate fall, inspected, backfilled, compacted, and graded. The black vapor barrier is now down across the whole space, and the screed lines are set.',
-      'That means every fixture in the finished practice, every sink, every floor drain, and the plumbing for sterilisation, is now permanently located. It is the least glamorous stage of a dental build and the one with the least room for error, because it all disappears under reinforced concrete.',
+      'That means every fixture in the finished practice, every sink, every floor drain, and the plumbing for sterilization, is now permanently located. It is the least glamorous stage of a dental build and the one with the least room for error, because it all disappears under reinforced concrete.',
       'The next milestone is the concrete floor itself. After that the interior build-out begins and the space starts to look like a dental practice rather than a building site.',
       'The photo story on this page walks through the whole sequence.',
     ],

@@ -80,7 +80,7 @@ export function ServiceCard({ service }: { service: ServiceCategory }) {
         className="link-arrow"
         data-event="planned_service_click"
       >
-        {isPreOpening ? 'View planned services' : 'Learn more'}
+        {'Learn more'}
         <span className="sr-only"> about {service.name}</span>
       </Link>
     </article>
@@ -303,7 +303,7 @@ export function MedicalDisclaimer() {
       This page is general education, not dental or medical advice, and reading it does not create a
       provider and patient relationship. Individual recommendations depend on an examination.{' '}
       {isPreOpening
-        ? `${practiceName} is not yet open for patient care. Services described here are planned and have not been confirmed. If you are experiencing a life-threatening emergency, call 911. For an urgent dental concern, contact an established dental provider or an appropriate emergency service.`
+        ? `${practiceName} is not yet open for patient care, so the services described here begin when we open. If you are experiencing a life-threatening emergency, call 911. For an urgent dental concern, contact an established dental provider or an appropriate emergency service.`
         : 'If you are experiencing a life-threatening emergency, call 911.'}
     </div>
   )

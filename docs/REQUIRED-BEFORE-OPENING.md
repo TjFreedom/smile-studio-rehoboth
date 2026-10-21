@@ -14,29 +14,29 @@ in production.
 
 | # | Item | Owner | Unblocks |
 |---|---|---|---|
-| 1 | **Public phone number** | Operations | Header and footer phone, click-to-call, mobile Call action, `telephone` in schema, call tracking, emergency contact. One config value. |
+| 1 | ~~**Public phone number**~~ **RESOLVED 2026-10-21** | Operations | **(302) 715-0020**, confirmed by the practice's own FINAL postcard and coming-soon sign. Now live in `practice.ts`: header, footer, click-to-call, mobile Call action, and `telephone` in structured data. |
 | 2 | **Exact opening date** | Construction + Operations | "Now Open" mode, `openingDate` schema, Google Business Profile eligibility, opening-list announcement |
-| 3 | **Provider roster and credentials** | Clinical Lead | Meet the Team, `Person` schema, provider review attribution on 12 clinical pages |
-| 4 | **Confirmed service list** | Clinical Lead | Service tier `confirmed`, `Service` schema, booking CTAs, GBP service categories |
+| 3 | **Provider roster** PARTLY RESOLVED 2026-10-21 | Clinical Lead | **Dr. Jonathon Cottone** confirmed as the practice's dentist, with biography sourced from Freedom Dental Health's own Provider Spotlight. `/team` is live with `Person` schema. **Still needed:** (a) the degree designation Maryland awarded, DDS or DMD, which is deliberately NOT stated anywhere on the site until confirmed; (b) his Delaware license number; (c) hygienists, assistants and front-office staff, who are described as being hired but not named. |
+| 4 | ~~**Confirmed service list**~~ **RESOLVED 2026-10-21** | Clinical Lead | Dr. Cottone provides all seven categories. All tiers flipped to `confirmed`, `Service` schema now emits on every category page, and booking CTAs are live. Specialty referrals remain separate, with periodontics now next door rather than a referral out. |
 | 5 | **Emergency procedures** | Clinical Lead + Compliance | Rewrite of the emergency page, `emergency-dentist` keyword activation |
-| 6 | **Scheduling workflow and URL** | Operations | Request an Appointment, online booking, scheduling attribution |
+| 6 | **Scheduling workflow and URL** | Operations | **Partly resolved 2026-10-21.** The postcard advertises "CURRENTLY SCHEDULING APPOINTMENTS" by phone, so `openingStatus` is now `'scheduling'` and `/request-appointment` is live (phone first, request form second, team calls back to confirm). Still outstanding: a real online-booking URL for `externalLinks.onlineScheduling`, and who owns callbacks and how fast. |
 | 7 | **Legal review of all four policy pages** | Marketing + counsel | Launch |
 
 ## Priority 2 — Needed at opening
 
 | # | Item | Owner | Notes |
 |---|---|---|---|
-| 8 | **Suite number, and the name on the exterior signage** | Operations + Marketing | The building directory photographed on site lists **Suite 1** under the name **"Freedom Dental"**, while this website is branded **Smile Studio of Rehoboth**. Two things to settle: (a) confirm the suite number so it can be set in `address.line2`, and (b) decide which name goes on the exterior sign and the directory. A patient who searches for Smile Studio of Rehoboth and arrives at a sign reading Freedom Dental will think they are in the wrong place. Affects NAP consistency, Google Business Profile, and wayfinding. |
-| 9 | Insurance participation, executed contracts only | Operations | Never publish a plan name before the contract is signed |
+| 8 | **Suite number** RESOLVED; **exterior signage name** still open | Operations + Marketing | **Suite 1 confirmed 2026-10-21** by the FINAL postcard and set in `address.line2`. The signage conflict remains: the building directory photographed on site lists Suite 1 under the name **"Freedom Dental"**, while this website and the postcard are branded **Smile Studio of Rehoboth**. Two things to settle: (a) confirm the suite number so it can be set in `address.line2`, and (b) decide which name goes on the exterior sign and the directory. A patient who searches for Smile Studio of Rehoboth and arrives at a sign reading Freedom Dental will think they are in the wrong place. Affects NAP consistency, Google Business Profile, and wayfinding. |
+| 9 | ~~**Insurance**~~ **RESOLVED 2026-10-21** | Operations | Out of network, courtesy billing, **payment collected in full at time of service**, and **assignment of benefits turned over to the patient** so the insurer reimburses them directly. Published on the insurance page and in the FAQs. Still open: accepted payment methods, third-party financing, and any membership plan. Never publish a plan name before a contract is signed. |
 | 10 | Financing options and any membership plan | Operations | |
 | 11 | Patient forms + intake system with a signed BAA | Operations + Compliance | |
 | 12 | Notice of Privacy Practices | Compliance | Linked from the footer and privacy policy |
 | 13 | Payment portal URL | Operations | |
-| 14 | Office technology, installed, by make and model | Clinical Lead | Only name what is physically installed |
+| 14 | ~~**Office technology**~~ **RESOLVED 2026-10-21** | Clinical Lead | Confirmed: digital X-rays, intraoral photography, digital scanning, and an **i-CAT CBCT**. The page now presents these as the committed equipment list rather than aspirations, while being explicit that nothing is installed yet because the office is still a building site. Name each system by manufacturer and model as it is commissioned. |
 | 15 | Parking details | Operations, by site walk | Space count, accessible spaces, distance to door |
 | 16 | Accessibility details | Operations, by site walk | Step-free entry, door widths, restroom, operatory access |
 | 17 | Confirmed office hours, including any lunch closure | Operations | Weekend hours only if actually offered |
-| 18 | Completed-office photography | Marketing | See `docs/PHOTOGRAPHY-SHOT-LIST.md` §B. Construction photography through slab prep is now published. **Next priority: photograph the concrete pour, and repeat the vapor-barrier wide shot from the same position afterwards for a before-and-after pair.** |
+| 18 | **Completed-office photography** | Marketing | See `docs/PHOTOGRAPHY-SHOT-LIST.md` §B. Construction photography now runs through drywall, data rough-in, floor tile, and the roadside sign. The concrete pour was never photographed and that opportunity has passed: the slab is down and tiled over. **Next priority: the operatories as cabinetry and chairs go in, shot from a repeatable position so the same frame can be taken again once the room is finished.** Then the full §B set when the office is complete. |
 | 19 | Provider headshots | Marketing | Brand Guide §5 standard |
 | 20 | Google Business Profile | Marketing | Only within Google's eligibility window |
 | 21 | Verified Google Maps pin | Marketing | Enables `geo` and `hasMap` in schema |
@@ -56,6 +56,54 @@ in production.
 | 30 | Pantone matches for print | Marketing. Brand Guide flags these as pending. |
 
 ---
+
+## Neighboring practice
+
+**Periodontal Associates of Delaware** is opening in **Suite 4** at Plantations
+Professional Park, in the same building as us. The services page now presents
+periodontics as "next door" rather than as a coordinated referral out, because
+those are materially different promises to a patient.
+
+[TO CONFIRM] whether that practice has its own opening date, website, and phone
+number to link to, and whether the relationship should be described anywhere
+beyond the services page.
+
+## Provider credentials — do not fill these in from assumption
+
+| Item | Detail |
+|---|---|
+| ~~**Degree designation**~~ **RESOLVED 2026-10-21** | **DDS**, confirmed by the practice. The site now renders "Dr. Jonathon Cottone, DDS" and emits `honorificSuffix` in Person schema. The Provider Spotlight never named the award, which is why it was left blank until asked. |
+| **Delaware license number** | Not supplied. `licenseNumber` is `null`. Needed if the site is to carry a regulatory footer. |
+| **Years in practice** | No graduation year was supplied, so no "X years of experience" claim appears anywhere. Do not add one without a date to support it. |
+
+## Local listings — the address is settled
+
+**CONFIRMED 2026-10-21: `19411 Plantations Road` (plural), Suite 1.**
+
+Submit this string character for character to Google Business Profile, Apple
+Business Connect, Bing Places, and the data aggregators:
+
+```
+Smile Studio of Rehoboth
+19411 Plantations Road, Suite 1
+Rehoboth Beach, DE 19971
+(302) 715-0020
+https://www.rehobothsmiles.com
+```
+
+> **The FINAL postcard has a typo.** It prints "19411 Plantation Road",
+> singular. That is a misprint in the printed piece, not an alternate spelling,
+> and the postcard is already in circulation. Two actions: correct it on the
+> next print run, and make sure nobody submitting directory listings works from
+> the card rather than from this document. An address that disagrees across
+> Google, Apple, Bing and the aggregators is slow and expensive to unwind, and
+> the whole point of fixing it here is that it never gets syndicated.
+
+Still outstanding before submission: the exterior directory reads **"Freedom
+Dental"** against Suite 1 while every patient-facing piece says Smile Studio of
+Rehoboth. Google compares the submitted name against street-level and
+photographic evidence, and a mismatch is a common cause of verification failure
+or suspension. Settle the signage before submitting, not after.
 
 ## Brand-level items to reconcile
 

@@ -7,7 +7,12 @@ import { serviceIcons } from '@/components/Icons'
 import { faqSchema, serviceSchema, webPageSchema } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { getService, services, tierLabel } from '@/content/services'
-import { cta, isPreOpening, practiceName } from '@/config/practice'
+import {
+  cta,
+  isAcceptingAppointments,
+  isPreOpening,
+  practiceName,
+} from '@/config/practice'
 
 /** Fully static. Every category is known at build time. */
 export function generateStaticParams() {
@@ -201,10 +206,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
             <aside className="split__aside">
               <div className="card card--soft">
-                <h3>Not open yet</h3>
+                <h3>{isAcceptingAppointments ? 'Book this treatment' : 'Not open yet'}</h3>
                 <p style={{ fontSize: 'var(--fs-small)', marginTop: 'var(--sp-2)' }}>
-                  Appointments cannot be scheduled while the office is under construction. Join the
-                  opening list and you will hear when this service is confirmed and bookable.
+                  {isAcceptingAppointments
+                    ? 'Dr. Cottone provides this treatment, and we are scheduling now for appointments after we open. Request a time and our team will call you back to confirm the details.'
+                    : 'Appointments cannot be scheduled while the office is under construction. Join the opening list and you will hear when this service is bookable.'}
                 </p>
                 <div style={{ marginTop: 'var(--sp-4)' }}>
                   <Button href={cta.primaryHref} full>
@@ -228,7 +234,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                       </li>
                     ))}
                     <li>
-                      <Link href="/services">All planned services</Link>
+                      <Link href="/services">All our services</Link>
                     </li>
                   </ul>
                 </div>

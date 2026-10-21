@@ -48,7 +48,7 @@ export const openingFaqs: Faq[] = [
   {
     question: 'Will you accept my insurance?',
     answer:
-      'Insurance participation has not been confirmed. We will publish the full list of plans we are in network with before opening, and we will not describe a plan as accepted until it is verified.',
+      'We are not in network with any dental plan. Payment is collected in full on the day of your visit, and we file your insurance claim for you as a courtesy. Your benefit is assigned to you rather than to us, so your insurer reimburses you directly. Out of network does not mean not covered, but it usually means covered differently, and how differently depends on your plan. In-network options are being evaluated, and we will not name a plan until a contract is signed.',
   },
   {
     question: 'Who are the providers?',

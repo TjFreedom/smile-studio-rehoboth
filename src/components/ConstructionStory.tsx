@@ -18,9 +18,16 @@ function Photo({ photo, priority = false }: { photo: StoryPhoto; priority?: bool
     <figure className="story-photo">
       {/* eslint-disable-next-line @next/next/no-img-element -- pre-optimized static JPEGs */}
       <img
-        src={`${base}-800.jpg`}
-        srcSet={`${base}-800.jpg 800w, ${base}.jpg 1600w`}
-        sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 540px"
+        src={photo.wSmall ? `${base}-800.jpg` : `${base}.jpg`}
+        // Widths come from the data rather than being hardcoded, so a
+        // photograph whose source was only 768px wide does not claim to be
+        // 1600. Photos without a narrower variant ship one file and no srcset.
+        srcSet={
+          photo.wSmall
+            ? `${base}-800.jpg ${photo.wSmall}w, ${base}.jpg ${photo.w}w`
+            : undefined
+        }
+        sizes={photo.wSmall ? '(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 540px' : undefined}
         width={photo.w}
         height={photo.h}
         alt={photo.alt}

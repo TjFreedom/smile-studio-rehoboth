@@ -20,6 +20,7 @@
  *       description, image
  */
 
+import type { Provider } from '@/content/providers'
 import {
   absoluteUrl,
   address,
@@ -30,6 +31,7 @@ import {
   geoIsVerified,
   approximateGeo,
   isPreOpening,
+  isAcceptingAppointments,
   parentOrganization,
   parentOrganizationUrl,
   phoneNumberE164,
@@ -79,9 +81,11 @@ export function practiceSchema(): Json {
     legalName: practiceNameLegal,
     url: absoluteUrl('/'),
     email,
-    description: isPreOpening
-      ? `${practiceName} is a dental practice under construction at ${address.line1} in ${address.city}, ${address.stateName}, with an anticipated opening in ${anticipatedOpening}.`
-      : `${practiceName} is a dental practice at ${address.line1} in ${address.city}, ${address.stateName}, providing comprehensive, patient-centered dentistry.`,
+    description: !isPreOpening
+      ? `${practiceName} is a dental practice at ${address.line1} in ${address.city}, ${address.stateName}, providing comprehensive, patient-centered dentistry.`
+      : isAcceptingAppointments
+        ? `${practiceName} is a new dental practice opening at ${address.line1} in ${address.city}, ${address.stateName}, in ${anticipatedOpening}, and is scheduling appointments now.`
+        : `${practiceName} is a dental practice under construction at ${address.line1} in ${address.city}, ${address.stateName}, with an anticipated opening in ${anticipatedOpening}.`,
     address: postalAddress(),
     image: absoluteUrl('/og/default.png'),
     logo: absoluteUrl('/logos/logo-horizontal.svg'),
@@ -234,6 +238,42 @@ export function blogPostingSchema(input: {
     isPartOf: { '@id': WEBSITE_ID },
     inLanguage: 'en-US',
   }
+}
+
+/**
+ * Person schema for a clinician.
+ *
+ * Only emits what src/content/providers.ts actually holds. In particular
+ * `honorificSuffix` is omitted entirely while the degree designation is
+ * unconfirmed, rather than guessed at from the school: DDS and DMD are not
+ * interchangeable, and a wrong one in structured data is a credential
+ * misstatement that a dental board could read.
+ *
+ * `worksFor` ties the person to the practice node, which is what lets Google
+ * associate the dentist with this location rather than treating them as a
+ * free-floating entity.
+ */
+export function personSchema(p: Provider): Json {
+  const node: Json = {
+    '@type': 'Person',
+    '@id': `${absoluteUrl('/team')}#${p.slug}`,
+    name: p.name,
+    jobTitle: p.role,
+    worksFor: { '@id': ORG_ID },
+    url: `${absoluteUrl('/team')}#${p.slug}`,
+    description: p.bio[0] ?? undefined,
+  }
+
+  if (p.credentials) node.honorificSuffix = p.credentials
+  if (p.photo) node.image = absoluteUrl(p.photo.src)
+
+  const alumni = p.education.map((e) => ({
+    '@type': 'CollegeOrUniversity',
+    name: e.institution,
+  }))
+  if (alumni.length > 0) node.alumniOf = alumni
+
+  return node
 }
 
 export function contactPointSchema(): Json {

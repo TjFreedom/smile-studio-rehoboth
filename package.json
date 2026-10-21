@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@opinly/backend": "^1.6.0",
+    "@opinly/shared": "^1.6.0",
     "next": "^16.3.1",
     "react": "19.1.1",
     "react-dom": "19.1.1",

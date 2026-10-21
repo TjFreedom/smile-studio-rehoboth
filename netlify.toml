@@ -48,14 +48,18 @@
 
 # Deploy Previews and branch deploys must never be indexed either. This is a
 # second belt on top of the application-level gate above.
+# NEXT_PUBLIC_SHOW_PLACEHOLDERS is now off in EVERY context, production and
+# preview alike. The amber internal notes existed so reviewers could see what
+# content was still outstanding, but the people reviewing these previews are
+# the practice rather than the build team, and the notes read as unfinished
+# work on an otherwise finished page. The outstanding list lives in
+# docs/REQUIRED-BEFORE-OPENING.md, which is where it belongs.
+# Set it to "true" on a branch deploy if a content review ever needs them back.
 [context.deploy-preview.build.environment]
   NEXT_PUBLIC_ALLOW_INDEXING = "false"
-  # Reviewers on a preview URL should see what content is still outstanding.
-  NEXT_PUBLIC_SHOW_PLACEHOLDERS = "true"
 
 [context.branch-deploy.build.environment]
   NEXT_PUBLIC_ALLOW_INDEXING = "false"
-  NEXT_PUBLIC_SHOW_PLACEHOLDERS = "true"
 
 # Security headers are set by the application in next.config.mjs so that they
 # apply identically in local dev, on Netlify, and anywhere else this is hosted.

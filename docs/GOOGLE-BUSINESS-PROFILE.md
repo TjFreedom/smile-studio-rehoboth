@@ -27,21 +27,43 @@ The single most important technical detail. These must match **character for
 character** everywhere: website, JSON-LD, Business Profile, social profiles,
 directories, and any future scheduling platform.
 
+> ### The address is settled: use it exactly as written below
+>
+> **`19411 Plantations Road`, plural**, confirmed by the practice 2026-10-21.
+>
+> The FINAL postcard already in circulation prints "Plantation Road", singular.
+> That is a misprint on the card, not an alternate spelling. Do not work from
+> the postcard when filling in any directory listing, and correct it on the
+> next print run.
+
 ```
 Name:     Smile Studio of Rehoboth
-Street:   19411 Plantations Road          [+ suite number once confirmed]
+Street:   19411 Plantations Road, Suite 1
 City:     Rehoboth Beach
 State:    DE
 ZIP:      19971
 Website:  https://www.rehobothsmiles.com
 Email:    info@rehobothsmiles.com
-Phone:    [NOT YET ASSIGNED — do not add a placeholder]
+Phone:    (302) 715-0020
 ```
 
+**Phone confirmed 2026-10-21** from the practice's own FINAL postcard and
+coming-soon sign, and now live on the website. Use this exact number and this
+exact formatting everywhere.
+
+**Suite 1 confirmed 2026-10-21** from the same postcard.
+
 **Do not enter a personal mobile, a construction-office line, or a Freedom
-Dental Health central number as a stopgap.** A phone number in the profile
-becomes a citation that propagates across data aggregators, and changing it
-later degrades local ranking.
+Dental Health central number instead.** A phone number in the profile becomes a
+citation that propagates across data aggregators, and changing it later degrades
+local ranking.
+
+**One further warning specific to this practice.** The exterior building
+directory photographed on site reads **"Freedom Dental"** under Suite 1, while
+every piece of marketing says **Smile Studio of Rehoboth**. Google's reviewers
+compare the name you submit against photographic and street-level evidence, and
+a mismatch is a common cause of verification failure and suspension. Decide
+which name goes on the door *before* submitting, not after.
 
 ## 3. Categories
 
@@ -142,7 +164,9 @@ Communications.
 ## 11. Before publishing the profile, confirm
 
 - [ ] Opening is within Google's eligibility window and the date is firm
-- [ ] Public phone number assigned, active, and answered
+- [x] Public phone number assigned — **(302) 715-0020**. Still confirm it is active and answered during the hours the profile advertises, before the profile goes live.
+- [x] **Street name verified**: "Plantations Road", plural. Note the postcard misprint.
+- [ ] **Name on the exterior signage reconciled** with the name being submitted
 - [ ] Suite number confirmed
 - [ ] Someone can receive verification at the address
 - [ ] Name, address, and website match the site character for character

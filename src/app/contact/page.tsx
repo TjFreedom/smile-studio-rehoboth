@@ -7,6 +7,7 @@ import { pageMetadata } from '@/lib/seo'
 import {
   anticipatedOpening,
   email,
+  isAcceptingAppointments,
   mailtoUrl,
   openingQualifier,
   practiceName,
@@ -89,7 +90,9 @@ export default function ContactPage() {
               <div className="card card--soft">
                 <h3>Want the opening date?</h3>
                 <p style={{ fontSize: 'var(--fs-small)', marginTop: 'var(--sp-2)' }}>
-                  The opening list is the fastest way to hear when scheduling opens.
+                  {isAcceptingAppointments
+                    ? 'We are scheduling now. The opening list is how we share the confirmed opening date.'
+                    : 'The opening list is the fastest way to hear when scheduling opens.'}
                 </p>
                 <div style={{ marginTop: 'var(--sp-4)' }}>
                   <Button href="/opening-list" full>

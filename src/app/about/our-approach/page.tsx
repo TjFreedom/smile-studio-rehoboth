@@ -100,7 +100,7 @@ export default function Page() {
         { label: 'What to Expect at a First Visit', href: '/new-patients/what-to-expect' },
         { label: 'Whole-Person Care', href: '/about/whole-person-care' },
         { label: 'Insurance and Financing', href: '/new-patients/insurance-and-financing' },
-        { label: 'Planned Services', href: '/services' },
+        { label: 'Our Services', href: '/services' },
       ]}
     />
   )

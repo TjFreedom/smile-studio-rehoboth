@@ -74,7 +74,7 @@ export default function Page() {
             ))}
 
             <nav aria-labelledby="sm-services">
-              <h2 id="sm-services">Planned service pages</h2>
+              <h2 id="sm-services">Service pages</h2>
               <ul>
                 {services.map((s) => (
                   <li key={s.slug}>

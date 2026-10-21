@@ -80,10 +80,19 @@ const nextConfig = {
       { source: '/our-services', destination: '/services', permanent: true },
       { source: '/service/:slug', destination: '/services/:slug', permanent: true },
       { source: '/new-patient', destination: '/new-patients', permanent: true },
-      { source: '/appointments', destination: '/opening-list', permanent: true },
-      { source: '/book', destination: '/opening-list', permanent: true },
-      { source: '/schedule', destination: '/opening-list', permanent: true },
-      { source: '/request-appointment', destination: '/opening-list', permanent: true },
+      // Booking aliases. These point at /request-appointment, which decides for
+      // itself whether booking is live and forwards to the opening list if it
+      // is not. That keeps `openingStatus` the single source of truth in
+      // src/config/practice.ts, rather than duplicating it here where this file
+      // (.mjs) cannot import it.
+      //
+      // Deliberately NOT permanent. The right answer to "I want an appointment"
+      // changes as the practice moves from under-construction to scheduling to
+      // open. A 301 is cached hard by browsers and by Google, so using one here
+      // would pin visitors to whichever answer was true the day they clicked.
+      { source: '/appointments', destination: '/request-appointment', permanent: false },
+      { source: '/book', destination: '/request-appointment', permanent: false },
+      { source: '/schedule', destination: '/request-appointment', permanent: false },
       { source: '/meet-the-team', destination: '/team', permanent: true },
       { source: '/location', destination: '/contact/directions', permanent: true },
       { source: '/directions', destination: '/contact/directions', permanent: true },
@@ -92,6 +101,45 @@ const nextConfig = {
       { source: '/accessibility', destination: '/accessibility-statement', permanent: true },
     ]
   },
+}
+
+/* --------------------------------------------------------------------------
+   OPINLY IMAGES
+   --------------------------------------------------------------------------
+   Opinly article images live on cdn.opinly.ai under a 21-character namespace
+   unique to this site. Rather than letting the browser fetch them from that
+   host, they are rewritten through this origin, which matters for two reasons:
+   the Content-Security-Policy above allows images from 'self' and data: only,
+   so a direct CDN URL would be blocked outright; and proxying keeps article
+   images on the same domain as the rest of the site.
+
+   The rewrite is added ONLY when OPINLY_CDN_NAMESPACE is set. Opinly's own
+   withOpinlyConfig() validates the namespace with zod and throws on a missing
+   or short value, which would turn "someone forgot an env var" into "the
+   production build fails". A content integration should degrade to no content,
+   never to no site. src/lib/opinly.ts makes the same check before calling the
+   API, so an unconfigured deploy simply shows the locally authored posts.
+   -------------------------------------------------------------------------- */
+
+const opinlyNamespace = process.env.OPINLY_CDN_NAMESPACE
+
+if (opinlyNamespace) {
+  const existingRewrites = nextConfig.rewrites
+  nextConfig.rewrites = async () => {
+    const opinly = [
+      {
+        source: '/blog-images/:path*',
+        destination: `https://cdn.opinly.ai/${opinlyNamespace}/:path*`,
+      },
+    ]
+    if (typeof existingRewrites !== 'function') return opinly
+    const resolved = await existingRewrites()
+    return Array.isArray(resolved) ? [...resolved, ...opinly] : resolved
+  }
+} else if (process.env.NODE_ENV === 'production') {
+  console.warn(
+    '[opinly] OPINLY_CDN_NAMESPACE is not set. Article images will not be served and Opinly content is disabled. Set it in the Netlify dashboard alongside OPINLY_API_KEY.',
+  )
 }
 
 export default nextConfig

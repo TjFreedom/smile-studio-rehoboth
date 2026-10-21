@@ -115,17 +115,17 @@ the site's single conversion is lost.
 
 ## 7. Content accuracy — **BLOCKER**
 
-- [ ] No phone number anywhere *(verified: zero phone-shaped strings, zero `tel:` links)*
-- [ ] No "Now Open" or "Accepting New Patients" *(verified)*
+- [x] Phone number correct and consistent everywhere: **(302) 715-0020** / `+13027150020` *(was "no phone number anywhere" until 2026-10-21; the practice's postcard made it public)*
+- [x] No "Now Open". **"Scheduling appointments" is now correct and deliberate**, matching the postcard; the office is still not open for care *(verified)*
 - [ ] No invented exact opening date *(verified)*
 - [ ] Opening window always described as anticipated, with the qualifier nearby *(verified)*
 - [ ] Hours labelled "Planned Office Hours" *(verified)*
 - [ ] No Saturday or Sunday hours invented *(verified)*
-- [ ] No unconfirmed service presented as confirmed *(verified: all seven tiered `planned`)*
-- [ ] No insurance plan named
-- [ ] No technology described as installed
+- [x] All seven categories tiered `confirmed`, because Dr. Cottone provides them. **Check no EIGHTH service creeps in unconfirmed** *(verified 2026-10-21)*
+- [x] No insurance plan named. Courtesy billing, payment in full at service, benefits assigned to the patient *(verified)*
+- [ ] No technology described as **installed**. The list (including the i-CAT CBCT) is confirmed as what will be in use, and the page says so without implying the machines are in the building yet. Re-check once equipment actually lands.
 - [ ] No parking or accessibility claim
-- [ ] No provider information, real or invented *(verified: `/team` is a holding page)*
+- [x] Provider information accurate and sourced: **Dr. Jonathon Cottone, DDS**, from the practice's own Provider Spotlight. **Delaware license number still absent and must stay absent until supplied.**
 - [ ] No reviews, ratings, or testimonials *(verified)*
 - [ ] No lorem ipsum *(verified)*
 - [ ] No `href="#"` *(verified: zero)*

@@ -2,7 +2,13 @@ import type { Metadata } from 'next'
 import { ProsePage, type Block } from '@/components/ProsePage'
 import { PlaceholderNote } from '@/components/Ui'
 import { pageMetadata } from '@/lib/seo'
-import { email, parentOrganization, practiceName, siteUrl } from '@/config/practice'
+import {
+  email,
+  isAcceptingAppointments,
+  parentOrganization,
+  practiceName,
+  siteUrl,
+} from '@/config/practice'
 
 const TITLE = 'Website Terms of Use'
 const DESCRIPTION =
@@ -25,7 +31,9 @@ const blocks: Block[] = [
   },
   {
     type: 'p',
-    text: `${practiceName} is under construction and is not open for patient care. Nothing on this site schedules an appointment or registers you as a patient.`,
+    text: isAcceptingAppointments
+      ? `${practiceName} is under construction and is not open for patient care. You may request an appointment for a date after we open. A request is not a confirmed booking and does not register you as a patient; we confirm every appointment with you directly before it exists.`
+      : `${practiceName} is under construction and is not open for patient care. Nothing on this site schedules an appointment or registers you as a patient.`,
   },
 
   { type: 'h2', text: 'No emergency service' },

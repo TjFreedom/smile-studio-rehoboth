@@ -41,7 +41,7 @@ export default function NotFound() {
             }}
           >
             <li>
-              <Link href="/services">Planned Services</Link>
+              <Link href="/services">Our Services</Link>
             </li>
             <li>
               <Link href="/our-new-office">Our New Office</Link>
