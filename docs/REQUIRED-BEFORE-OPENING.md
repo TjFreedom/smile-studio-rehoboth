@@ -36,7 +36,7 @@ in production.
 | 15 | Parking details | Operations, by site walk | Space count, accessible spaces, distance to door |
 | 16 | Accessibility details | Operations, by site walk | Step-free entry, door widths, restroom, operatory access |
 | 17 | Confirmed office hours, including any lunch closure | Operations | Weekend hours only if actually offered |
-| 18 | Completed-office photography | Marketing | See `docs/PHOTOGRAPHY-SHOT-LIST.md` §B. Construction photography through slab prep is now published. **Next priority: photograph the concrete pour, and repeat the vapor-barrier wide shot from the same position afterwards for a before-and-after pair.** |
+| 18 | **Completed-office photography** | Marketing | See `docs/PHOTOGRAPHY-SHOT-LIST.md` §B. Construction photography now runs through drywall, data rough-in, floor tile, and the roadside sign. The concrete pour was never photographed and that opportunity has passed: the slab is down and tiled over. **Next priority: the operatories as cabinetry and chairs go in, shot from a repeatable position so the same frame can be taken again once the room is finished.** Then the full §B set when the office is complete. |
 | 19 | Provider headshots | Marketing | Brand Guide §5 standard |
 | 20 | Google Business Profile | Marketing | Only within Google's eligibility window |
 | 21 | Verified Google Maps pin | Marketing | Enables `geo` and `hasMap` in schema |
