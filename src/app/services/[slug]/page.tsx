@@ -7,7 +7,12 @@ import { serviceIcons } from '@/components/Icons'
 import { faqSchema, serviceSchema, webPageSchema } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { getService, services, tierLabel } from '@/content/services'
-import { cta, isPreOpening, practiceName } from '@/config/practice'
+import {
+  cta,
+  isAcceptingAppointments,
+  isPreOpening,
+  practiceName,
+} from '@/config/practice'
 
 /** Fully static. Every category is known at build time. */
 export function generateStaticParams() {
@@ -201,10 +206,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
             <aside className="split__aside">
               <div className="card card--soft">
-                <h3>Not open yet</h3>
+                <h3>{isAcceptingAppointments ? 'Planned service' : 'Not open yet'}</h3>
                 <p style={{ fontSize: 'var(--fs-small)', marginTop: 'var(--sp-2)' }}>
-                  Appointments cannot be scheduled while the office is under construction. Join the
-                  opening list and you will hear when this service is confirmed and bookable.
+                  {isAcceptingAppointments
+                    ? 'We are scheduling appointments for after we open. This category is still being confirmed by clinical leadership, so mention what you need when our team calls you back and they will tell you where it stands.'
+                    : 'Appointments cannot be scheduled while the office is under construction. Join the opening list and you will hear when this service is confirmed and bookable.'}
                 </p>
                 <div style={{ marginTop: 'var(--sp-4)' }}>
                   <Button href={cta.primaryHref} full>

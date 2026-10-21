@@ -30,6 +30,7 @@ import {
   geoIsVerified,
   approximateGeo,
   isPreOpening,
+  isAcceptingAppointments,
   parentOrganization,
   parentOrganizationUrl,
   phoneNumberE164,
@@ -79,9 +80,11 @@ export function practiceSchema(): Json {
     legalName: practiceNameLegal,
     url: absoluteUrl('/'),
     email,
-    description: isPreOpening
-      ? `${practiceName} is a dental practice under construction at ${address.line1} in ${address.city}, ${address.stateName}, with an anticipated opening in ${anticipatedOpening}.`
-      : `${practiceName} is a dental practice at ${address.line1} in ${address.city}, ${address.stateName}, providing comprehensive, patient-centered dentistry.`,
+    description: !isPreOpening
+      ? `${practiceName} is a dental practice at ${address.line1} in ${address.city}, ${address.stateName}, providing comprehensive, patient-centered dentistry.`
+      : isAcceptingAppointments
+        ? `${practiceName} is a new dental practice opening at ${address.line1} in ${address.city}, ${address.stateName}, in ${anticipatedOpening}, and is scheduling appointments now.`
+        : `${practiceName} is a dental practice under construction at ${address.line1} in ${address.city}, ${address.stateName}, with an anticipated opening in ${anticipatedOpening}.`,
     address: postalAddress(),
     image: absoluteUrl('/og/default.png'),
     logo: absoluteUrl('/logos/logo-horizontal.svg'),

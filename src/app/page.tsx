@@ -23,6 +23,7 @@ import {
   cta,
   email,
   hoursLabel,
+  isAcceptingAppointments,
   mailtoUrl,
   openingQualifier,
   parentOrganization,
@@ -511,9 +512,15 @@ export default function HomePage() {
           <div className="split">
             <div>
               <span className="eyebrow">Opening list</span>
-              <h2>Be Among the First to Hear When Scheduling Opens</h2>
+              <h2>
+                {isAcceptingAppointments
+                  ? 'Be the First to Know When We Open'
+                  : 'Be Among the First to Hear When Scheduling Opens'}
+              </h2>
               <p className="lede" style={{ marginTop: 'var(--sp-4)' }}>
-                Appointments are not open yet. When they are, the people on this list hear first.
+                {isAcceptingAppointments
+                  ? 'Already booked, or not ready to yet? The list is how we share the confirmed opening date and progress from the build.'
+                  : 'Appointments are not open yet. When they are, the people on this list hear first.'}
               </p>
               <ul
                 className="list-clean"

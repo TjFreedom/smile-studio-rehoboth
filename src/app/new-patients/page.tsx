@@ -5,7 +5,13 @@ import { CtaBand, FaqList } from '@/components/Blocks'
 import { webPageSchema, faqSchema } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { newPatientFaqs } from '@/content/faqs'
-import { anticipatedOpening, email, mailtoUrl, practiceName } from '@/config/practice'
+import {
+  anticipatedOpening,
+  email,
+  isAcceptingAppointments,
+  mailtoUrl,
+  practiceName,
+} from '@/config/practice'
 
 const TITLE = 'New Patient Information'
 const DESCRIPTION =
@@ -55,7 +61,11 @@ export default function Page() {
       <PageHero
         eyebrow="New patients"
         title="Planning to Become a Patient"
-        lede={`${practiceName} is not open yet, so we cannot register patients or schedule appointments. This is what we can tell you now, and how to be first in line when scheduling opens.`}
+        lede={
+          isAcceptingAppointments
+            ? `${practiceName} is not open yet, but we are scheduling appointments for after we open. This is what we can tell you now, and how to book your first visit.`
+            : `${practiceName} is not open yet, so we cannot register patients or schedule appointments. This is what we can tell you now, and how to be first in line when scheduling opens.`
+        }
         crumbs={crumbs}
       />
 
@@ -63,13 +73,28 @@ export default function Page() {
         <div className="container">
           <Callout>
             <p>
-              <strong>Scheduling is not open.</strong>
+              <strong>
+                {isAcceptingAppointments
+                  ? 'Scheduling is open. The office is not.'
+                  : 'Scheduling is not open.'}
+              </strong>
             </p>
             <p style={{ fontSize: 'var(--fs-small)' }}>
-              The office is under construction, with an anticipated opening in {anticipatedOpening}.
-              Nothing on this website books an appointment. Joining the opening list is the fastest
-              route to a first visit, because subscribers receive scheduling information before
-              appointments are offered publicly.
+              {isAcceptingAppointments ? (
+                <>
+                  The office is under construction, with an anticipated opening in{' '}
+                  {anticipatedOpening}. We are booking appointments now for dates after we open.
+                  Requesting one is not a confirmed booking: a member of our team calls you back to
+                  agree the details.
+                </>
+              ) : (
+                <>
+                  The office is under construction, with an anticipated opening in{' '}
+                  {anticipatedOpening}. Nothing on this website books an appointment. Joining the
+                  opening list is the fastest route to a first visit, because subscribers receive
+                  scheduling information before appointments are offered publicly.
+                </>
+              )}
             </p>
           </Callout>
 

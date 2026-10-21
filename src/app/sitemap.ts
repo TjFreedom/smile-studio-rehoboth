@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { absoluteUrl, features } from '@/config/practice'
+import { absoluteUrl, features, isAcceptingAppointments } from '@/config/practice'
 import { serviceSlugs } from '@/content/services'
 import { postSlugs } from '@/content/blog'
 import { allowIndexing } from '@/lib/seo'
@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const core: MetadataRoute.Sitemap = [
     entry('/', 1.0, 'weekly'),
     entry('/opening-list', 0.9, 'monthly'),
+    ...(isAcceptingAppointments ? [entry('/request-appointment', 0.95, 'monthly')] : []),
     entry('/our-new-office', 0.8, 'weekly'),
     entry('/our-new-office/construction-updates', 0.8, 'weekly'),
     entry('/our-new-office/office-features', 0.6),

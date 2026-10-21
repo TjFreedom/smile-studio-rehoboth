@@ -14,19 +14,19 @@ in production.
 
 | # | Item | Owner | Unblocks |
 |---|---|---|---|
-| 1 | **Public phone number** | Operations | Header and footer phone, click-to-call, mobile Call action, `telephone` in schema, call tracking, emergency contact. One config value. |
+| 1 | ~~**Public phone number**~~ **RESOLVED 2026-10-21** | Operations | **(302) 715-0020**, confirmed by the practice's own FINAL postcard and coming-soon sign. Now live in `practice.ts`: header, footer, click-to-call, mobile Call action, and `telephone` in structured data. |
 | 2 | **Exact opening date** | Construction + Operations | "Now Open" mode, `openingDate` schema, Google Business Profile eligibility, opening-list announcement |
 | 3 | **Provider roster and credentials** | Clinical Lead | Meet the Team, `Person` schema, provider review attribution on 12 clinical pages |
 | 4 | **Confirmed service list** | Clinical Lead | Service tier `confirmed`, `Service` schema, booking CTAs, GBP service categories |
 | 5 | **Emergency procedures** | Clinical Lead + Compliance | Rewrite of the emergency page, `emergency-dentist` keyword activation |
-| 6 | **Scheduling workflow and URL** | Operations | Request an Appointment, online booking, scheduling attribution |
+| 6 | **Scheduling workflow and URL** | Operations | **Partly resolved 2026-10-21.** The postcard advertises "CURRENTLY SCHEDULING APPOINTMENTS" by phone, so `openingStatus` is now `'scheduling'` and `/request-appointment` is live (phone first, request form second, team calls back to confirm). Still outstanding: a real online-booking URL for `externalLinks.onlineScheduling`, and who owns callbacks and how fast. |
 | 7 | **Legal review of all four policy pages** | Marketing + counsel | Launch |
 
 ## Priority 2 — Needed at opening
 
 | # | Item | Owner | Notes |
 |---|---|---|---|
-| 8 | **Suite number, and the name on the exterior signage** | Operations + Marketing | The building directory photographed on site lists **Suite 1** under the name **"Freedom Dental"**, while this website is branded **Smile Studio of Rehoboth**. Two things to settle: (a) confirm the suite number so it can be set in `address.line2`, and (b) decide which name goes on the exterior sign and the directory. A patient who searches for Smile Studio of Rehoboth and arrives at a sign reading Freedom Dental will think they are in the wrong place. Affects NAP consistency, Google Business Profile, and wayfinding. |
+| 8 | **Suite number** RESOLVED; **exterior signage name** still open | Operations + Marketing | **Suite 1 confirmed 2026-10-21** by the FINAL postcard and set in `address.line2`. The signage conflict remains: the building directory photographed on site lists Suite 1 under the name **"Freedom Dental"**, while this website and the postcard are branded **Smile Studio of Rehoboth**. Two things to settle: (a) confirm the suite number so it can be set in `address.line2`, and (b) decide which name goes on the exterior sign and the directory. A patient who searches for Smile Studio of Rehoboth and arrives at a sign reading Freedom Dental will think they are in the wrong place. Affects NAP consistency, Google Business Profile, and wayfinding. |
 | 9 | Insurance participation, executed contracts only | Operations | Never publish a plan name before the contract is signed |
 | 10 | Financing options and any membership plan | Operations | |
 | 11 | Patient forms + intake system with a signed BAA | Operations + Compliance | |
@@ -56,6 +56,12 @@ in production.
 | 30 | Pantone matches for print | Marketing. Brand Guide flags these as pending. |
 
 ---
+
+## Blocks the local-listings push — settle before any directory submission
+
+| Item | Detail | Action |
+|---|---|---|
+| **"Plantation" vs "Plantations" Road** | The FINAL postcard prints **19411 Plantation Road** (singular). The original brief, this website, and 44 other places in the repo use **19411 Plantations Road** (plural). One of the two is wrong. | Verify against the lease, the USPS address database, or the county parcel record, then make every channel match. This is the single highest-priority item before listings go out: NAP (name, address, phone) consistency is a primary local-ranking signal, and an address that disagrees across Google, Apple, Bing, and the data aggregators is slow and expensive to unwind once syndicated. The site has NOT been changed on the strength of one piece of collateral. |
 
 ## Brand-level items to reconcile
 

@@ -1,4 +1,4 @@
-import { features, isPreOpening } from '@/config/practice'
+import { features, isAcceptingAppointments } from '@/config/practice'
 
 export interface NavItem {
   label: string
@@ -101,8 +101,8 @@ export const primaryNav: NavItem[] = prune(all)
 
 /** The header's standalone CTA button. Not part of the nav list. */
 export const navCta = {
-  label: isPreOpening ? 'Join the Opening List' : 'Request an Appointment',
-  href: isPreOpening ? '/opening-list' : '/request-appointment',
+  label: isAcceptingAppointments ? 'Request an Appointment' : 'Join the Opening List',
+  href: isAcceptingAppointments ? '/request-appointment' : '/opening-list',
 }
 
 export const footerNav: { heading: string; links: NavItem[] }[] = [

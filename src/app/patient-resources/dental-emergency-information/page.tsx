@@ -16,7 +16,7 @@ const faqs = [
   {
     question: 'Can Smile Studio of Rehoboth see me for an emergency today?',
     answer:
-      'No. The office is under construction and is not open for patient care. We have no clinical staff on site, no operatories in use, and no phone line. Please contact an established dental provider or an appropriate emergency service.',
+      `No. The office is under construction and is not open for patient care: there are no clinical staff on site and no operatories in use, so we cannot treat you today. Our phone line is open for scheduling future appointments only, and it is not monitored for emergencies. Please contact an established dental provider or an appropriate emergency service.`,
   },
   {
     question: 'What counts as a medical emergency rather than a dental one?',

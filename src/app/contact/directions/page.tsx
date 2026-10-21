@@ -3,7 +3,13 @@ import { JsonLd, PageHero, SectionHead, Button, PlaceholderNote } from '@/compon
 import { LocationDetails, StaticMap, CtaBand } from '@/components/Blocks'
 import { webPageSchema } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
-import { address, directionsUrl, practiceName, serviceArea } from '@/config/practice'
+import {
+  address,
+  directionsUrl,
+  isAcceptingAppointments,
+  practiceName,
+  serviceArea,
+} from '@/config/practice'
 
 const TITLE = 'Directions and Parking'
 const DESCRIPTION =
@@ -173,8 +179,16 @@ export default function DirectionsPage() {
 
       <CtaBand
         eyebrow="Before you visit"
-        title="We Are Not Open Yet, But You Can Be First in Line"
-        lede="Join the opening list for the confirmed opening date, arrival details, and early scheduling information."
+        title={
+          isAcceptingAppointments
+            ? 'We Are Not Open Yet, But We Are Booking Appointments'
+            : 'We Are Not Open Yet, But You Can Be First in Line'
+        }
+        lede={
+          isAcceptingAppointments
+            ? 'Request an appointment for after we open, and our team will call you back to confirm the time and tell you exactly where to park and which door to use.'
+            : 'Join the opening list for the confirmed opening date, arrival details, and early scheduling information.'
+        }
       />
     </>
   )

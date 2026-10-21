@@ -7,6 +7,7 @@ import { pageMetadata } from '@/lib/seo'
 import {
   anticipatedOpening,
   email,
+  isAcceptingAppointments,
   mailtoUrl,
   openingQualifier,
   practiceName,
@@ -26,8 +27,9 @@ export const metadata: Metadata = pageMetadata({
 const listFaqs: Faq[] = [
   {
     question: 'Does joining the list book an appointment?',
-    answer:
-      'No. Scheduling is not open yet, and nothing on this website books an appointment. The list is how we tell you the moment scheduling does open, before appointments are offered to the public.',
+    answer: isAcceptingAppointments
+      ? 'No. The list is for news about the opening. If you want an appointment, we are scheduling now: request one on the Request an Appointment page, or call the office and our team will book it with you.'
+      : 'No. Scheduling is not open yet, and nothing on this website books an appointment. The list is how we tell you the moment scheduling does open, before appointments are offered to the public.',
   },
   {
     question: 'How often will you email me?',
@@ -63,8 +65,16 @@ export default function OpeningListPage() {
 
       <PageHero
         eyebrow="Opening list"
-        title="Be Among the First to Hear When Scheduling Opens"
-        lede={`${practiceName} is under construction, with an anticipated opening in ${anticipatedOpening}. Join the list and you will hear the confirmed date before it is public.`}
+        title={
+          isAcceptingAppointments
+            ? 'Hear the Confirmed Opening Date First'
+            : 'Be Among the First to Hear When Scheduling Opens'
+        }
+        lede={
+          isAcceptingAppointments
+            ? `${practiceName} opens in ${anticipatedOpening} and is scheduling appointments now. Join the list for the confirmed date, provider introductions, and progress from the build.`
+            : `${practiceName} is under construction, with an anticipated opening in ${anticipatedOpening}. Join the list and you will hear the confirmed date before it is public.`
+        }
         crumbs={crumbs}
       />
 
@@ -98,10 +108,15 @@ export default function OpeningListPage() {
                     h: 'Construction progress',
                     p: 'Photographs from the office as the build-out moves along.',
                   },
-                  {
-                    h: 'Early scheduling information',
-                    p: 'How to book, and a window to do it before appointments open to the public.',
-                  },
+                  isAcceptingAppointments
+                    ? {
+                        h: 'Your appointment, confirmed',
+                        p: 'Scheduling is already open. Once we have a confirmed opening date, we contact everyone with a booking to lock in their time.',
+                      }
+                    : {
+                        h: 'Early scheduling information',
+                        p: 'How to book, and a window to do it before appointments open to the public.',
+                      },
                 ].map((i) => (
                   <li key={i.h}>
                     <strong style={{ color: 'var(--navy)', display: 'block', marginBottom: '0.25rem' }}>
