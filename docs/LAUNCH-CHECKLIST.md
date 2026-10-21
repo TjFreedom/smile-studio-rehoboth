@@ -101,10 +101,20 @@ the site's single conversion is lost.
 
 ## 6. Legal — **BLOCKER**
 
-- [ ] Privacy Policy reviewed by counsel
-- [ ] Website Terms reviewed by counsel
-- [ ] Website Disclaimer reviewed by counsel
-- [ ] Accessibility Statement reviewed
+> **Counsel reviewed and approved the four policy pages on 2026-10-21.** The
+> remaining items below are NOT policy pages and are not covered by that review
+> unless counsel was asked about them specifically. They are questions about
+> site copy, data collection, and consent wording, which live outside the four
+> documents. Do not tick them on the strength of the policy review.
+>
+> [TO CONFIRM] the reviewing firm or attorney and the version reviewed, so this
+> has an audit trail rather than a date.
+
+
+- [x] Privacy Policy reviewed by counsel *(2026-10-21)*
+- [x] Website Terms reviewed by counsel *(2026-10-21)*
+- [x] Website Disclaimer reviewed by counsel *(2026-10-21)*
+- [x] Accessibility Statement reviewed *(2026-10-21)*
 - [ ] Delaware Board of Dentistry advertising rules reviewed against all site copy
 - [ ] Delaware Personal Data Privacy Act applicability assessed
 - [ ] SMS consent language checked against TCPA and CTIA requirements
