@@ -206,11 +206,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
             <aside className="split__aside">
               <div className="card card--soft">
-                <h3>{isAcceptingAppointments ? 'Planned service' : 'Not open yet'}</h3>
+                <h3>{isAcceptingAppointments ? 'Book this treatment' : 'Not open yet'}</h3>
                 <p style={{ fontSize: 'var(--fs-small)', marginTop: 'var(--sp-2)' }}>
                   {isAcceptingAppointments
-                    ? 'We are scheduling appointments for after we open. This category is still being confirmed by clinical leadership, so mention what you need when our team calls you back and they will tell you where it stands.'
-                    : 'Appointments cannot be scheduled while the office is under construction. Join the opening list and you will hear when this service is confirmed and bookable.'}
+                    ? 'Dr. Cottone provides this treatment, and we are scheduling now for appointments after we open. Request a time and our team will call you back to confirm the details.'
+                    : 'Appointments cannot be scheduled while the office is under construction. Join the opening list and you will hear when this service is bookable.'}
                 </p>
                 <div style={{ marginTop: 'var(--sp-4)' }}>
                   <Button href={cta.primaryHref} full>
@@ -234,7 +234,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                       </li>
                     ))}
                     <li>
-                      <Link href="/services">All planned services</Link>
+                      <Link href="/services">All our services</Link>
                     </li>
                   </ul>
                 </div>

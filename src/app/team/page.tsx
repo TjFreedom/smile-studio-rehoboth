@@ -50,27 +50,22 @@ export default function Page() {
       {providers.map((p) => (
         <section className="section" key={p.slug} id={p.slug}>
           <div className="container">
-            <div className="split">
+            <div className="provider">
               {p.photo ? (
-                <div>
+                <figure className="provider__figure">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- pre-cropped static JPEG, two fixed widths */}
                   <img
+                    className="provider__photo"
                     src={p.photo.src}
                     srcSet={`${p.photo.srcSmall} 500w, ${p.photo.src} 1000w`}
-                    sizes="(max-width: 700px) 86vw, 420px"
+                    sizes="(max-width: 860px) 320px, 300px"
                     width={p.photo.width}
                     height={p.photo.height}
                     alt={p.photo.alt}
                     loading="lazy"
                     decoding="async"
-                    style={{
-                      width: '100%',
-                      maxWidth: '420px',
-                      height: 'auto',
-                      borderRadius: 'var(--radius-md, 6px)',
-                      display: 'block',
-                    }}
                   />
-                </div>
+                </figure>
               ) : null}
 
               <div>
@@ -80,59 +75,53 @@ export default function Page() {
                   as="h2"
                 />
 
-                <div style={{ marginTop: 'var(--sp-5)', display: 'grid', gap: 'var(--sp-4)' }}>
+                <div className="provider__body" style={{ marginTop: 'var(--sp-5)' }}>
                   {p.bio.map((para) => (
                     <p key={para.slice(0, 40)}>{para}</p>
                   ))}
                 </div>
 
-                {p.education.length > 0 ? (
-                  <>
-                    <h3 style={{ marginTop: 'var(--sp-7)', fontSize: 'var(--fs-h4)' }}>Education</h3>
-                    <ul
-                      className="list-clean"
-                      style={{
-                        display: 'grid',
-                        gap: 'var(--sp-3)',
-                        marginTop: 'var(--sp-3)',
-                        fontSize: 'var(--fs-small)',
-                      }}
-                    >
-                      {p.education.map((e) => (
-                        <li key={e.institution}>
-                          <strong style={{ color: 'var(--navy)', display: 'block' }}>
-                            {e.institution}
-                          </strong>
-                          {[e.credential, e.detail]
-                            .filter(Boolean)
-                            .map((part) => `${part}.`)
-                            .join(' ')}
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                ) : null}
+                <div className="provider__facts">
+                  {p.education.length > 0 ? (
+                    <div>
+                      <h3 className="provider__factsHead">Education</h3>
+                      <ul
+                        className="list-clean"
+                        style={{ display: 'grid', gap: 'var(--sp-3)', fontSize: 'var(--fs-small)' }}
+                      >
+                        {p.education.map((e) => (
+                          <li key={e.institution}>
+                            <strong style={{ color: 'var(--navy)', display: 'block' }}>
+                              {e.institution}
+                            </strong>
+                            {[e.credential, e.detail]
+                              .filter(Boolean)
+                              .map((part) => `${part}.`)
+                              .join(' ')}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
 
-                {p.honors.length > 0 ? (
-                  <>
-                    <h3 style={{ marginTop: 'var(--sp-6)', fontSize: 'var(--fs-h4)' }}>
-                      Honors and recognition
-                    </h3>
-                    <ul
-                      style={{
-                        display: 'grid',
-                        gap: 'var(--sp-2)',
-                        marginTop: 'var(--sp-3)',
-                        paddingLeft: '1.35rem',
-                        fontSize: 'var(--fs-small)',
-                      }}
-                    >
-                      {p.honors.map((h) => (
-                        <li key={h}>{h}</li>
-                      ))}
-                    </ul>
-                  </>
-                ) : null}
+                  {p.honors.length > 0 ? (
+                    <div>
+                      <h3 className="provider__factsHead">Honors and recognition</h3>
+                      <ul
+                        style={{
+                          display: 'grid',
+                          gap: 'var(--sp-2)',
+                          paddingLeft: '1.35rem',
+                          fontSize: 'var(--fs-small)',
+                        }}
+                      >
+                        {p.honors.map((h) => (
+                          <li key={h}>{h}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>

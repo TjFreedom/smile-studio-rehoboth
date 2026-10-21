@@ -111,7 +111,7 @@ export default function Page() {
       related={[
         { label: 'Dental Emergency Information', href: '/patient-resources/dental-emergency-information' },
         { label: 'Patient Resources', href: '/patient-resources' },
-        { label: 'Planned Services', href: '/services' },
+        { label: 'Our Services', href: '/services' },
       ]}
     />
   )

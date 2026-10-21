@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { ProsePage, type Block } from '@/components/ProsePage'
-import { PlaceholderNote } from '@/components/Ui'
 import { pageMetadata } from '@/lib/seo'
 
 const TITLE = 'Insurance and Financing'
@@ -13,7 +12,7 @@ export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESC
 const blocks: Block[] = [
   {
     type: 'note',
-    text: 'We are not currently in network with any dental plan. We offer courtesy billing, which means we submit your claim to your insurer for you. In-network participation is being evaluated, and no plan will be named here until a contract is signed.',
+    text: 'We are not in network with any dental plan. Payment is collected in full at the time of your visit, we file your insurance claim for you as a courtesy, and your insurer reimburses you directly. In-network participation is being evaluated, and no plan will be named here until a contract is signed.',
   },
   {
     type: 'p',
@@ -40,13 +39,33 @@ const blocks: Block[] = [
     text: 'Joining a network is a contract, and the terms differ considerably between insurers. We are evaluating those options rather than signing whatever is quickest in order to advertise a longer list of plan names before opening. If and when we join a network, it will be named on this page, and not a day before the contract is executed.',
   },
 
+  { type: 'h2', text: 'How payment actually works here' },
+  {
+    type: 'p',
+    text: 'This is the part worth reading twice, because it is different from what many people are used to and it decides what happens to your money.',
+  },
+  {
+    type: 'ul',
+    items: [
+      'You pay for your visit in full on the day, rather than being billed later for a balance.',
+      'We prepare your insurance claim and submit it for you. You do not file anything yourself.',
+      'Your benefit is assigned to you, not to us. That means your insurer sends the reimbursement directly to you rather than to the practice.',
+    ],
+  },
+  {
+    type: 'p',
+    text: 'The practical effect is that you are out of pocket between your visit and your insurer paying you back, and how long that takes is up to them rather than us. In exchange you are never waiting on a claim to find out what you owe, and you will not get an invoice months later for a balance an insurer declined. You know the number on the day.',
+  },
+  {
+    type: 'p',
+    text: 'We will give you everything your insurer needs. If a claim is slow or questioned, tell us and we will help you chase it, even though the payment is going to you rather than to us.',
+  },
+
   { type: 'h2', text: 'What is not settled yet' },
   {
     type: 'ul',
     items: [
       'Which networks, if any, the practice will join',
-      'Whether your benefit is paid to us or reimbursed directly to you, which varies by plan',
-      'Whether payment is due in full at the time of service',
       'Whether an in-house membership plan will be offered for patients without insurance',
       'Which third-party financing options will be available',
       'The fee schedule, and accepted payment methods',
@@ -54,7 +73,7 @@ const blocks: Block[] = [
   },
   {
     type: 'p',
-    text: 'Our scheduling team can answer these for your specific situation when they call to confirm your appointment, and every one of them will be published here before we open. Opening list subscribers will hear when it happens.',
+    text: 'Our scheduling team can answer these for your specific situation when they call to confirm your appointment, and every one of them will be published here before we open.',
   },
 
   { type: 'h2', text: 'How we will handle costs' },
@@ -122,18 +141,6 @@ export default function Page() {
       ]}
       seo={{ name: TITLE, description: DESCRIPTION, path: PATH }}
       blocks={blocks}
-      aside={
-        <PlaceholderNote label="Required before opening: insurance and financing">
-          Courtesy billing confirmed 2026-10-21. Still to confirm and publish: assignment of
-          benefits (paid to the practice or reimbursed to the patient), whether payment is due in
-          full at the time of service, accepted payment methods, third-party financing providers,
-          membership plan details if offered, and the pre-treatment estimate process. Do not
-          publish any plan name until the contract is executed. Have counsel review this page
-          against Delaware Board of Dentistry advertising rules before opening, since it now makes
-          an affirmative statement about billing practice. Owner: Practice Operations with
-          Marketing review.
-        </PlaceholderNote>
-      }
       related={[
         { label: 'New Patient Information', href: '/new-patients' },
         { label: 'What to Expect', href: '/new-patients/what-to-expect' },

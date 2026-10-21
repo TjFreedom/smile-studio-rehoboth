@@ -32,7 +32,7 @@ const all: NavItem[] = [
     label: 'Services',
     href: '/services',
     children: [
-      { label: 'All Planned Services', href: '/services' },
+      { label: 'All Services', href: '/services' },
       { label: 'General and Preventive', href: '/services/general-and-preventive-dentistry' },
       { label: 'Restorative Dentistry', href: '/services/restorative-dentistry' },
       { label: 'Cosmetic Dentistry', href: '/services/cosmetic-dentistry' },
@@ -118,7 +118,7 @@ export const footerNav: { heading: string; links: NavItem[] }[] = [
     ],
   },
   {
-    heading: 'Planned Services',
+    heading: 'Services',
     links: [
       { label: 'General and Preventive', href: '/services/general-and-preventive-dentistry' },
       { label: 'Restorative Dentistry', href: '/services/restorative-dentistry' },

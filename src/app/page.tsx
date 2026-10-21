@@ -219,7 +219,7 @@ export default function HomePage() {
           <ServiceGrid />
           <div className="btn-row" style={{ justifyContent: 'center', marginTop: 'var(--sp-8)' }}>
             <Button href="/services" variant="outline">
-              Explore All Planned Services
+              Explore All Our Services
             </Button>
           </div>
         </div>

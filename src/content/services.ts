@@ -75,10 +75,10 @@ export const services: ServiceCategory[] = [
     slug: 'general-and-preventive-dentistry',
     name: 'General and Preventive Dentistry',
     shortName: 'General and Preventive',
-    tier: 'planned',
+    tier: 'confirmed',
     icon: 'shield',
     metaDescription:
-      'Planned general and preventive dentistry at Smile Studio of Rehoboth, opening in Rehoboth Beach, DE. Exams, cleanings, digital X-rays, and gum health care.',
+      'General and preventive dentistry at Smile Studio of Rehoboth, opening in Rehoboth Beach, DE. Exams, cleanings, digital X-rays, and gum health care.',
     headline: 'Care That Keeps It Simple',
     cardSummary:
       'Exams, cleanings, digital X-rays, and gum health care for every age in the family.',
@@ -136,10 +136,10 @@ export const services: ServiceCategory[] = [
     slug: 'restorative-dentistry',
     name: 'Restorative Dentistry',
     shortName: 'Restorative',
-    tier: 'planned',
+    tier: 'confirmed',
     icon: 'tooth',
     metaDescription:
-      'Planned restorative dentistry at Smile Studio of Rehoboth in Rehoboth Beach, DE. Fillings, crowns, bridges, dentures, and root canal treatment.',
+      'Restorative dentistry at Smile Studio of Rehoboth in Rehoboth Beach, DE. Fillings, crowns, bridges, dentures, and root canal treatment.',
     headline: 'Comfortable, Lasting Repairs',
     cardSummary:
       'Fillings, crowns, bridges, and dentures using current materials and digital planning.',
@@ -190,10 +190,10 @@ export const services: ServiceCategory[] = [
     slug: 'cosmetic-dentistry',
     name: 'Cosmetic Dentistry',
     shortName: 'Cosmetic',
-    tier: 'planned',
+    tier: 'confirmed',
     icon: 'sparkle',
     metaDescription:
-      'Planned cosmetic dentistry at Smile Studio of Rehoboth in Rehoboth Beach, DE. Whitening, veneers, bonding, and clear aligner consultations.',
+      'Cosmetic dentistry at Smile Studio of Rehoboth in Rehoboth Beach, DE. Whitening, veneers, bonding, and clear aligner consultations.',
     headline: 'A Smile That Looks Like You',
     cardSummary:
       'Whitening, veneers, and bonding, planned around your features rather than a template.',
@@ -240,10 +240,10 @@ export const services: ServiceCategory[] = [
     slug: 'dental-implants',
     name: 'Dental Implants',
     shortName: 'Implants',
-    tier: 'planned',
+    tier: 'confirmed',
     icon: 'anchor-implant',
     metaDescription:
-      'Planned dental implant care at Smile Studio of Rehoboth in Rehoboth Beach, DE. Consultations, single-tooth implants, and implant-supported dentures.',
+      'Dental implant care at Smile Studio of Rehoboth in Rehoboth Beach, DE. Consultations, single-tooth implants, and implant-supported dentures.',
     headline: 'A Stable Replacement for a Missing Tooth',
     cardSummary:
       'Consultations, single-tooth implants, and implant-supported bridges and dentures.',
@@ -291,13 +291,13 @@ export const services: ServiceCategory[] = [
     slug: 'emergency-dentistry',
     name: 'Emergency Dentistry',
     shortName: 'Emergency Care',
-    tier: 'planned',
+    tier: 'confirmed',
     icon: 'alert',
     metaDescription:
-      'Emergency dental care is planned at our Rehoboth Beach, DE practice. The office is not yet open, and emergency procedures will be published before opening.',
+      'Emergency dental care at our Rehoboth Beach, DE practice. The office is not yet open, and emergency procedures will be published before opening.',
     headline: 'Dental Pain Should Not Wait',
     cardSummary:
-      'Planned same-day care for pain, breaks, and lost restorations, for residents and visitors.',
+      'Same-day care for pain, breaks, and lost restorations, for residents and visitors.',
     publicationGate:
       'The office is not yet open and cannot accept emergency patients. Emergency procedures, hours, and contact methods will be published here before opening.',
     intro: [
@@ -332,13 +332,13 @@ export const services: ServiceCategory[] = [
     slug: 'tmj-and-facial-pain',
     name: 'TMJ and Facial Pain',
     shortName: 'TMJ and Facial Pain',
-    tier: 'planned',
+    tier: 'confirmed',
     icon: 'jaw',
     metaDescription:
-      'Planned TMJ and facial pain evaluations at Smile Studio of Rehoboth in Rehoboth Beach, DE. Providers and available services will be confirmed before opening.',
+      'TMJ and facial pain evaluations at Smile Studio of Rehoboth in Rehoboth Beach, DE. Providers and available services will be confirmed before opening.',
     headline: 'When the Jaw Is the Problem',
     cardSummary:
-      'Planned evaluations for jaw pain, clicking, clenching, and headache-related dental concerns.',
+      'Evaluations for jaw pain, clicking, clenching, and headache-related dental concerns.',
     publicationGate:
       'Providers and the specific TMJ services available at the Rehoboth office have not been confirmed. Some care in this category may be provided by visiting affiliated providers, or referred to a Freedom Dental Health location.',
     intro: [
@@ -373,13 +373,13 @@ export const services: ServiceCategory[] = [
     slug: 'sleep-and-airway-care',
     name: 'Sleep and Airway Care',
     shortName: 'Sleep and Airway',
-    tier: 'planned',
+    tier: 'confirmed',
     icon: 'moon',
     metaDescription:
-      'Planned sleep and airway dental care at Smile Studio of Rehoboth in Rehoboth Beach, DE. Providers and available services will be confirmed before opening.',
+      'Sleep and airway dental care at Smile Studio of Rehoboth in Rehoboth Beach, DE. Providers and available services will be confirmed before opening.',
     headline: 'Breathing, Sleep, and the Mouth',
     cardSummary:
-      'Planned screening and oral appliance care for snoring and sleep-disordered breathing.',
+      'Screening and oral appliance care for snoring and sleep-disordered breathing.',
     publicationGate:
       'Providers and the specific sleep and airway services available at the Rehoboth office have not been confirmed. Care in this category is often shared with a physician, and some services may be referred to a Freedom Dental Health location.',
     intro: [
@@ -426,6 +426,13 @@ export interface NetworkService {
   name: string
   description: string
   note: string
+  /**
+   * A sister practice physically at Plantations Professional Park rather than a
+   * referral to another town. Rendered differently: "next door" is a materially
+   * different promise from "coordinated referral", and conflating the two is
+   * the kind of thing a patient only discovers when they are in the car.
+   */
+  neighboring?: { practice: string; suite: string }
 }
 
 /**
@@ -437,7 +444,8 @@ export const networkSpecialties: NetworkService[] = [
   {
     name: 'Periodontics',
     description: 'Advanced gum disease treatment, gum grafting, and surgical periodontal care.',
-    note: 'Referral coordinated through your Smile Studio provider.',
+    note: 'Provided next door by Periodontal Associates of Delaware, opening in Suite 4.',
+    neighboring: { practice: 'Periodontal Associates of Delaware', suite: 'Suite 4' },
   },
   {
     name: 'Endodontics',

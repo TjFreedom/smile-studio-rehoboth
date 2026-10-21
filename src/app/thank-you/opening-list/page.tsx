@@ -45,7 +45,7 @@ export default function ThankYouOpeningList() {
             Follow Construction Progress
           </Button>
           <Button href="/services" variant="outline">
-            Explore Planned Services
+            Explore Our Services
           </Button>
         </div>
 

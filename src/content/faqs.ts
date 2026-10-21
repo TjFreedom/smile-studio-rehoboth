@@ -48,7 +48,7 @@ export const openingFaqs: Faq[] = [
   {
     question: 'Will you accept my insurance?',
     answer:
-      'We are not currently in network with any dental plan. We do offer courtesy billing, which means we submit your claim to your insurer for you rather than leaving you to file it. Because we are out of network, your plan may reimburse differently than it would for a contracted practice, and the balance is your responsibility. In-network options are being evaluated, and we will not name a plan until a contract is signed.',
+      'We are not in network with any dental plan. Payment is collected in full on the day of your visit, and we file your insurance claim for you as a courtesy. Your benefit is assigned to you rather than to us, so your insurer reimburses you directly. Out of network does not mean not covered, but it usually means covered differently, and how differently depends on your plan. In-network options are being evaluated, and we will not name a plan until a contract is signed.',
   },
   {
     question: 'Who are the providers?',

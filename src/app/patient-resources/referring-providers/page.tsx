@@ -103,7 +103,7 @@ export default function Page() {
       }
       related={[
         { label: `The ${parentOrganization} Connection`, href: '/about/freedom-dental-health' },
-        { label: 'Planned Services', href: '/services' },
+        { label: 'Our Services', href: '/services' },
         { label: 'Contact', href: '/contact' },
       ]}
     />

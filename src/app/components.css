@@ -596,15 +596,22 @@
      largest painted surface above the fold, for a difference nobody can see. */
   background: linear-gradient(165deg, var(--navy-600) 0%, var(--navy-900) 100%);
   border: 1px solid rgba(168, 198, 216, 0.22);
-  /* Two real rows: the lockup takes the free space and centres in it, the
-     caption takes its own height. Previously the caption was absolutely
-     positioned and the panel reserved a fixed padding for it, which broke as
-     soon as the caption wrapped to two lines on mobile and overlapped the
-     lockup. As grid rows, overlap is structurally impossible at any width. */
+  /* Two real rows, both sized to their content, and the pair centered in the
+     panel as a single group. Previously the first row was `1fr`, so the lockup
+     centered in the space above the caption while the caption sat on the
+     floor: that left far more air above the mark than below the address and
+     read as bottom-heavy rather than centered.
+
+     The caption was once absolutely positioned, with the panel reserving fixed
+     padding for it, which broke as soon as it wrapped to two lines on mobile
+     and overlapped the lockup. Keeping both as real grid rows means overlap is
+     structurally impossible at any width, and `gap` sets the one distance that
+     actually matters here: lockup to address. */
   display: grid;
-  grid-template-rows: 1fr auto;
-  align-items: center;
+  grid-template-rows: auto auto;
+  place-content: center;
   justify-items: center;
+  gap: clamp(1.25rem, 3vw, 2.25rem);
   padding: clamp(1.5rem, 4vw, 3rem);
 }
 
@@ -613,6 +620,18 @@
    max-height both resolve against the panel rather than the wrapper. */
 .hero__visual picture {
   display: contents;
+}
+
+/* ...but display:contents promotes EVERY child of <picture> into the grid, and
+   that includes <source>, which the UA stylesheet otherwise keeps at
+   display:none. As a grid item it is invisible and zero-height but entirely
+   real: it claimed the `1fr` row, pushed the lockup down into an implicit row,
+   and left a ~275px void above the mark with everything crammed against the
+   caption. Hiding it restores the intended two-row layout.
+   Media selection is unaffected: <source> is consulted during resource
+   selection, which has nothing to do with whether it generates a box. */
+.hero__visual source {
+  display: none;
 }
 
 .hero__visualMark {
@@ -633,12 +652,39 @@
      this the element inherits `aspect-ratio: auto 340/288` from the attributes
      and boxes the horizontal lockup at the vertical lockup's proportions. */
   aspect-ratio: 1362 / 1155; /* vertical lockup */
+
+  /* OPTICAL CENTERING.
+     The brand SVGs are not centered inside their own viewBoxes, so centering
+     the <img> box leaves the artwork visibly off-center. Measured with
+     getBBox() against each file:
+
+       logo-vertical-reversed    99.1 units above the ink, 224.7 below
+       logo-horizontal-reversed  179.3 above, 152.6 below, and 4.847% right
+
+     The dead space is removed from LAYOUT rather than corrected with a
+     transform. A transform moves the artwork but leaves its box where it was,
+     so the grid would center one thing while the eye saw another, and `gap`
+     would stop describing any distance measurable on screen. Negative margins
+     shrink the box onto the ink instead, so the grid centers exactly what is
+     visible and `gap` is a real lockup-to-address distance.
+
+     The ratios are dead space over the viewBox WIDTH, not height: percentage
+     margins resolve against the containing block's width, so expressing them
+     against --logo-w, the element's own width, keeps both sides in one unit.
+       top    99.1 / 1362 = 0.07276
+       bottom 224.7 / 1362 = 0.16498
+     Left and right are already equal at 105, so no horizontal correction here.
+
+     If the logo package is ever re-exported with the artwork centered in its
+     viewBox, set these to 0 rather than deleting the mechanism. */
+  margin-top: calc(var(--logo-w) * -0.07276);
+  margin-bottom: calc(var(--logo-w) * -0.16498);
 }
 
 .hero__visualCaption {
   /* In normal flow as the second grid row. No gradient scrim needed now that
-     it no longer overlays the lockup. */
-  padding-top: var(--sp-4);
+     it no longer overlays the lockup. Spacing to the lockup comes from the
+     grid `gap`; a padding here as well would double-count it. */
   font-size: var(--fs-caption);
   color: var(--seaglass);
   text-align: center;
@@ -670,6 +716,17 @@
   .hero__visualMark {
     --logo-w: clamp(200px, 66%, 380px);
     aspect-ratio: 2000 / 720; /* horizontal lockup */
+    /* Different file, different error. Dead space measured against this
+       viewBox's width of 2000:
+         top    179.3 / 2000 = 0.08965
+         bottom 152.6 / 2000 = 0.07630
+       This lockup is also off-center horizontally, by 4.847% of its width,
+       which margins cannot express without disturbing the width itself. A
+       translate is correct for that one axis: it is a pure optical nudge with
+       no layout consequence, because the box is already centered. */
+    margin-top: calc(var(--logo-w) * -0.08965);
+    margin-bottom: calc(var(--logo-w) * -0.07630);
+    transform: translateX(-4.847%);
   }
   .hero h1 {
     max-width: 18ch;
@@ -1269,6 +1326,80 @@
   grid-template-columns: minmax(0, 1fr) 340px;
   gap: clamp(2rem, 5vw, 4rem);
   align-items: start;
+}
+
+
+/* --------------------------------------------------------------------------
+   PROVIDER PROFILE
+   --------------------------------------------------------------------------
+   The team page first reused .split, which is content-plus-sidebar at
+   `minmax(0,1fr) 340px`. With the portrait written first that handed the photo
+   the WIDE column and squeezed the biography into the 340px sidebar, so the
+   text ran long and narrow beside a tall column of empty space. This is the
+   right way round: a fixed portrait column and a flexible measure for the
+   prose, which is also what lets the photo be properly large. */
+
+.provider {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.provider__figure {
+  margin: 0;
+  /* Follows the biography rather than leaving a void beside it. */
+  position: sticky;
+  top: calc(var(--header-h) + var(--sp-5));
+}
+
+.provider__photo {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+}
+
+.provider__body {
+  /* The text column is wide enough to run to ~95 characters, which is past the
+     point where the eye loses its place between lines. Cap the prose only: the
+     reference columns below can use the full width, so the right-hand gutter
+     reads as deliberate rather than as a layout that ran out of content. */
+  max-width: 68ch;
+}
+
+.provider__body > * + * {
+  margin-top: var(--sp-4);
+}
+
+/* Education and honors read as reference material, so they sit side by side
+   below the prose rather than continuing the single long column. */
+.provider__facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--sp-6);
+  margin-top: var(--sp-7);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--rule);
+}
+
+.provider__factsHead {
+  font-size: var(--fs-small);
+  font-family: var(--font-sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mist);
+  margin: 0 0 var(--sp-3);
+}
+
+@media (max-width: 860px) {
+  .provider {
+    grid-template-columns: 1fr;
+  }
+  .provider__figure {
+    position: static;
+    max-width: 320px;
+  }
 }
 
 .split__aside {

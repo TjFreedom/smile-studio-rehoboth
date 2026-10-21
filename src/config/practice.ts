@@ -253,14 +253,23 @@ export type InsurancePosture = 'unconfirmed' | 'courtesy-billing' | 'in-network'
 export const insurancePosture: InsurancePosture = 'courtesy-billing'
 
 /**
- * [TO CONFIRM] Operational details the practice has not yet specified, and
- * which must NOT be guessed at in copy:
- *   · whether benefits are assigned to the practice or reimbursed to the patient
- *   · whether payment is due in full at the time of service
- *   · accepted payment methods, and any third-party financing
- *   · whether an in-house membership plan will exist for uninsured patients
+ * Confirmed by the practice 2026-10-21:
+ *   · Payment is collected IN FULL at the time of service.
+ *   · Assignment of benefits is turned over to the PATIENT, so the insurer
+ *     reimburses them directly rather than paying the practice.
+ *
+ * Together with courtesy billing that is a complete and unusually clear
+ * arrangement, and it is the single most important thing for a patient to
+ * understand before their first visit: they pay us, we file the claim for
+ * them, and their insurer pays them back. Copy must never leave someone
+ * expecting the practice to bill their insurance and wait.
+ *
+ * [TO CONFIRM] still: accepted payment methods, any third-party financing, and
+ * whether an in-house membership plan will exist for uninsured patients.
  */
-export const insuranceDetailsConfirmed = false
+export const insuranceDetailsConfirmed = true
+export const paymentDueInFullAtService = true
+export const assignmentOfBenefits: 'practice' | 'patient' = 'patient'
 
 /** Named plans. Stays empty until a contract is signed. Never pre-populate. */
 export const inNetworkPlans: readonly string[] = []

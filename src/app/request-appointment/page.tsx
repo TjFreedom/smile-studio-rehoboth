@@ -64,7 +64,7 @@ const appointmentFaqs: Faq[] = [
   {
     question: 'What insurance do you take?',
     answer:
-      'We are not in network with any plan at the moment, but we offer courtesy billing: we submit your claim to your insurer for you. Out of network does not mean not covered, it usually means covered differently, and how differently depends on your plan. Our team can talk through what that means for your specific coverage when they call you back.',
+      'We are not in network with any plan. You pay in full on the day, we file your claim for you, and your insurer reimburses you directly rather than paying us. Out of network does not mean not covered, but it usually means covered differently. Our team will walk you through what that means for your specific plan when they call you back, so there are no surprises on the day.',
   },
   {
     question: 'Do I need to do anything before my first visit?',
