@@ -11,13 +11,30 @@ const clarityEnabled = Boolean(process.env.NEXT_PUBLIC_CLARITY_ID)
 // subdomains of google-analytics.com and analytics.google.com.
 // Microsoft Clarity serves its tag from www.clarity.ms and uploads session
 // data to per-region subdomains; c.bing.com is its cookie-sync endpoint.
+/**
+ * Opinly web analytics pixel. The script is served from static.opinly.ai, and
+ * the pixel derives its own API host from its script origin
+ * (`new URL(scriptEl.src).origin`), posting events to
+ * https://static.opinly.ai/track with fetch(). The SAME host is therefore
+ * needed in BOTH script-src and connect-src: with script-src alone the pixel
+ * loads, looks installed, and every event it sends is silently blocked.
+ *
+ * Gated on the key being configured, so the CSP never advertises a host the
+ * site does not actually talk to.
+ */
+const opinlyPixelEnabled = Boolean(process.env.NEXT_PUBLIC_OPINLY_PIXEL_KEY)
+const opinlyHost = opinlyPixelEnabled ? ' https://static.opinly.ai' : ''
+
 const analyticsScriptHosts =
   (analyticsEnabled ? ' https://www.googletagmanager.com' : '') +
-  (clarityEnabled ? ' https://www.clarity.ms https://*.clarity.ms' : '')
+  (clarityEnabled ? ' https://www.clarity.ms https://*.clarity.ms' : '') +
+  opinlyHost
 const analyticsConnectHosts =
   (analyticsEnabled
     ? ' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com'
-    : '') + (clarityEnabled ? ' https://*.clarity.ms https://c.bing.com' : '')
+    : '') +
+  (clarityEnabled ? ' https://*.clarity.ms https://c.bing.com' : '') +
+  opinlyHost
 const analyticsImageHosts =
   (analyticsEnabled ? ' https://www.googletagmanager.com https://*.google-analytics.com' : '') +
   (clarityEnabled ? ' https://*.clarity.ms https://c.bing.com' : '')

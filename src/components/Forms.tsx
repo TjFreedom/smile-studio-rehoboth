@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { trackEvent } from './Analytics'
+import { trackEvent, trackLead } from './Analytics'
 // Imported from form-options, NOT from lib/forms: the latter pulls in zod,
 // which would then ship to the browser for no reason. See lib/form-options.ts.
 import {
@@ -201,6 +201,16 @@ export function useFormSubmit(
 
       if (data.ok) {
         trackEvent(`${eventPrefix}_form_submit`)
+        /**
+         * Opinly conversion. This site sells nothing, so `generate_lead` is the
+         * event that matters rather than `purchase`. One call here covers all
+         * three forms, because they all submit through this hook.
+         *
+         * Only the form name is sent. No email, no name, no phone: the people
+         * filling these in are prospective dental patients, and what they typed
+         * is not analytics data.
+         */
+        trackLead('generate_lead', { form: eventPrefix })
         router.push(redirectTo)
         return
       }

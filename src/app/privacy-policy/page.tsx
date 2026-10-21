@@ -91,7 +91,12 @@ const blocks: Block[] = [
   { type: 'h2', text: 'Cookies and tracking' },
   {
     type: 'p',
-    text: 'Strictly necessary cookies may be used to operate the site securely. Analytics and advertising storage default to denied and are only enabled with your consent. Most browsers let you refuse or delete cookies, and the site remains usable if you do.',
+    // [PENDING COUNSEL RE-REVIEW 2026-10-21] Opinly's pixel is not governed by
+    // Google Consent Mode and writes an anonymous id to localStorage on load,
+    // so the previous blanket "default to denied" sentence no longer described
+    // the site accurately. Scoped to the Google tags and the Opinly behaviour
+    // stated plainly. Send this paragraph to counsel as a delta.
+    text: 'Strictly necessary cookies may be used to operate the site securely. Google analytics and advertising storage default to denied and are only enabled with your consent. Our web analytics provider, Opinly, stores an anonymous identifier in your browser when you arrive, so repeat visits count as one person rather than several. It is not linked to your name or email address, and nothing you type into a form is sent to it. Most browsers let you refuse or delete cookies and local storage, and the site remains usable if you do.',
   },
 
   { type: 'h2', text: 'Data retention' },

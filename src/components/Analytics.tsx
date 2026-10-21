@@ -16,11 +16,63 @@ import { enableClickToCall } from '@/config/practice'
  *
  * Nothing here fires `click_to_call`. That event is registered only when
  * `enableClickToCall` is true, which requires a real phone number.
+ *
+ * Opinly's pixel loads alongside the Google tags when a key is configured. See
+ * the note on OPINLY_PIXEL_KEY for how it differs from them on consent.
  */
+
+/** Standard Opinly events. Narrow on purpose: this site sells nothing, so
+ *  `purchase` is not among them and `generate_lead` is the conversion that
+ *  matters. */
+type OpinlyEvent = 'generate_lead' | 'sign_up' | 'search'
+
+declare global {
+  interface Window {
+    opinly?: {
+      track: (name: string, props?: Record<string, unknown>) => void
+      identify: (traits: Record<string, unknown>) => void
+      anonId?: string
+    }
+  }
+}
+
+/**
+ * Report a conversion to Opinly. Safe to call before the pixel has loaded, or
+ * when it is not configured at all: it does nothing, so submitting a form never
+ * depends on an analytics script being present.
+ *
+ * Deliberately takes NO email address. The only emails on this site are typed
+ * into lead forms by prospective patients, and forwarding those to an analytics
+ * vendor is a decision for the practice and its counsel, not a default.
+ * `identify()` is likewise never called: there is no sign-in on this site, so
+ * there is no authenticated user to identify.
+ */
+export function trackLead(event: OpinlyEvent, props?: Record<string, unknown>) {
+  try {
+    window.opinly?.track(event, props)
+  } catch {
+    // An analytics failure must never surface to a patient mid-form.
+  }
+}
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID
 const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID
+
+/**
+ * Opinly web analytics. Public, write-only key, so it is safe in client code
+ * and carries the NEXT_PUBLIC_ prefix by design rather than by accident.
+ *
+ * NOTE FOR THE PRIVACY REVIEW: unlike GTM and Clarity, this pixel is NOT
+ * governed by Google Consent Mode. It writes an anonymous id to localStorage
+ * as soon as it loads. The Privacy Policy approved on 2026-10-21 says
+ * "Analytics and advertising storage default to denied and are only enabled
+ * with your consent", which this does not currently satisfy. The practice
+ * chose to ship it and send the policy delta back to counsel. If the answer
+ * comes back no, unset this one env var: the pixel, its CSP hosts and the lead
+ * event all disappear together.
+ */
+const OPINLY_PIXEL_KEY = process.env.NEXT_PUBLIC_OPINLY_PIXEL_KEY
 
 declare global {
   interface Window {
@@ -74,7 +126,12 @@ export function Analytics() {
     return () => document.removeEventListener('click', onClick)
   }, [])
 
-  if (!GTM_ID && !GA4_ID && !CLARITY_ID) return null
+  // Opinly is deliberately part of this test. It is an independent provider,
+  // so the component must still render when it is the only one configured.
+  // Without it in the guard the pixel loads on production purely by accident,
+  // because GA4 and Clarity happen to be set there, and silently does nothing
+  // anywhere they are not.
+  if (!GTM_ID && !GA4_ID && !CLARITY_ID && !OPINLY_PIXEL_KEY) return null
 
   return (
     <>
@@ -155,6 +212,20 @@ gtag('config', '${GA4_ID}');
 })(window, document, "clarity", "script", "${CLARITY_ID}");
           `}
         </Script>
+      ) : null}
+
+      {/* Opinly pixel. afterInteractive, so it never competes with first paint.
+          The key is public and write-only; `data-key` is how the script reads
+          it, per Opinly's loader. The pixel posts to https://static.opinly.ai
+          /track, which is why that host is in connect-src as well as
+          script-src in next.config.mjs. */}
+      {OPINLY_PIXEL_KEY ? (
+        <Script
+          id="opinly-pixel"
+          strategy="afterInteractive"
+          src="https://static.opinly.ai/p.js"
+          data-key={OPINLY_PIXEL_KEY}
+        />
       ) : null}
     </>
   )
