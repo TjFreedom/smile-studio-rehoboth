@@ -92,6 +92,7 @@ safety property for a healthcare site.
 | Add a blog post | `src/content/blog.ts` |
 | An FAQ | `src/content/faqs.ts` |
 | Navigation | `src/content/navigation.ts` |
+| Paid-ads landing page copy | `src/app/visit/page.tsx` (form fields in `src/components/AppointmentRequestForm.tsx`) |
 
 To move to a hosted CMS later, replace these modules with a fetch layer that
 returns the same types. Nothing else changes.

@@ -18,10 +18,12 @@
       Delivery path (see docs/CONVERSION-AND-FORMS.md §5):
         browser -> POST /api/{route} (validate, rate limit, spam traps)
                 -> src/lib/netlify-forms.ts posts here as form-name=<name>
-                -> Netlify Forms stores it and fires the notifications configured
-                   in the Netlify UI (email, Slack, outgoing webhook to the CRM).
+                -> Netlify Forms stores it, fires the email notifications
+                   configured in the Netlify UI, and invokes
+                   netlify/functions/submission-created.ts, which posts the
+                   lead to the Freedom Dental Health CRM.
 
-      Field names must match what src/lib/netlify-forms.ts sends. A field that is
+      Field names must match what the route handlers send. A field that is
       not declared here is silently dropped by Netlify.
     -->
 
@@ -49,6 +51,29 @@
       <input type="tel" name="phone" />
       <input type="text" name="category" />
       <textarea name="message"></textarea>
+      <input type="text" name="submittedAt" />
+      <input type="text" name="deployContext" />
+      <input type="text" name="website" />
+    </form>
+
+    <!-- Paid-traffic landing page (/visit). Carries ad attribution through to the CRM. -->
+    <form name="appointment-request" data-netlify="true" netlify-honeypot="website" hidden>
+      <input type="hidden" name="subject" />
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
+      <input type="tel" name="phone" />
+      <input type="email" name="email" />
+      <input type="text" name="reason" />
+      <input type="text" name="callTime" />
+      <textarea name="message"></textarea>
+      <input type="text" name="consentContact" />
+      <input type="text" name="utm_source" />
+      <input type="text" name="utm_medium" />
+      <input type="text" name="utm_campaign" />
+      <input type="text" name="utm_term" />
+      <input type="text" name="utm_content" />
+      <input type="text" name="gclid" />
+      <input type="text" name="landingPage" />
       <input type="text" name="submittedAt" />
       <input type="text" name="deployContext" />
       <input type="text" name="website" />

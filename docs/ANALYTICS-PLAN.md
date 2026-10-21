@@ -35,6 +35,14 @@ No CMP banner UI is built. Whether one is legally required is a decision for
 counsel (see the launch checklist). Any standard CMP can be dropped in without
 touching application code.
 
+## 1b. Paid-traffic landing page events
+
+`/visit` emits `appointment_request_form_start`, `appointment_request_form_submit`,
+`landing_cta_click`, and `landing_sticky_cta_click`. Mark
+`appointment_request_form_submit` (or a pageview of `/visit/thank-you`) as the
+conversion in GA4 and import it into Google Ads. The lead's `gclid` and `utm_*`
+values also reach the CRM, so offline conversion matching is possible later.
+
 ## 2. Event implementation
 
 A single delegated `click` listener reads `data-event="…"` from any element.

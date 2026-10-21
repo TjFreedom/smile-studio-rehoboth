@@ -38,7 +38,10 @@
 // https://crm.freedomdentalhealth.com; both resolve to the same application.
 const CRM_URL = process.env.CRM_WEBHOOK_URL || 'https://fdhscrm.azurewebsites.net/api/leads/webhook'
 
-const LEAD_FORMS = ['opening-list', 'inquiry'] as const
+const LEAD_FORMS = ['opening-list', 'inquiry', 'appointment-request'] as const
+
+/** Ad attribution fields the CRM accepts verbatim. */
+const ATTRIBUTION_FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid'] as const
 type LeadForm = (typeof LEAD_FORMS)[number]
 
 interface SubmissionPayload {
@@ -103,6 +106,33 @@ function fromInquiry(data: Record<string, unknown>): CrmLead {
   }
 }
 
+/** Paid-traffic landing page. A call-back request, so it leads the interest. */
+function fromAppointmentRequest(data: Record<string, unknown>): CrmLead {
+  const parts = ['Appointment request (landing page)']
+  if (text(data.reason)) parts.push(`Reason: ${text(data.reason)}`)
+  if (text(data.callTime)) parts.push(`Best time to call: ${text(data.callTime)}`)
+  if (text(data.message)) parts.push(text(data.message))
+
+  return {
+    first_name: text(data.firstName),
+    last_name: text(data.lastName),
+    phone: text(data.phone),
+    email: text(data.email),
+    interest: parts.join(' | '),
+  }
+}
+
+function buildLead(formName: LeadForm, data: Record<string, unknown>): CrmLead {
+  switch (formName) {
+    case 'opening-list':
+      return fromOpeningList(data)
+    case 'inquiry':
+      return fromInquiry(data)
+    case 'appointment-request':
+      return fromAppointmentRequest(data)
+  }
+}
+
 export const handler = async (event: HandlerEvent): Promise<HandlerResult> => {
   // Netlify does not retry this event, but a non-200 shows as a failed
   // invocation. Every early exit returns 200 with a reason in the body so the
@@ -132,7 +162,14 @@ export const handler = async (event: HandlerEvent): Promise<HandlerResult> => {
   const locationId = Number(process.env.CRM_LOCATION_ID)
   if (!Number.isInteger(locationId) || locationId <= 0) return skip('CRM_LOCATION_ID is not set')
 
-  const lead = payload.form_name === 'opening-list' ? fromOpeningList(data) : fromInquiry(data)
+  const lead = buildLead(payload.form_name, data)
+
+  // Campaign attribution, when the form carried it. The CRM records these on
+  // the lead and uses gclid for Google Ads conversion matching.
+  const attribution: Record<string, string> = {}
+  for (const field of ATTRIBUTION_FIELDS) {
+    if (text(data[field])) attribution[field] = text(data[field])
+  }
 
   try {
     const res = await fetch(CRM_URL, {
@@ -141,7 +178,7 @@ export const handler = async (event: HandlerEvent): Promise<HandlerResult> => {
         'Content-Type': 'application/json',
         'x-webhook-secret': secret,
       },
-      body: JSON.stringify({ ...lead, location_id: locationId }),
+      body: JSON.stringify({ ...lead, ...attribution, location_id: locationId }),
       signal: AbortSignal.timeout(10_000),
     })
 

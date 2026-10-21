@@ -1,8 +1,20 @@
 import { z } from 'zod'
-import { CONTACT_METHODS, INQUIRY_CATEGORIES, SERVICE_INTERESTS } from './form-options'
+import {
+  CALL_TIMES,
+  CONTACT_METHODS,
+  INQUIRY_CATEGORIES,
+  SERVICE_INTERESTS,
+  VISIT_REASONS,
+} from './form-options'
 
 // Re-exported so server-side callers can keep importing from one place.
-export { SERVICE_INTERESTS, CONTACT_METHODS, INQUIRY_CATEGORIES } from './form-options'
+export {
+  SERVICE_INTERESTS,
+  CONTACT_METHODS,
+  INQUIRY_CATEGORIES,
+  VISIT_REASONS,
+  CALL_TIMES,
+} from './form-options'
 export type { FormResponse } from './form-options'
 
 /**
@@ -89,6 +101,57 @@ export const inquirySchema = z.object({
     .max(3000, 'Please keep your message under 3,000 characters.'),
   ...antiSpam,
 })
+
+/** Required phone, for forms where the follow-up is a call. */
+const requiredPhone = z
+  .string()
+  .trim()
+  .min(1, 'Please enter a mobile number so we can call you.')
+  .max(25, 'Please enter a valid phone number.')
+  .refine((v) => /^[\d\s()+.-]{7,25}$/.test(v), 'Please enter a valid phone number.')
+
+/** Optional email, for forms where phone is the primary channel. */
+const optionalEmail = z
+  .string()
+  .trim()
+  .max(160)
+  .refine(
+    (v) => v === '' || z.string().email().safeParse(v).success,
+    'Please enter a valid email address, for example name@example.com.',
+  )
+  .optional()
+  .default('')
+
+/** Ad attribution, captured from the landing URL. Free text, length capped. */
+const attribution = z.string().trim().max(200).optional().default('')
+
+/**
+ * Paid-traffic landing page. The lead is a request for a call back to
+ * schedule, so phone and an explicit contact consent are required.
+ */
+export const appointmentRequestSchema = z.object({
+  firstName: name,
+  lastName: name.describe('last name'),
+  phone: requiredPhone,
+  email: optionalEmail,
+  callTime: z.enum(CALL_TIMES).default('Either is fine'),
+  reason: z.enum(VISIT_REASONS).default('New patient exam and cleaning'),
+  message: z.string().trim().max(1000, 'Please keep your note under 1,000 characters.').optional().default(''),
+  /** Must be explicitly checked. Never pre-selected in the UI. */
+  consentContact: z.literal(true, {
+    errorMap: () => ({ message: 'Please confirm we may contact you about scheduling.' }),
+  }),
+  utm_source: attribution,
+  utm_medium: attribution,
+  utm_campaign: attribution,
+  utm_term: attribution,
+  utm_content: attribution,
+  gclid: attribution,
+  landingPage: attribution,
+  ...antiSpam,
+})
+
+export type AppointmentRequestInput = z.infer<typeof appointmentRequestSchema>
 
 export type OpeningListInput = z.infer<typeof openingListSchema>
 export type InquiryInput = z.infer<typeof inquirySchema>

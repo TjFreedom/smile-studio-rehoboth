@@ -17,7 +17,7 @@ import { email as practiceEmail, mailtoUrl } from '@/config/practice'
  * SHARED FIELD PRIMITIVES
  * ------------------------------------------------------------------ */
 
-function Field({
+export function Field({
   name,
   label,
   type = 'text',
@@ -80,7 +80,7 @@ function Field({
   )
 }
 
-function SelectField({
+export function SelectField({
   name,
   label,
   options,
@@ -131,7 +131,7 @@ function SelectField({
 }
 
 /** Honeypot plus timing trap. Hidden from sighted users and screen readers. */
-function SpamTraps({ startedAt }: { startedAt: React.RefObject<number> }) {
+export function SpamTraps({ startedAt }: { startedAt: React.RefObject<number> }) {
   return (
     <div className="hp-field" aria-hidden="true">
       <label htmlFor="website">Leave this field blank</label>
@@ -147,7 +147,13 @@ function SpamTraps({ startedAt }: { startedAt: React.RefObject<number> }) {
 
 type Status = 'idle' | 'submitting' | 'error'
 
-function useFormSubmit(endpoint: string, redirectTo: string, eventPrefix: string) {
+export function useFormSubmit(
+  endpoint: string,
+  redirectTo: string,
+  eventPrefix: string,
+  /** Extra fields merged into the payload at submit time, e.g. ad attribution. */
+  extraPayload?: () => Record<string, unknown>,
+) {
   const router = useRouter()
   const [status, setStatus] = useState<Status>('idle')
   const [message, setMessage] = useState<string>('')
@@ -178,8 +184,12 @@ function useFormSubmit(endpoint: string, redirectTo: string, eventPrefix: string
     const fd = new FormData(form)
     const payload: Record<string, unknown> = Object.fromEntries(fd.entries())
     payload.elapsed = Date.now() - mountedAt.current
-    payload.consentEmail = fd.get('consentEmail') === 'on'
-    payload.consentSms = fd.get('consentSms') === 'on'
+    // Checkboxes arrive as 'on' or not at all. Send every one as a boolean so
+    // the server schema can require, default, or ignore it explicitly.
+    for (const box of form.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')) {
+      payload[box.name] = box.checked
+    }
+    if (extraPayload) Object.assign(payload, extraPayload())
 
     try {
       const res = await fetch(endpoint, {

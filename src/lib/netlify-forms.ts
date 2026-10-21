@@ -24,7 +24,7 @@ import { siteUrl } from '@/config/practice'
 
 const FORMS_PATH = '/__forms.html'
 
-export type NetlifyFormName = 'opening-list' | 'inquiry'
+export type NetlifyFormName = 'opening-list' | 'inquiry' | 'appointment-request'
 
 const productionHost = new URL(siteUrl).host
 

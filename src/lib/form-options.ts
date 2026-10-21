@@ -38,7 +38,20 @@ export const INQUIRY_CATEGORIES = [
   'Something else',
 ] as const
 
-/** Shape returned by both API routes. */
+/** Paid-traffic landing page: why the visitor wants to come in. */
+export const VISIT_REASONS = [
+  'New patient exam and cleaning',
+  'A specific concern or tooth pain',
+  'Cosmetic consultation',
+  'Dental implants',
+  'Second opinion',
+  'Not sure yet',
+] as const
+
+/** Paid-traffic landing page: when a call back suits them. */
+export const CALL_TIMES = ['Morning', 'Afternoon', 'Either is fine'] as const
+
+/** Shape returned by every form API route. */
 export interface FormResponse {
   ok: boolean
   message?: string

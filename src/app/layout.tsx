@@ -5,6 +5,7 @@ import './components.css'
 import { Header } from '@/components/Header'
 import { AnnouncementBar, Footer, MobileActionBar } from '@/components/Chrome'
 import { Analytics } from '@/components/Analytics'
+import { ChromeGate } from '@/components/ChromeGate'
 import { JsonLd } from '@/components/Ui'
 import { practiceSchema, websiteSchema } from '@/lib/schema'
 import { metadataBase } from '@/lib/seo'
@@ -107,15 +108,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to main content
         </a>
 
-        <AnnouncementBar />
-        <Header />
+        {/* Site chrome is withheld on paid-traffic landing pages, which carry
+            their own minimal header and footer. See components/ChromeGate.tsx. */}
+        <ChromeGate>
+          <AnnouncementBar />
+          <Header />
+        </ChromeGate>
 
         <main id="main" tabIndex={-1}>
           {children}
         </main>
 
-        <Footer />
-        <MobileActionBar />
+        <ChromeGate>
+          <Footer />
+          <MobileActionBar />
+        </ChromeGate>
 
         {/* Site-wide entity graph. Page-level nodes are added per route. */}
         <JsonLd nodes={[practiceSchema(), websiteSchema()]} />

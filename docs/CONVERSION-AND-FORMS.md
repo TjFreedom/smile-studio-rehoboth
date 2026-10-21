@@ -40,6 +40,31 @@ Carries a persistent, programmatically-associated notice:
 > Please do not include private medical, dental, insurance, or financial
 > information in this form.
 
+## 2b. Appointment request form (paid-traffic landing page)
+
+**Where:** `/visit` only. Not linked from the site, not indexed, not in the sitemap.
+**Endpoint:** `POST /api/appointment-request`
+**Success:** redirect to `/visit/thank-you` (noindex). A pageview there, or the
+`appointment_request_form_submit` event, is the conversion to point Google Ads at.
+
+| Field | Required | Notes |
+|---|---|---|
+| First name, last name | yes | Same rules as the other forms |
+| Mobile phone | **yes** | The follow-up is a call, so phone is required here |
+| Email | no | Optional; lowers friction on paid traffic |
+| What brings you in | no | Six options, defaults to a new patient exam |
+| Best time to call | no | Morning / Afternoon / Either |
+| Note | no | Up to 1,000 characters |
+| Contact consent | **yes** | Not pre-selected. Phone, text, or email about scheduling, with STOP language |
+| `utm_*`, `gclid`, `landingPage` | hidden | Read from the landing URL at submit time and passed through to the CRM |
+
+The page itself is `src/app/visit/page.tsx`. It renders without the site chrome
+(`components/ChromeGate.tsx` withholds the announcement bar, header, footer, and
+mobile action bar on `/visit*`) and carries its own minimal header, footer, and a
+phone-only sticky CTA. Brief: new office, come check us out, experienced
+providers, appointments available. Insurance is not a selling point on the page
+and is answered once, plainly, in the FAQ.
+
 ## 3. Anti-spam
 
 Three layers, none of which inconvenience a real visitor:
@@ -71,7 +96,7 @@ library into the browser.
 
 ```
 Browser → POST /api/{route} → rate limit → parse → zod → spam traps
-    ├→ captureSubmission() → Netlify Forms → email notification (Netlify UI)
+    ├→ captureSubmission() → Netlify Forms → email notification (Netlify UI)      (forms: opening-list, inquiry, appointment-request)
     │                                      └→ submission-created function → FDH CRM
     └→ sendNotification()  → Resend → info@rehobothsmiles.com (only when RESEND_API_KEY is set)
 ```
@@ -104,6 +129,9 @@ DCAD site uses, so both practices arrive in the CRM identically.
 - Opening-list signups carry the service interest, preferred contact method,
   ZIP, and both consent answers in `interest`.
 - Inquiries carry the category and the message in `interest`.
+- Appointment requests carry the reason, preferred call time, and note in
+  `interest`, and pass `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`,
+  `utm_content`, and `gclid` through unchanged so the CRM can attribute the lead.
 - Submissions tagged with a non-production `deployContext` are skipped, so a
   reviewer's test on a deploy preview never becomes a CRM lead.
 - If `CRM_WEBHOOK_SECRET` or `CRM_LOCATION_ID` is missing, the function logs

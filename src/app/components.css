@@ -1770,3 +1770,213 @@
     margin-inline: auto;
   }
 }
+
+/* --------------------------------------------------------------------------
+   LANDING PAGE (paid traffic)
+   Rendered without the site chrome. See app/visit and components/ChromeGate.
+   -------------------------------------------------------------------------- */
+
+.lp-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+
+.lp-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding-block: var(--sp-4);
+}
+
+.lp-header__tag {
+  font-size: var(--fs-caption);
+  color: var(--mist);
+  text-align: right;
+}
+
+.lp-hero {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.lp-hero h1,
+.lp-hero h2 {
+  color: var(--white);
+}
+
+.lp-hero__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.lp-hero .form-card h2 {
+  color: var(--navy);
+}
+
+.lp-hero__lede {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-body-lg);
+  color: rgba(255, 255, 255, 0.86);
+  max-width: 56ch;
+}
+
+.lp-points {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--sp-6);
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.lp-points li {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.lp-points svg {
+  flex: none;
+  color: var(--sand);
+  margin-top: 2px;
+}
+
+.lp-hero__qualifier {
+  margin-top: var(--sp-6);
+  font-size: var(--fs-caption);
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 56ch;
+}
+
+.lp-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-5);
+}
+
+.lp-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-6);
+}
+
+.lp-card__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--sand-100);
+  color: var(--navy);
+  margin-bottom: var(--sp-4);
+}
+
+.lp-card h3 {
+  font-size: var(--fs-h3);
+}
+
+.lp-card p {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-small);
+}
+
+.lp-steps {
+  counter-reset: step;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-6);
+}
+
+.lp-steps li {
+  position: relative;
+  padding-left: 3.25rem;
+}
+
+.lp-steps li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 600;
+  font-size: var(--fs-small);
+}
+
+.lp-steps h3 {
+  font-size: var(--fs-h4);
+}
+
+.lp-steps p {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-small);
+}
+
+.lp-footer {
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.8);
+  padding-block: var(--sp-8) var(--sp-9);
+  font-size: var(--fs-caption);
+}
+
+.lp-footer .container {
+  display: grid;
+  gap: var(--sp-5);
+}
+
+.lp-footer a {
+  color: var(--white);
+}
+
+.lp-footer__legal {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+
+/* Sticky CTA, phones only. Sits where the site's mobile action bar normally
+   does, so the body padding that reserves that space is not wasted. */
+.lp-sticky {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 95;
+  padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + env(safe-area-inset-bottom));
+  background: var(--white);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -2px 14px rgba(11, 40, 89, 0.08);
+}
+
+.lp-sticky .btn {
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .lp-hero__grid,
+  .lp-cards,
+  .lp-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .lp-sticky {
+    display: block;
+  }
+}
