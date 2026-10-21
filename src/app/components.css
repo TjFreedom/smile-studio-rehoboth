@@ -1980,3 +1980,11 @@
     display: block;
   }
 }
+
+/* The affiliation line wraps badly beside the logo on narrow phones. It is
+   repeated in the landing footer, so it can go here. */
+@media (max-width: 600px) {
+  .lp-header__tag {
+    display: none;
+  }
+}

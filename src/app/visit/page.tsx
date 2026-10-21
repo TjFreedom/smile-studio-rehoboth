@@ -244,6 +244,8 @@ export default function VisitLandingPage() {
         <div className="container">
           <Logo variant="horizontal-reversed" width={200} decorative />
           <p>
+            {affiliationLabel}
+            <br />
             {addressLines.join(', ')} · {address.complex}
             <br />
             <a href={mailtoUrl} data-event="email_click">
