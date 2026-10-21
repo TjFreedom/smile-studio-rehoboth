@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { absoluteUrl, features, isAcceptingAppointments } from '@/config/practice'
 import { serviceSlugs } from '@/content/services'
 import { postSlugs } from '@/content/blog'
+import { opinlyPostSlugs } from '@/lib/opinly'
 import { allowIndexing } from '@/lib/seo'
 
 /**
@@ -14,7 +15,7 @@ import { allowIndexing } from '@/lib/seo'
  * On non-production deploys the sitemap is empty, matching the noindex posture
  * of the rest of the site.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (!allowIndexing) return []
 
   const now = new Date()
@@ -62,8 +63,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const serviceEntries = serviceSlugs.map((slug) => entry(`/services/${slug}`, 0.7))
 
+  // Opinly slugs are fetched here so imported articles are discoverable. The
+  // call fails soft to [], so a sitemap is still produced if Opinly is down:
+  // a sitemap missing a few URLs is recoverable, a 500 on /sitemap.xml is not.
+  // A locally authored slug wins over a remote one with the same slug, matching
+  // how /blog/[slug] resolves, so no URL is ever listed twice.
+  const localSet = new Set<string>(postSlugs)
+  const remoteSlugs = features.enableBlog ? await opinlyPostSlugs() : []
+  const allBlogSlugs = [...postSlugs, ...remoteSlugs.filter((s) => !localSet.has(s))]
+
   const blogEntries = features.enableBlog
-    ? [entry('/blog', 0.6, 'weekly'), ...postSlugs.map((slug) => entry(`/blog/${slug}`, 0.5))]
+    ? [entry('/blog', 0.6, 'weekly'), ...allBlogSlugs.map((slug) => entry(`/blog/${slug}`, 0.5))]
     : []
 
   // Team pages stay out of the sitemap until real provider content exists.

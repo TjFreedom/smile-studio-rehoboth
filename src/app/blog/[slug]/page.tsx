@@ -7,12 +7,23 @@ import { blogPostingSchema, webPageSchema } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { formatDate, getPost, posts } from '@/content/blog'
 import { cta, practiceName } from '@/config/practice'
+import { getOpinlyPost, opinlyImagePath } from '@/lib/opinly'
+import { OpinlyArticle } from '@/components/OpinlyArticle'
 
 export function generateStaticParams() {
+  // Only the locally authored posts are prerendered. Opinly slugs are resolved
+  // on demand, so publishing an article there does not require a redeploy.
   return posts.map((p) => ({ slug: p.slug }))
 }
 
-export const dynamicParams = false
+/**
+ * Was `false`, which 404'd every slug outside the three local posts. Opinly
+ * articles need it true. Unknown slugs still 404, via notFound() below, after
+ * both sources have been checked.
+ */
+export const dynamicParams = true
+
+export const revalidate = 3600
 
 export async function generateMetadata({
   params,
@@ -21,23 +32,44 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const post = getPost(slug)
-  if (!post) return {}
+  if (post) {
+    return pageMetadata({
+      title: post.title,
+      description: post.description,
+      path: `/blog/${post.slug}`,
+      absolute: true,
+      type: 'article',
+      publishedTime: post.date,
+      modifiedTime: post.updated ?? post.date,
+    })
+  }
+
+  const remote = await getOpinlyPost(slug)
+  if (!remote) return {}
 
   return pageMetadata({
-    title: post.title,
-    description: post.description,
-    path: `/blog/${post.slug}`,
+    title: remote.metaTitle || remote.title,
+    description: remote.metaDescription || remote.description,
+    path: `/blog/${remote.slug}`,
     absolute: true,
     type: 'article',
-    publishedTime: post.date,
-    modifiedTime: post.updated ?? post.date,
+    publishedTime: remote.firstPublishedAt,
+    modifiedTime: remote.modifiedAt,
+    ogImage: opinlyImagePath(remote.titleFile?.fileKey) ?? undefined,
   })
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const post = getPost(slug)
-  if (!post) notFound()
+
+  // Locally authored posts keep their existing rendering untouched. Only a
+  // slug that is not one of those is looked up in Opinly.
+  if (!post) {
+    const remote = await getOpinlyPost(slug)
+    if (!remote) notFound()
+    return <OpinlyArticle post={remote} />
+  }
 
   const related = post.related
     .map((r) => getPost(r))
