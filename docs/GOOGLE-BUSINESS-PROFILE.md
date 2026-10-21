@@ -27,25 +27,18 @@ The single most important technical detail. These must match **character for
 character** everywhere: website, JSON-LD, Business Profile, social profiles,
 directories, and any future scheduling platform.
 
-> ### STOP — the street name is not settled
+> ### The address is settled: use it exactly as written below
 >
-> The practice's FINAL postcard prints **19411 Plantation Road** (singular).
-> The original brief, this website, and 44 other places in the codebase use
-> **19411 Plantations Road** (plural). One of them is wrong.
+> **`19411 Plantations Road`, plural**, confirmed by the practice 2026-10-21.
 >
-> **Do not submit to Google, Apple, Bing, Yelp, or any aggregator until this is
-> verified** against the lease, the USPS address database, or the county parcel
-> record. This is not pedantry: the address you first submit propagates to the
-> data aggregators (Data Axle, Foursquare, Neustar) that feed hundreds of
-> downstream directories. Correcting it afterwards means re-submitting to each
-> one and waiting out their refresh cycles, and in the meantime Google sees two
-> competing addresses for the same practice and trusts neither.
->
-> Settle it once, then use the exact string below everywhere.
+> The FINAL postcard already in circulation prints "Plantation Road", singular.
+> That is a misprint on the card, not an alternate spelling. Do not work from
+> the postcard when filling in any directory listing, and correct it on the
+> next print run.
 
 ```
 Name:     Smile Studio of Rehoboth
-Street:   19411 Plantations Road, Suite 1     [VERIFY "Plantations" vs "Plantation"]
+Street:   19411 Plantations Road, Suite 1
 City:     Rehoboth Beach
 State:    DE
 ZIP:      19971
@@ -172,7 +165,7 @@ Communications.
 
 - [ ] Opening is within Google's eligibility window and the date is firm
 - [x] Public phone number assigned — **(302) 715-0020**. Still confirm it is active and answered during the hours the profile advertises, before the profile goes live.
-- [ ] **Street name verified** ("Plantations" vs "Plantation") against the lease or USPS
+- [x] **Street name verified**: "Plantations Road", plural. Note the postcard misprint.
 - [ ] **Name on the exterior signage reconciled** with the name being submitted
 - [ ] Suite number confirmed
 - [ ] Someone can receive verification at the address

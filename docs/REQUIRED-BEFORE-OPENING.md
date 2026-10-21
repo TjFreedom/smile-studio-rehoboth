@@ -72,15 +72,38 @@ beyond the services page.
 
 | Item | Detail |
 |---|---|
-| **Degree designation** | The Provider Spotlight says Dr. Cottone "pursued his dental education at the University of Maryland School of Dentistry" but never names the award. DDS and DMD are not interchangeable, and a misstated credential is a Delaware Board of Dentistry advertising matter rather than a typo. `credentials` is `null` in `src/content/providers.ts` and the site omits post-nominals entirely rather than guessing. Fill it in once confirmed. |
+| ~~**Degree designation**~~ **RESOLVED 2026-10-21** | **DDS**, confirmed by the practice. The site now renders "Dr. Jonathon Cottone, DDS" and emits `honorificSuffix` in Person schema. The Provider Spotlight never named the award, which is why it was left blank until asked. |
 | **Delaware license number** | Not supplied. `licenseNumber` is `null`. Needed if the site is to carry a regulatory footer. |
 | **Years in practice** | No graduation year was supplied, so no "X years of experience" claim appears anywhere. Do not add one without a date to support it. |
 
-## Blocks the local-listings push — settle before any directory submission
+## Local listings — the address is settled
 
-| Item | Detail | Action |
-|---|---|---|
-| **"Plantation" vs "Plantations" Road** | The FINAL postcard prints **19411 Plantation Road** (singular). The original brief, this website, and 44 other places in the repo use **19411 Plantations Road** (plural). One of the two is wrong. | Verify against the lease, the USPS address database, or the county parcel record, then make every channel match. This is the single highest-priority item before listings go out: NAP (name, address, phone) consistency is a primary local-ranking signal, and an address that disagrees across Google, Apple, Bing, and the data aggregators is slow and expensive to unwind once syndicated. The site has NOT been changed on the strength of one piece of collateral. |
+**CONFIRMED 2026-10-21: `19411 Plantations Road` (plural), Suite 1.**
+
+Submit this string character for character to Google Business Profile, Apple
+Business Connect, Bing Places, and the data aggregators:
+
+```
+Smile Studio of Rehoboth
+19411 Plantations Road, Suite 1
+Rehoboth Beach, DE 19971
+(302) 715-0020
+https://www.rehobothsmiles.com
+```
+
+> **The FINAL postcard has a typo.** It prints "19411 Plantation Road",
+> singular. That is a misprint in the printed piece, not an alternate spelling,
+> and the postcard is already in circulation. Two actions: correct it on the
+> next print run, and make sure nobody submitting directory listings works from
+> the card rather than from this document. An address that disagrees across
+> Google, Apple, Bing and the aggregators is slow and expensive to unwind, and
+> the whole point of fixing it here is that it never gets syndicated.
+
+Still outstanding before submission: the exterior directory reads **"Freedom
+Dental"** against Suite 1 while every patient-facing piece says Smile Studio of
+Rehoboth. Google compares the submitted name against street-level and
+photographic evidence, and a mismatch is a common cause of verification failure
+or suspension. Settle the signage before submitting, not after.
 
 ## Brand-level items to reconcile
 

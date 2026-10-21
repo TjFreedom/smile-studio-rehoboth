@@ -127,14 +127,14 @@ export const phoneNumberE164: string | null = '+13027150020'
 
 export const address = {
   /**
-   * NOTE: the practice's FINAL postcard prints "19411 Plantation Road"
-   * (singular). Every other source, including the original brief, uses
-   * "Plantations Road" (plural), which is the spelling used here and in 44
-   * other places in this repo. NOT changed on the strength of one piece of
-   * collateral: this string is about to be syndicated to local directories,
-   * where an inconsistent address is expensive to unwind. Verify against the
-   * lease or USPS and settle it before listings go out.
-   * See docs/REQUIRED-BEFORE-OPENING.md.
+   * CONFIRMED by the practice 2026-10-21: "Plantations Road", plural.
+   *
+   * This is the string to syndicate to Google, Apple, Bing and the data
+   * aggregators, character for character. Note that the FINAL postcard already
+   * in circulation prints "19411 Plantation Road" (singular), which is a typo
+   * in the printed piece rather than a variant spelling. Correct it on the
+   * next print run, and do not let it become the address anyone submits to a
+   * directory. See docs/REQUIRED-BEFORE-OPENING.md.
    */
   line1: '19411 Plantations Road',
   /** Confirmed 2026-10-21 by the FINAL postcard: "19411 Plantation Road, Suite 1". */

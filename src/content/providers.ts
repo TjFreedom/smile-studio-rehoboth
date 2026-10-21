@@ -17,8 +17,7 @@
  * missing it is `null` with a [TO CONFIRM] note, and the UI omits the whole
  * element rather than guessing.
  *
- * Specifically NOT claimed, because the source document does not state them:
- *   · the degree letters (DDS or DMD) awarded by Maryland
+ * Specifically NOT claimed, because no source states them:
  *   · a Delaware license number
  *   · a graduation year or any "years of experience" figure
  *   · clinical interests, special training, or languages spoken
@@ -54,8 +53,8 @@ export interface Provider {
   /** How the person is addressed in running copy. */
   readonly displayName: string
   /**
-   * Post-nominal letters, e.g. 'DDS'. [TO CONFIRM] — null until the practice
-   * confirms which degree Maryland awarded. Rendered nowhere while null.
+   * Post-nominal letters. Rendered nowhere while null, so an unconfirmed
+   * credential is absent rather than guessed.
    */
   readonly credentials: string | null
   /**
@@ -79,7 +78,7 @@ export const providers: readonly Provider[] = [
     slug: 'jonathon-cottone',
     name: 'Jonathon Cottone',
     displayName: 'Dr. Jonathon Cottone',
-    credentials: null,
+    credentials: 'DDS',
     role: 'Dentist',
     photo: {
       src: '/images/team/cottone.jpg',
@@ -96,11 +95,9 @@ export const providers: readonly Provider[] = [
         detail: 'Graduated Cum Laude with a double major',
       },
       {
-        // [TO CONFIRM] The spotlight says only "pursued his dental education at
-        // the University of Maryland School of Dentistry". It does not name the
-        // award, so neither do we. Fill in 'DDS' or 'DMD' once confirmed, and
-        // set `credentials` above to match.
-        credential: null,
+        // Confirmed by the practice 2026-10-21. The Provider Spotlight named
+        // only the school, so this was deliberately left blank until asked.
+        credential: 'Doctor of Dental Surgery (DDS)',
         institution: 'University of Maryland School of Dentistry',
         detail: 'Graduated in the top quarter of his class',
       },
