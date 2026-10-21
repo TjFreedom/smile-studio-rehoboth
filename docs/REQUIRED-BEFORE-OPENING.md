@@ -16,7 +16,7 @@ in production.
 |---|---|---|---|
 | 1 | ~~**Public phone number**~~ **RESOLVED 2026-10-21** | Operations | **(302) 715-0020**, confirmed by the practice's own FINAL postcard and coming-soon sign. Now live in `practice.ts`: header, footer, click-to-call, mobile Call action, and `telephone` in structured data. |
 | 2 | **Exact opening date** | Construction + Operations | "Now Open" mode, `openingDate` schema, Google Business Profile eligibility, opening-list announcement |
-| 3 | **Provider roster and credentials** | Clinical Lead | Meet the Team, `Person` schema, provider review attribution on 12 clinical pages |
+| 3 | **Provider roster** PARTLY RESOLVED 2026-10-21 | Clinical Lead | **Dr. Jonathon Cottone** confirmed as the practice's dentist, with biography sourced from Freedom Dental Health's own Provider Spotlight. `/team` is live with `Person` schema. **Still needed:** (a) the degree designation Maryland awarded, DDS or DMD, which is deliberately NOT stated anywhere on the site until confirmed; (b) his Delaware license number; (c) hygienists, assistants and front-office staff, who are described as being hired but not named. |
 | 4 | **Confirmed service list** | Clinical Lead | Service tier `confirmed`, `Service` schema, booking CTAs, GBP service categories |
 | 5 | **Emergency procedures** | Clinical Lead + Compliance | Rewrite of the emergency page, `emergency-dentist` keyword activation |
 | 6 | **Scheduling workflow and URL** | Operations | **Partly resolved 2026-10-21.** The postcard advertises "CURRENTLY SCHEDULING APPOINTMENTS" by phone, so `openingStatus` is now `'scheduling'` and `/request-appointment` is live (phone first, request form second, team calls back to confirm). Still outstanding: a real online-booking URL for `externalLinks.onlineScheduling`, and who owns callbacks and how fast. |
@@ -27,7 +27,7 @@ in production.
 | # | Item | Owner | Notes |
 |---|---|---|---|
 | 8 | **Suite number** RESOLVED; **exterior signage name** still open | Operations + Marketing | **Suite 1 confirmed 2026-10-21** by the FINAL postcard and set in `address.line2`. The signage conflict remains: the building directory photographed on site lists Suite 1 under the name **"Freedom Dental"**, while this website and the postcard are branded **Smile Studio of Rehoboth**. Two things to settle: (a) confirm the suite number so it can be set in `address.line2`, and (b) decide which name goes on the exterior sign and the directory. A patient who searches for Smile Studio of Rehoboth and arrives at a sign reading Freedom Dental will think they are in the wrong place. Affects NAP consistency, Google Business Profile, and wayfinding. |
-| 9 | Insurance participation, executed contracts only | Operations | Never publish a plan name before the contract is signed |
+| 9 | **Insurance** RESOLVED for now 2026-10-21 | Operations | Position is **courtesy billing**: out of network with every plan, claims submitted on the patient's behalf, in-network options under evaluation. Published on `/new-patients/insurance-and-financing` and in the FAQs. **Still needed:** whether benefits are assigned to the practice or reimbursed to the patient, whether payment is due in full at time of service, accepted payment methods, and financing options. Never publish a plan name before the contract is signed. |
 | 10 | Financing options and any membership plan | Operations | |
 | 11 | Patient forms + intake system with a signed BAA | Operations + Compliance | |
 | 12 | Notice of Privacy Practices | Compliance | Linked from the footer and privacy policy |
@@ -56,6 +56,14 @@ in production.
 | 30 | Pantone matches for print | Marketing. Brand Guide flags these as pending. |
 
 ---
+
+## Provider credentials — do not fill these in from assumption
+
+| Item | Detail |
+|---|---|
+| **Degree designation** | The Provider Spotlight says Dr. Cottone "pursued his dental education at the University of Maryland School of Dentistry" but never names the award. DDS and DMD are not interchangeable, and a misstated credential is a Delaware Board of Dentistry advertising matter rather than a typo. `credentials` is `null` in `src/content/providers.ts` and the site omits post-nominals entirely rather than guessing. Fill it in once confirmed. |
+| **Delaware license number** | Not supplied. `licenseNumber` is `null`. Needed if the site is to carry a regulatory footer. |
+| **Years in practice** | No graduation year was supplied, so no "X years of experience" claim appears anywhere. Do not add one without a date to support it. |
 
 ## Blocks the local-listings push — settle before any directory submission
 

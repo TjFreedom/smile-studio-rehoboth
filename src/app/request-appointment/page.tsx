@@ -64,7 +64,7 @@ const appointmentFaqs: Faq[] = [
   {
     question: 'What insurance do you take?',
     answer:
-      'Participation is still being confirmed, and we will not list a plan before the contract is signed. Ask when our team calls you back and we will tell you exactly where things stand.',
+      'We are not in network with any plan at the moment, but we offer courtesy billing: we submit your claim to your insurer for you. Out of network does not mean not covered, it usually means covered differently, and how differently depends on your plan. Our team can talk through what that means for your specific coverage when they call you back.',
   },
   {
     question: 'Do I need to do anything before my first visit?',

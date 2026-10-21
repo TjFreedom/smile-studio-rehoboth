@@ -1,29 +1,28 @@
 import type { Metadata } from 'next'
-import { JsonLd, PageHero, Button, PlaceholderNote, SectionHead } from '@/components/Ui'
+import { JsonLd, PageHero, SectionHead } from '@/components/Ui'
 import { CtaBand } from '@/components/Blocks'
-import { webPageSchema } from '@/lib/schema'
+import { personSchema, webPageSchema } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
-import { features, practiceName } from '@/config/practice'
+import { anticipatedOpening, practiceName } from '@/config/practice'
+import { providers } from '@/content/providers'
 
 const TITLE = 'Meet the Team'
-const DESCRIPTION =
-  'Provider introductions for Smile Studio of Rehoboth in Rehoboth Beach, DE will be published before the office opens.'
+const DESCRIPTION = `Meet the dentist at ${practiceName} in Rehoboth Beach, Delaware, including training, honors, and the ties that brought him to Sussex County.`
 const PATH = '/team'
 
 /**
- * Holding page.
+ * Provider introductions.
  *
- * `features.enableTeamPages` is false, so this page is excluded from the
- * navigation and the XML sitemap, and it is set to noindex. It exists so that
- * anyone arriving from an old link or a direct URL gets a real explanation
- * rather than a 404, and so the route is ready the moment provider content is
- * approved.
+ * Every fact on this page comes from src/content/providers.ts, which in turn
+ * comes from the practice's own Provider Spotlight announcement. Sections are
+ * rendered only when the underlying data exists, so a missing credential or
+ * license number removes its element rather than printing an empty label or a
+ * guess. See the sourcing rule at the top of that file.
  */
 export const metadata: Metadata = pageMetadata({
   title: TITLE,
   description: DESCRIPTION,
   path: PATH,
-  index: features.enableTeamPages,
 })
 
 export default function Page() {
@@ -34,89 +33,135 @@ export default function Page() {
 
   return (
     <>
-      <JsonLd nodes={[webPageSchema({ name: TITLE, description: DESCRIPTION, path: PATH })]} />
+      <JsonLd
+        nodes={[
+          webPageSchema({ name: TITLE, description: DESCRIPTION, path: PATH }),
+          ...providers.map(personSchema),
+        ]}
+      />
 
       <PageHero
         eyebrow="Our team"
-        title="Provider Introductions Are Coming"
-        lede={`${practiceName} is under construction, and the provider team has not been announced. When it is, you will meet every dentist and clinical team member here.`}
+        title="Meet Your Dentist"
+        lede={`${practiceName} opens in ${anticipatedOpening}. This is the dentist who will be looking after you.`}
         crumbs={crumbs}
       />
 
-      <section className="section">
-        <div className="container container--narrow">
-          <div className="article-body">
-            <h2>Why this page is empty</h2>
-            <p>
-              A lot of new practice websites fill this space with stock photographs of models in lab
-              coats, or with biographies for providers who have not been hired. We are not going to
-              do that. Choosing a dentist is a decision about a person, and the page that introduces
-              those people should be true from the first day it is published.
-            </p>
+      {providers.map((p) => (
+        <section className="section" key={p.slug} id={p.slug}>
+          <div className="container">
+            <div className="split">
+              {p.photo ? (
+                <div>
+                  <img
+                    src={p.photo.src}
+                    srcSet={`${p.photo.srcSmall} 500w, ${p.photo.src} 1000w`}
+                    sizes="(max-width: 700px) 86vw, 420px"
+                    width={p.photo.width}
+                    height={p.photo.height}
+                    alt={p.photo.alt}
+                    loading="lazy"
+                    decoding="async"
+                    style={{
+                      width: '100%',
+                      maxWidth: '420px',
+                      height: 'auto',
+                      borderRadius: 'var(--radius-md, 6px)',
+                      display: 'block',
+                    }}
+                  />
+                </div>
+              ) : null}
 
-            <h2>What you will find here before we open</h2>
-            <p>For every dentist and clinical team member:</p>
-            <ul style={{ display: 'grid', gap: 'var(--sp-2)', paddingLeft: '1.35rem' }}>
-              <li>Full name and accurate credentials, stated exactly as they are held</li>
-              <li>Dental school and any postgraduate training</li>
-              <li>Delaware licensure</li>
-              <li>Clinical areas of interest, and what they most enjoy treating</li>
-              <li>Professional memberships</li>
-              <li>A real photograph, taken at this practice</li>
-              <li>Something about who they are outside the office</li>
-            </ul>
+              <div>
+                <SectionHead
+                  eyebrow={p.role}
+                  title={p.credentials ? `${p.displayName}, ${p.credentials}` : p.displayName}
+                  as="h2"
+                />
 
-            <h2>On credentials</h2>
-            <p>
-              We will state credentials accurately, and we will not imply specialty status where a
-              recognized specialty credential is not held. A general dentist with a strong interest
-              and substantial training in an area is describable as exactly that, which is honest
-              and still worth knowing.
-            </p>
+                <div style={{ marginTop: 'var(--sp-5)', display: 'grid', gap: 'var(--sp-4)' }}>
+                  {p.bio.map((para) => (
+                    <p key={para.slice(0, 40)}>{para}</p>
+                  ))}
+                </div>
 
-            <h2>Hearing first</h2>
-            <p>
-              Provider announcements go to the opening list before they are published anywhere else.
-              If knowing who your dentist will be matters to your decision, and it reasonably might,
-              that is the fastest way to find out.
-            </p>
+                {p.education.length > 0 ? (
+                  <>
+                    <h3 style={{ marginTop: 'var(--sp-7)', fontSize: 'var(--fs-h4)' }}>Education</h3>
+                    <ul
+                      className="list-clean"
+                      style={{
+                        display: 'grid',
+                        gap: 'var(--sp-3)',
+                        marginTop: 'var(--sp-3)',
+                        fontSize: 'var(--fs-small)',
+                      }}
+                    >
+                      {p.education.map((e) => (
+                        <li key={e.institution}>
+                          <strong style={{ color: 'var(--navy)', display: 'block' }}>
+                            {e.institution}
+                          </strong>
+                          {[e.credential, e.detail]
+                            .filter(Boolean)
+                            .map((part) => `${part}.`)
+                            .join(' ')}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+
+                {p.honors.length > 0 ? (
+                  <>
+                    <h3 style={{ marginTop: 'var(--sp-6)', fontSize: 'var(--fs-h4)' }}>
+                      Honors and recognition
+                    </h3>
+                    <ul
+                      style={{
+                        display: 'grid',
+                        gap: 'var(--sp-2)',
+                        marginTop: 'var(--sp-3)',
+                        paddingLeft: '1.35rem',
+                        fontSize: 'var(--fs-small)',
+                      }}
+                    >
+                      {p.honors.map((h) => (
+                        <li key={h}>{h}</li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+              </div>
+            </div>
           </div>
-
-          <PlaceholderNote label="Required before publication: provider content">
-            This page is hidden from navigation and the sitemap and is set to noindex via
-            features.enableTeamPages in src/config/practice.ts. Before enabling: confirm the
-            provider roster, verify credentials and Delaware licence numbers, obtain approved
-            biographies, complete headshots to the Brand Guidelines section 5 standard, obtain
-            written sign-off from each provider on their own biography, and add Person schema. Use
-            docs/PROVIDER-BIO-TEMPLATE.md. Owner: Director of Marketing and Communications with
-            Clinical Lead.
-          </PlaceholderNote>
-
-          <div className="btn-row" style={{ justifyContent: 'center', marginTop: 'var(--sp-8)' }}>
-            <Button href="/opening-list" size="lg">
-              Hear Provider Announcements First
-            </Button>
-          </div>
-        </div>
-      </section>
+        </section>
+      ))}
 
       <section className="section section--soft">
-        <div className="container container--narrow text-center">
-          <SectionHead
-            eyebrow="Careers"
-            title="Are You a Clinician Reading This?"
-            center
-            lede="We are building a team from scratch, which is a rare thing to be part of. If you are a dentist, hygienist, assistant, or front office professional in coastal Delaware, we would like to hear from you."
-          />
-          <div className="btn-row" style={{ justifyContent: 'center' }}>
-            <Button href="/careers" variant="outline">
-              About Working With Us
-            </Button>
+        <div className="container container--narrow">
+          <div className="article-body">
+            <h2>The rest of the team</h2>
+            <p>
+              Hygienists, assistants, and front-office staff are being hired now. They will be
+              introduced here by name before we open, with the same detail. We are not going to fill
+              this space with stock photographs of models in lab coats, or with biographies for
+              people who have not been hired.
+            </p>
           </div>
         </div>
       </section>
 
-      <CtaBand />
+      <CtaBand
+        eyebrow="Appointments"
+        title={
+          providers.length === 1 && providers[0]
+            ? `Book With ${providers[0].displayName}`
+            : 'Book With Our Team'
+        }
+        lede="We are scheduling now for appointments after we open. Call the office, or send a request and our team will call you back to confirm a time."
+      />
     </>
   )
 }

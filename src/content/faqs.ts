@@ -48,7 +48,7 @@ export const openingFaqs: Faq[] = [
   {
     question: 'Will you accept my insurance?',
     answer:
-      'Insurance participation has not been confirmed. We will publish the full list of plans we are in network with before opening, and we will not describe a plan as accepted until it is verified.',
+      'We are not currently in network with any dental plan. We do offer courtesy billing, which means we submit your claim to your insurer for you rather than leaving you to file it. Because we are out of network, your plan may reimburse differently than it would for a contracted practice, and the balance is your responsibility. In-network options are being evaluated, and we will not name a plan until a contract is signed.',
   },
   {
     question: 'Who are the providers?',

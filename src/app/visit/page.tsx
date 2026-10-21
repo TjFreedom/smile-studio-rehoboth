@@ -65,7 +65,7 @@ const faqs: Faq[] = [
   {
     question: 'Do you accept my insurance?',
     answer:
-      'We are not currently in network with insurance plans. We will explain costs clearly before any treatment, and we are happy to talk through options on the call.',
+      'We are not currently in network with insurance plans, but we offer courtesy billing and submit your claim to your insurer for you. Out of network does not mean not covered. We will explain costs clearly before any treatment, and we are happy to talk through options on the call.',
   },
   {
     question: 'What does a first visit include?',

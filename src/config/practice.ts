@@ -16,7 +16,7 @@
  *   'open'                Seeing patients. Hours become real opening hours.
  *
  * Two derived booleans carry the distinction, and they are NOT the same test:
- *   `isPreOpening`            not yet seeing patients. Keeps hours labelled
+ *   `isPreOpening`            not yet seeing patients. Keeps hours labeled
  *                             "Planned", keeps openingHoursSpecification out of
  *                             structured data, keeps services marked planned.
  *   `isAcceptingAppointments` booking is live. Swaps every CTA to Request an
@@ -225,11 +225,45 @@ export const features = {
   enablePatientForms: false,
   enablePayOnline: false,
   enableEmergencyInstructions: false,
-  enableTeamPages: false,
+  enableTeamPages: true,
   enableInsuranceList: false,
   enableBlog: true,
   enableSocialLinks: false,
 } as const
+
+/* ------------------------------------------------------------------ *
+ * BILLING AND INSURANCE
+ * ------------------------------------------------------------------ */
+
+export type InsurancePosture = 'unconfirmed' | 'courtesy-billing' | 'in-network'
+
+/**
+ * Confirmed by the practice 2026-10-21: "we are going to do courtesy dental
+ * billing as we continue to evaluate in network options."
+ *
+ * 'courtesy-billing' means the practice is OUT of network with every plan and
+ * submits claims on the patient's behalf as a convenience. That distinction is
+ * the whole point of stating it carefully: "we bill your insurance" and "we
+ * take your insurance" sound alike to a patient and mean very different things
+ * for what they owe. Copy derived from this flag must never blur the two.
+ *
+ * Flip to 'in-network' only once a contract is executed, and name a plan only
+ * then. Delaware Board of Dentistry advertising rules apply.
+ */
+export const insurancePosture: InsurancePosture = 'courtesy-billing'
+
+/**
+ * [TO CONFIRM] Operational details the practice has not yet specified, and
+ * which must NOT be guessed at in copy:
+ *   · whether benefits are assigned to the practice or reimbursed to the patient
+ *   · whether payment is due in full at the time of service
+ *   · accepted payment methods, and any third-party financing
+ *   · whether an in-house membership plan will exist for uninsured patients
+ */
+export const insuranceDetailsConfirmed = false
+
+/** Named plans. Stays empty until a contract is signed. Never pre-populate. */
+export const inNetworkPlans: readonly string[] = []
 
 /* ------------------------------------------------------------------ *
  * HOURS
