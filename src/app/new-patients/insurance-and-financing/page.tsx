@@ -11,10 +11,6 @@ export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESC
 
 const blocks: Block[] = [
   {
-    type: 'note',
-    text: 'We are not in network with any dental plan. Payment is collected in full at the time of your visit, we file your insurance claim for you as a courtesy, and your insurer reimburses you directly. In-network participation is being evaluated, and no plan will be named here until a contract is signed.',
-  },
-  {
     type: 'p',
     text: 'Dental costs are one of the main reasons people postpone care, and dental insurance is one of the more confusing products a person is expected to understand. Here is exactly where we stand, in plain terms.',
   },
