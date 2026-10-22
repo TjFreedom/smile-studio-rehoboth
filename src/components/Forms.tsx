@@ -154,9 +154,11 @@ export function useFormSubmit(
   /** Extra fields merged into the payload at submit time, e.g. ad attribution. */
   extraPayload?: () => Record<string, unknown>,
   /**
-   * Navigate with a full page load instead of the client router. Google Ads
-   * URL-based conversions only count a real page load of the thank-you URL,
-   * so the paid-traffic form uses this.
+   * Navigate with a full page load instead of the client router, carrying the
+   * current query string (gclid, utm_*) across. Google Ads URL-based
+   * conversions only count a real page load of the thank-you URL, and with
+   * Consent Mode defaulting to denied the click id must survive in the URL
+   * for the conversion to attribute to the ad. The paid-traffic form uses this.
    */
   hardRedirect = false,
 ) {
@@ -218,7 +220,7 @@ export function useFormSubmit(
          */
         trackLead('generate_lead', { form: eventPrefix })
         if (hardRedirect) {
-          window.location.assign(redirectTo)
+          window.location.assign(`${redirectTo}${window.location.search}`)
         } else {
           router.push(redirectTo)
         }
