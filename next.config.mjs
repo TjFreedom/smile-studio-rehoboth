@@ -4,8 +4,13 @@
 // CSP is intentionally strict: no external script hosts, except Google's tag
 // host, which is added only when an analytics ID is configured at build time.
 // The loaders themselves live in src/components/Analytics.tsx.
-const analyticsEnabled = Boolean(process.env.NEXT_PUBLIC_GTM_ID || process.env.NEXT_PUBLIC_GA4_ID)
+const analyticsEnabled = Boolean(
+  process.env.NEXT_PUBLIC_GTM_ID || process.env.NEXT_PUBLIC_GA4_ID || process.env.NEXT_PUBLIC_GOOGLE_ADS_ID,
+)
 const clarityEnabled = Boolean(process.env.NEXT_PUBLIC_CLARITY_ID)
+// The Google Ads tag (AW-...) also loads through gtag.js, so it needs the tag
+// host too; analyticsEnabled covers that when only the Ads ID is set.
+const adsEnabled = Boolean(process.env.NEXT_PUBLIC_GOOGLE_ADS_ID)
 
 // Hosts gtag.js and GTM talk to. Regional collection endpoints are
 // subdomains of google-analytics.com and analytics.google.com.
@@ -25,19 +30,38 @@ const clarityEnabled = Boolean(process.env.NEXT_PUBLIC_CLARITY_ID)
 const opinlyPixelEnabled = Boolean(process.env.NEXT_PUBLIC_OPINLY_PIXEL_KEY)
 const opinlyHost = opinlyPixelEnabled ? ' https://static.opinly.ai' : ''
 
+/**
+ * Google Ads conversion endpoints. The URL-based conversion on
+ * /visit/thank-you is reported by the Ads tag with fetch() and image beacons
+ * to pagead2.googlesyndication.com (and, depending on consent state, to
+ * google.com, googleadservices.com, and googleads.g.doubleclick.net). Without
+ * these in connect-src and img-src the tag loads, looks installed in Google
+ * Ads, and every conversion ping is silently blocked.
+ */
+const adsScriptHosts = adsEnabled
+  ? ' https://www.googleadservices.com https://pagead2.googlesyndication.com'
+  : ''
+const adsBeaconHosts = adsEnabled
+  ? ' https://pagead2.googlesyndication.com https://www.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net'
+  : ''
+const adsFrameHosts = adsEnabled ? ' https://td.doubleclick.net https://bid.g.doubleclick.net' : ''
+
 const analyticsScriptHosts =
   (analyticsEnabled ? ' https://www.googletagmanager.com' : '') +
   (clarityEnabled ? ' https://www.clarity.ms https://*.clarity.ms' : '') +
+  adsScriptHosts +
   opinlyHost
 const analyticsConnectHosts =
   (analyticsEnabled
     ? ' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com'
     : '') +
   (clarityEnabled ? ' https://*.clarity.ms https://c.bing.com' : '') +
+  adsBeaconHosts +
   opinlyHost
 const analyticsImageHosts =
   (analyticsEnabled ? ' https://www.googletagmanager.com https://*.google-analytics.com' : '') +
-  (clarityEnabled ? ' https://*.clarity.ms https://c.bing.com' : '')
+  (clarityEnabled ? ' https://*.clarity.ms https://c.bing.com' : '') +
+  adsBeaconHosts
 
 const ContentSecurityPolicy = [
   "default-src 'self'",
@@ -50,7 +74,7 @@ const ContentSecurityPolicy = [
   "font-src 'self' https://fonts.gstatic.com data:",
   `img-src 'self' data: blob: https://maps.googleapis.com https://maps.gstatic.com${analyticsImageHosts}`,
   // Google Maps is loaded only after an explicit user click (see StaticMap).
-  "frame-src 'self' https://www.google.com https://maps.google.com",
+  `frame-src 'self' https://www.google.com https://maps.google.com${adsFrameHosts}`,
   // The dev server's HMR socket uses ws:, which 'self' does not cover.
   `connect-src 'self'${analyticsConnectHosts}${process.env.NODE_ENV === 'development' ? ' ws: wss:' : ''}`,
   // React's dev overlay needs eval(). Production never does, so the
