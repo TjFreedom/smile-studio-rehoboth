@@ -53,7 +53,7 @@ export const openingFaqs: Faq[] = [
   {
     question: 'Who are the providers?',
     answer:
-      'The provider team has not been announced. We will introduce each provider with their credentials and background before opening, and opening list subscribers hear first.',
+      'Dr. Jonathon Cottone, DDS is the dentist at Smile Studio of Rehoboth. You can read about his training and background on our Meet the Team page. Hygienists, assistants and front-office staff are being hired now and will be introduced there by name before we open.',
   },
 ]
 

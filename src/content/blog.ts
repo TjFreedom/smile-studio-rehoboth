@@ -35,6 +35,7 @@ export const posts: BlogPost[] = [
     description:
       'Smile Studio of Rehoboth is under construction at 19411 Plantations Road, with an anticipated opening in late November or early December 2026.',
     date: '2026-08-19',
+    updated: '2026-10-21',
     category: 'Practice News',
     readingTime: '3 min read',
     excerpt:
@@ -60,7 +61,7 @@ export const posts: BlogPost[] = [
       { type: 'h2', text: 'What we are still working out' },
       {
         type: 'p',
-        text: 'Quite a lot, and we would rather list it than imply otherwise. The provider team has not been announced. The final service list has not been confirmed by clinical leadership. Insurance participation is not settled. There is no public phone number yet, which is why every contact route on this site is by email for now.',
+        text: 'Updated October 2026: most of what this section originally listed has since been settled, and it is reproduced here with the answers rather than left to mislead anyone who finds this post later. Dr. Jonathon Cottone, DDS has been announced as the practice’s dentist. The service list is confirmed. The office phone number is (302) 715-0020, and we are scheduling appointments now. Still genuinely open: in-network insurance participation, which is being evaluated, and the exact opening date.',
       },
       {
         type: 'p',

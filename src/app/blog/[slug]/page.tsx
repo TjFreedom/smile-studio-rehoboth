@@ -140,10 +140,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 <div className="med-disclaimer">
                   <strong>Clinical review status</strong>
                   This article is practice news rather than clinical guidance, and it has not been
-                  reviewed by a named provider because the provider team has not been confirmed.
-                  Treatment-specific articles will not be published until a named provider has
-                  reviewed them, and each will carry that provider&rsquo;s name, credentials, and
-                  review date.
+                  reviewed by a named provider. Treatment-specific articles will not be published
+                  until Dr. Cottone has reviewed them, and each will carry his name, credentials,
+                  and review date.
                 </div>
               )}
 

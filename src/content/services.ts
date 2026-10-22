@@ -340,7 +340,7 @@ export const services: ServiceCategory[] = [
     cardSummary:
       'Evaluations for jaw pain, clicking, clenching, and headache-related dental concerns.',
     publicationGate:
-      'Providers and the specific TMJ services available at the Rehoboth office have not been confirmed. Some care in this category may be provided by visiting affiliated providers, or referred to a Freedom Dental Health location.',
+      'Dr. Cottone provides TMJ and facial pain care at the Rehoboth office. Whether visiting affiliated providers will hold sessions here has not been decided, and a complex case may still be referred to a Freedom Dental Health location. We will tell you which applies to you before you commit to anything.',
     intro: [
       'Jaw pain, clicking, limited opening, and morning headaches often have a dental component. Sometimes the answer is straightforward, such as a worn bite or a clenching habit. Sometimes it is more involved and benefits from a coordinated evaluation.',
       'This is an area where honest scoping matters. An evaluation tells you what is going on and which of the available approaches is reasonable for you. It does not promise that a dental appliance resolves every headache, because it does not.',
@@ -381,7 +381,7 @@ export const services: ServiceCategory[] = [
     cardSummary:
       'Screening and oral appliance care for snoring and sleep-disordered breathing.',
     publicationGate:
-      'Providers and the specific sleep and airway services available at the Rehoboth office have not been confirmed. Care in this category is often shared with a physician, and some services may be referred to a Freedom Dental Health location.',
+      'Dr. Cottone provides sleep and airway care at the Rehoboth office. Care in this category is often shared with a physician, because the diagnosis of sleep-disordered breathing is a medical one rather than a dental one. Whether visiting affiliated providers will hold sessions here has not been decided, and some services may be referred to a Freedom Dental Health location.',
     intro: [
       'Dentists see the airway from an angle physicians usually do not. Worn teeth, a scalloped tongue, a narrow palate, and a history of snoring are all things we notice during an ordinary examination, and any of them can be worth a conversation.',
       'What a dental practice can do here is specific and bounded. We can screen, we can raise the question, and where a physician has made a diagnosis we can provide oral appliance therapy as one of the recognized treatment options. Diagnosing sleep apnea is a physician role, and treatment decisions belong with them.',

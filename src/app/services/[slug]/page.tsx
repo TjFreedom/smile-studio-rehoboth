@@ -194,11 +194,9 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                   reason stated, rather than attributed to a fictional provider. */}
               <div className="med-disclaimer">
                 <strong>Clinical review status</strong>
-                This page has not yet been reviewed by a named provider, because the provider team
-                for {practiceName} has not been confirmed. Once providers are appointed, each
-                clinical page will carry the reviewing provider&rsquo;s name, credentials, review
-                date, and a link to their biography. We will not attribute content to a provider who
-                has not read it.
+                This page has not yet been reviewed by Dr. Cottone. Once it has been, it will carry
+                his name, credentials, the review date, and a link to his biography, as will every
+                other clinical page. We will not attribute content to a provider who has not read it.
               </div>
 
               <MedicalDisclaimer />
