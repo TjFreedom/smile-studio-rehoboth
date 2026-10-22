@@ -322,7 +322,7 @@ export const services: ServiceCategory[] = [
       {
         question: 'Will you see visitors who are not established patients?',
         answer:
-          'Serving visitors who need care while they are at the shore is part of the plan for this practice. Confirmed emergency policies, including whether we will see patients who are not of record, will be published before opening.',
+          'Serving visitors who need care while they are at the beach is part of the plan for this practice. Confirmed emergency policies, including whether we will see patients who are not of record, will be published before opening.',
       },
     ],
     related: ['restorative-dentistry', 'general-and-preventive-dentistry'],

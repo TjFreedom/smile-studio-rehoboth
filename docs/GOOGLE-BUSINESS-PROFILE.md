@@ -86,7 +86,7 @@ rules both prohibit implying specialty status that is not held.
 > Smile Studio of Rehoboth is a new dental practice in Rehoboth Beach, Delaware,
 > at 19411 Plantations Road in Plantations Professional Park. We provide
 > comprehensive, patient-centered dentistry for families, year-round residents,
-> and visitors to the Delaware shore, serving Rehoboth Beach, Lewes, Dewey
+> and visitors to the Delaware beaches, serving Rehoboth Beach, Lewes, Dewey
 > Beach, Milton, Harbeson, Long Neck, and Millsboro. Our approach is
 > straightforward: unhurried appointments, findings explained in plain language,
 > and written costs before any treatment is scheduled. The office is
@@ -95,7 +95,7 @@ rules both prohibit implying specialty status that is not held.
 > Health Practice.
 
 **Short description / social bio:**
-> Modern, comfortable dentistry at the Delaware shore. Families, residents, and visitors welcome. Rehoboth Beach, DE.
+> Modern, comfortable dentistry at the Delaware beaches. Families, residents, and visitors welcome. Rehoboth Beach, DE.
 
 ## 5. Services to list
 

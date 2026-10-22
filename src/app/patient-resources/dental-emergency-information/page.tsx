@@ -26,7 +26,7 @@ const faqs = [
   {
     question: 'Will you offer emergency dental care once you open?',
     answer:
-      'Emergency care is part of the plan for this practice, including for visitors who need help while they are at the shore. Our confirmed emergency procedures, hours, and contact methods will be published on this page before we open.',
+      'Emergency care is part of the plan for this practice, including for visitors who need help while they are at the beach. Our confirmed emergency procedures, hours, and contact methods will be published on this page before we open.',
   },
   {
     question: 'A tooth was knocked out. What should I do?',
@@ -160,7 +160,7 @@ export default function Page() {
               A dentist who can help when something goes wrong is a genuinely useful thing for a
               resort community to have, and it is part of why this location was chosen. Emergency
               care is planned for both patients of record and for visitors who need help while they
-              are at the shore.
+              are at the beach.
             </p>
             <p>
               Our confirmed emergency policy, including hours, how to reach us, after-hours

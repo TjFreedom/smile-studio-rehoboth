@@ -6,7 +6,7 @@ import { serviceArea } from '@/config/practice'
 
 const TITLE = 'Community Involvement'
 const DESCRIPTION =
-  'Smile Studio of Rehoboth is being built for the people who live in coastal Sussex County year-round, and for visitors who need care while they are at the shore.'
+  'Smile Studio of Rehoboth is being built for the people who live in coastal Sussex County year-round, and for visitors who need care while they are at the beach.'
 const PATH = '/about/community'
 
 export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: PATH })

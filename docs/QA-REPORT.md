@@ -223,11 +223,25 @@ Scripted scan of all 45 rendered pages for prohibited language and phone leaks.
 | "Now Open" / "Schedule Today" / "Book Now" / "Call Now" | ✅ 0 |
 | "state of the art" / "pain-free" / "guaranteed" / "world class" | ✅ 0 as claims |
 | Nautical puns ("smooth sailing", "shore thing", "anchor your smile") | ✅ 0 |
+| **"the shore" for this area** (say "the beach") | ✅ 0 *(17 fixed 2026-10-21)* |
 | "Lorem ipsum" | ✅ 0 |
+
 | Invented exact opening date | ✅ 0 |
 | Saturday or Sunday hours | ✅ 0 |
 | Fake reviews, ratings, or testimonials | ✅ 0 |
 | Fake provider information | ✅ 0 |
+
+> **Local usage: "beach", not "shore".** Flagged by a local reader. People in
+> Rehoboth Beach, Lewes and Dewey Beach say they are *at the beach*; "the
+> shore" reads as someone describing the area from the outside, and to a local
+> ear it means New Jersey. Seventeen instances were corrected on 2026-10-21,
+> across page copy, the provider biography, both flyers, and the Google
+> Business Profile description that had not yet been submitted. Use "the beach"
+> or "the Delaware beaches", or name the town. The brand colour **Shoreline
+> White** is unaffected and keeps its name.
+>
+> This applies to anything written for the site later, including articles
+> imported from Opinly.
 | `undefined` / `[object Object]` render bugs | ✅ 0 |
 
 The scanner flagged nine matches for banned phrases. **All nine are the site

@@ -24,7 +24,7 @@ export const metadata: Metadata = pageMetadata({
 
 const pillars = [
   {
-    h: 'A dental home at the shore',
+    h: 'A dental home at the beach',
     p: 'Somewhere you return to, where your history is known and you do not start over every visit. Continuity is the whole point of a general practice.',
     href: '/about/our-approach',
   },
@@ -50,7 +50,7 @@ const pillars = [
   },
   {
     h: 'Rooted in the community',
-    p: 'Built for the people who live here year-round, and open to anyone who needs a dentist while they are at the shore.',
+    p: 'Built for the people who live here year-round, and open to anyone who needs a dentist while they are at the beach.',
     href: '/about/community',
   },
 ]

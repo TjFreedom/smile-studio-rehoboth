@@ -22,7 +22,7 @@ const blocks: Block[] = [
   { type: 'h2', text: 'Who we expect to work with' },
   {
     type: 'p',
-    text: 'A new general practice at the shore is useful to several groups of colleagues:',
+    text: 'A new general practice at the beach is useful to several groups of colleagues:',
   },
   {
     type: 'ul',

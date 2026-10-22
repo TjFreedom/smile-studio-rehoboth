@@ -108,7 +108,7 @@ export const providers: readonly Provider[] = [
       'Multiple awards for excellence in general dentistry and oral pathology',
     ],
     bio: [
-      'Dr. Jonathon Cottone grew up in Bucks County, Pennsylvania, and has held deep connections to Sussex County since childhood, visiting regularly to spend time with family. Practicing on the Delaware shore is a return to a place he has known his whole life, rather than a posting he arrived at by chance.',
+      'Dr. Jonathon Cottone grew up in Bucks County, Pennsylvania, and has held deep connections to Sussex County since childhood, visiting regularly to spend time with family. Practicing in Rehoboth Beach is a return to a place he has known his whole life, rather than a posting he arrived at by chance.',
       'He earned his Bachelor of Science at the University of Delaware, graduating Cum Laude with a double major in Plant Science and Animal Science. His academic work was recognized with honors including Plant Science Student of the Year, and he took on advanced research at the Delaware Biotechnology Institute.',
       'Dr. Cottone pursued his dental education at the University of Maryland School of Dentistry, where he graduated in the top quarter of his class and received multiple awards for excellence in general dentistry and oral pathology.',
       'He joined Freedom Dental Health at its Peninsula Dental office in Millsboro before taking up his role here in Rehoboth Beach.',

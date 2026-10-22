@@ -122,7 +122,7 @@ export default function ServicesPage() {
             <p style={{ fontSize: 'var(--fs-small)', marginTop: 'var(--sp-3)' }}>
               The remaining specialties are not performed at the Rehoboth Beach office. Whether any
               visiting specialists will hold sessions here has not been determined. Some affiliated
-              locations are a substantial drive from the shore, and we will tell you how far before
+              locations are a substantial drive from the beach, and we will tell you how far before
               you commit to a referral.
             </p>
           </div>

@@ -147,7 +147,7 @@ export default function HomePage() {
         <div className="container">
           <div className="split">
             <div>
-              <span className="eyebrow">A new practice at the shore</span>
+              <span className="eyebrow">A new practice at the beach</span>
               <h2>A Thoughtfully Designed New Dental Experience</h2>
               <div className="stack" style={{ marginTop: 'var(--sp-5)' }}>
                 <p className="lede">

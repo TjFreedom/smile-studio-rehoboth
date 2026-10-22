@@ -47,7 +47,7 @@ const blocks: Block[] = [
   { type: 'h2', text: 'What it does not mean' },
   {
     type: 'p',
-    text: 'It does not mean every service offered anywhere in the network is available in Rehoboth Beach. Some specialty care happens at other locations, and some of those locations are a substantial drive from the shore.',
+    text: 'It does not mean every service offered anywhere in the network is available in Rehoboth Beach. Some specialty care happens at other locations, and some of those locations are a substantial drive from the beach.',
   },
   {
     type: 'p',

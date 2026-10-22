@@ -70,7 +70,7 @@ const blocks: Block[] = [
       'A brand new, purpose-built office rather than a tired space with somebody else’s workflow baked in',
       'A voice in how the practice runs, at the point where that voice actually changes things',
       `The support of ${parentOrganization}, including operational infrastructure and a wider professional network`,
-      'Living and working at the Delaware shore, which is a real benefit and not a line of marketing copy',
+      'Living and working at the Delaware beaches, which is a real benefit and not a line of marketing copy',
       'Growth as the practice grows',
     ],
   },

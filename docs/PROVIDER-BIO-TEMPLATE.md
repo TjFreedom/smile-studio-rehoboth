@@ -55,7 +55,7 @@ export interface Provider {
 5. **Clinical interests**, and what they most enjoy treating
 6. **Professional memberships**
 7. **Approach**, two to three sentences in the practice voice
-8. **Something human**, where they live, what they do at the shore
+8. **Something human**, where they live, what they do at the beach
 9. **Languages**, where relevant
 10. **Headshot**, shot to the Brand Guide §5 standard
 
