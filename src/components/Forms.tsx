@@ -153,6 +153,12 @@ export function useFormSubmit(
   eventPrefix: string,
   /** Extra fields merged into the payload at submit time, e.g. ad attribution. */
   extraPayload?: () => Record<string, unknown>,
+  /**
+   * Navigate with a full page load instead of the client router. Google Ads
+   * URL-based conversions only count a real page load of the thank-you URL,
+   * so the paid-traffic form uses this.
+   */
+  hardRedirect = false,
 ) {
   const router = useRouter()
   const [status, setStatus] = useState<Status>('idle')
@@ -211,7 +217,11 @@ export function useFormSubmit(
          * is not analytics data.
          */
         trackLead('generate_lead', { form: eventPrefix })
-        router.push(redirectTo)
+        if (hardRedirect) {
+          window.location.assign(redirectTo)
+        } else {
+          router.push(redirectTo)
+        }
         return
       }
 

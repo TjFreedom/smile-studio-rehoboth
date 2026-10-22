@@ -43,6 +43,7 @@ export function AppointmentRequestForm() {
     '/visit/thank-you',
     'appointment_request',
     readAttribution,
+    true,
   )
   const elapsed = useRef(0)
 

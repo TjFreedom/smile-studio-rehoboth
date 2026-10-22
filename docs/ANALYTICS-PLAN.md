@@ -38,10 +38,18 @@ touching application code.
 ## 1b. Paid-traffic landing page events
 
 `/visit` emits `appointment_request_form_start`, `appointment_request_form_submit`,
-`landing_cta_click`, and `landing_sticky_cta_click`. Mark
-`appointment_request_form_submit` (or a pageview of `/visit/thank-you`) as the
-conversion in GA4 and import it into Google Ads. The lead's `gclid` and `utm_*`
-values also reach the CRM, so offline conversion matching is possible later.
+`landing_cta_click`, and `landing_sticky_cta_click`.
+
+**Google Ads conversion (set up 2026-10-22).** The Ads account (130-819-0739)
+has a conversion action named **Landing page appointment request**, category
+Submit lead form, primary, counted once per click, data-driven attribution. It
+is URL-based: a page load whose URL starts with
+`www.rehobothsmiles.com/visit/thank-you`. The Google Ads tag `AW-18529325871`
+is loaded by `Analytics.tsx` from `NEXT_PUBLIC_GOOGLE_ADS_ID` (production only),
+alongside GA4 through the same gtag.js loader. The landing form redirects with a
+full page load, not the client router, because URL-based conversions only count
+real page loads. The lead's `gclid` and `utm_*` values also reach the CRM, so
+offline conversion matching is possible later.
 
 ## 2. Event implementation
 

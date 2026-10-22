@@ -58,6 +58,8 @@ export function trackLead(event: OpinlyEvent, props?: Record<string, unknown>) {
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID
 const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID
+/** Google Ads tag (AW-...). Conversions are URL-based, so config alone is enough. */
+const ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID
 
 /**
  * Opinly web analytics. Public, write-only key, so it is safe in client code
@@ -131,7 +133,7 @@ export function Analytics() {
   // Without it in the guard the pixel loads on production purely by accident,
   // because GA4 and Clarity happen to be set there, and silently does nothing
   // anywhere they are not.
-  if (!GTM_ID && !GA4_ID && !CLARITY_ID && !OPINLY_PIXEL_KEY) return null
+  if (!GTM_ID && !GA4_ID && !CLARITY_ID && !OPINLY_PIXEL_KEY && !ADS_ID) return null
 
   return (
     <>
@@ -168,14 +170,15 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
         </Script>
       ) : null}
 
-      {/* Direct GA4 (gtag.js), used only when there is no GTM container to
-          manage it. Loads after the consent defaults above, so the first hit
-          already carries the denied consent state. */}
-      {!GTM_ID && GA4_ID ? (
+      {/* Direct gtag.js, used only when there is no GTM container to manage
+          it. One loader serves both GA4 and the Google Ads tag; each gets its
+          own config call. Loads after the consent defaults above, so the
+          first hit already carries the denied consent state. */}
+      {!GTM_ID && (GA4_ID || ADS_ID) ? (
         <>
           <Script
             id="ga4-loader"
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID || ADS_ID}`}
             strategy="afterInteractive"
           />
           <Script id="ga4-config" strategy="afterInteractive">
@@ -184,7 +187,8 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 window.gtag = gtag;
 gtag('js', new Date());
-gtag('config', '${GA4_ID}');
+${GA4_ID ? `gtag('config', '${GA4_ID}');` : ''}
+${ADS_ID ? `gtag('config', '${ADS_ID}');` : ''}
             `}
           </Script>
         </>

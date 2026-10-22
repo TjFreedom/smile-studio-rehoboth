@@ -195,6 +195,7 @@ pinned to `noindex` in `netlify.toml`.
 | `NEXT_PUBLIC_GA4_ID` | Set | `G-BMGTYZL0KJ` on the production context only, since 2026-09-17. Loads gtag.js directly. |
 | `NEXT_PUBLIC_GTM_ID` | Optional | If set, GTM loads instead of the direct GA4 tag and GA4 should be managed inside the container. |
 | `NEXT_PUBLIC_CLARITY_ID` | Set | `ypyhcnujep` on the production context only, since 2026-09-29. Microsoft Clarity session recordings. |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | Set | `AW-18529325871` on the production context only, since 2026-10-22. Powers the URL-based Google Ads conversion on `/visit/thank-you`. |
 
 ### Forms and the CRM
 
