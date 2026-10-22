@@ -220,6 +220,9 @@ export function useFormSubmit(
          */
         trackLead('generate_lead', { form: eventPrefix })
         if (hardRedirect) {
+          // A real page load is the point here, so the client router is not an
+          // option: Google Ads only counts a URL-based conversion on a page load.
+          // eslint-disable-next-line @next/next/no-location-assign-relative-destination
           window.location.assign(`${redirectTo}${window.location.search}`)
         } else {
           router.push(redirectTo)
