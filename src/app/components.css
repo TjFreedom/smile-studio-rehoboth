@@ -1984,6 +1984,25 @@
   max-width: 56ch;
 }
 
+.lp-hero__photo {
+  margin: var(--sp-7) 0 0;
+}
+
+.lp-hero__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+.lp-hero__photo figcaption {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-caption);
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .lp-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

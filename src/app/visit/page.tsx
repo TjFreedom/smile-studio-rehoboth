@@ -119,6 +119,22 @@ export default function VisitLandingPage() {
                 Anticipated opening in {anticipatedOpening}. Construction schedules can change, and
                 we will tell you plainly if the date moves.
               </p>
+
+              <figure className="lp-hero__photo">
+                {/* eslint-disable-next-line @next/next/no-img-element -- pre-optimized static JPEGs */}
+                <img
+                  src="/images/office/building-front-800.jpg"
+                  srcSet="/images/office/building-front-800.jpg 800w, /images/office/building-front.jpg 1400w"
+                  sizes="(max-width: 960px) 92vw, 48vw"
+                  width={1400}
+                  height={1046}
+                  alt={`The front of the ${practiceName} building: grey shingled siding with white trim, the practice sign with the lighthouse mark beside the entrance, and a covered walkway along the storefronts.`}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+                <figcaption>{address.line1}, {address.complex}</figcaption>
+              </figure>
             </div>
 
             <div className="form-card" id="reserve">
