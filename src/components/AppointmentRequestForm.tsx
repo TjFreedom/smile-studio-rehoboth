@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { Field, SelectField, SpamTraps, useFormSubmit } from './Forms'
-import { CALL_TIMES, VISIT_REASONS } from '@/lib/form-options'
+import { VISIT_REASONS } from '@/lib/form-options'
 import { practiceName } from '@/config/practice'
 
 /** Query parameters carried from the ad click into the lead. */
@@ -86,7 +86,7 @@ export function AppointmentRequestForm() {
           inputMode="tel"
           required
           autoComplete="tel"
-          hint="We will call this number to find a time."
+          hint="Our new patient concierge will text or call this number."
           error={errors.phone}
         />
         <Field
@@ -99,22 +99,13 @@ export function AppointmentRequestForm() {
         />
       </div>
 
-      <div className="form__grid">
-        <SelectField
-          name="reason"
-          label="What brings you in?"
-          options={VISIT_REASONS}
-          defaultValue="New patient exam and cleaning"
-          error={errors.reason}
-        />
-        <SelectField
-          name="callTime"
-          label="Best time to call"
-          options={CALL_TIMES}
-          defaultValue="Either is fine"
-          error={errors.callTime}
-        />
-      </div>
+      <SelectField
+        name="reason"
+        label="What are you interested in?"
+        options={VISIT_REASONS}
+        defaultValue="New Patient Exam"
+        error={errors.reason}
+      />
 
       <div className="field">
         <label htmlFor="message">

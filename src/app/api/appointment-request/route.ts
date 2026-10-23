@@ -60,7 +60,6 @@ export async function POST(request: Request): Promise<NextResponse<FormResponse>
         phone: data.phone,
         email: data.email,
         reason: data.reason,
-        callTime: data.callTime,
         message: data.message,
         consentContact: 'Yes',
         utm_source: data.utm_source,
@@ -84,8 +83,7 @@ export async function POST(request: Request): Promise<NextResponse<FormResponse>
         ['Name', `${data.firstName} ${data.lastName}`],
         ['Mobile phone', data.phone],
         ['Email', data.email],
-        ['Reason', data.reason],
-        ['Best time to call', data.callTime],
+        ['Interest', data.reason],
         ['Note', data.message],
         ['Campaign', [data.utm_source, data.utm_medium, data.utm_campaign].filter(Boolean).join(' / ')],
         ['Submitted', submittedAt],
@@ -98,7 +96,7 @@ export async function POST(request: Request): Promise<NextResponse<FormResponse>
       {
         ok: false,
         message:
-          'We could not submit the form just now. Please email info@rehobothsmiles.com and we will call you to schedule.',
+          'We could not submit the form just now. Please email info@rehobothsmiles.com and we will reach out to schedule.',
       },
       { status: 502 },
     )

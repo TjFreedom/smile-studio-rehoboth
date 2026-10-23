@@ -60,7 +60,7 @@ const faqs: Faq[] = [
   {
     question: 'What happens after I send the form?',
     answer:
-      'A member of our team will call the number you provide to find a time that works for you, answer any questions, and confirm what to bring. Nothing is scheduled until you have spoken with us.',
+      'Our new patient concierge will text or call the number you provide to find a time that works for you, answer any questions, and confirm what to bring. Nothing is scheduled until you have heard from us.',
   },
   {
     question: 'Do you accept my insurance?',
@@ -102,8 +102,8 @@ export default function VisitLandingPage() {
               <h1>A Brand-New Dental Office Is Opening in Rehoboth Beach</h1>
               <p className="lp-hero__lede">
                 {practiceName} brings experienced providers and a thoughtfully designed new office
-                to {address.complex}. Tell us a little about you, and we will call to reserve your
-                first appointment.
+                to {address.complex}. Tell us a little about you, and we will reach out to reserve
+                your first appointment.
               </p>
 
               <ul className="lp-points">
@@ -149,7 +149,7 @@ export default function VisitLandingPage() {
                   marginBottom: 'var(--sp-5)',
                 }}
               >
-                Takes about a minute. A member of our team will call to find a time.
+                Takes about a minute. Our new patient concierge will text or call to find a time.
               </p>
               <AppointmentRequestForm />
             </div>
@@ -212,10 +212,10 @@ export default function VisitLandingPage() {
               <p>Your name, a mobile number, and what brings you in. That is all we need to start.</p>
             </li>
             <li>
-              <h3>We call to reserve your time</h3>
+              <h3>We reach out to reserve your time</h3>
               <p>
-                A member of our team calls at the time you prefer, answers your questions, and holds
-                a first appointment for you.
+                Our new patient concierge texts or calls you, answers your questions, and holds a
+                first appointment for you.
               </p>
             </li>
             <li>
@@ -243,7 +243,7 @@ export default function VisitLandingPage() {
           <SectionHead
             eyebrow="Reserve your place"
             title="First Appointments Are Being Reserved Now"
-            lede="Send us your details and we will call to find a time that suits you."
+            lede="Send us your details and we will reach out to find a time that suits you."
             center
             invert
           />

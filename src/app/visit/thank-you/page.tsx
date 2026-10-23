@@ -42,9 +42,9 @@ export default function VisitThankYou() {
             <CheckIcon size={34} />
           </span>
 
-          <h1>Thank you. We&rsquo;ll call you soon.</h1>
+          <h1>Thank you. We&rsquo;ll be in touch soon.</h1>
           <p className="lede" style={{ marginTop: 'var(--sp-4)', marginInline: 'auto' }}>
-            A member of the {practiceName} team will call the number you gave us to find a time
+            Our new patient concierge will text or call the number you gave us to find a time
             that works and answer any questions.
           </p>
           <p
@@ -55,7 +55,7 @@ export default function VisitThankYou() {
               color: 'var(--mist)',
             }}
           >
-            No appointment is scheduled until you have spoken with us. If you would rather write,
+            No appointment is scheduled until you have heard from us. If you would rather write,
             email <a href={mailtoUrl}>{email}</a>.
           </p>
 

@@ -52,8 +52,7 @@ Carries a persistent, programmatically-associated notice:
 | First name, last name | yes | Same rules as the other forms |
 | Mobile phone | **yes** | The follow-up is a call, so phone is required here |
 | Email | no | Optional; lowers friction on paid traffic |
-| What brings you in | no | Six options, defaults to a new patient exam |
-| Best time to call | no | Morning / Afternoon / Either |
+| What are you interested in | no | Cleaning, New Patient Exam, Implants, Cosmetic, Other. These are the CRM's own interest values, verbatim, because the CRM routes follow-up texts on them. |
 | Note | no | Up to 1,000 characters |
 | Contact consent | **yes** | Not pre-selected. Phone, text, or email about scheduling, with STOP language |
 | `utm_*`, `gclid`, `landingPage` | hidden | Read from the landing URL at submit time and passed through to the CRM |
@@ -126,12 +125,14 @@ posts it to `https://fdhscrm.azurewebsites.net/api/leads/webhook` with the
 `x-webhook-secret` header. This is the same endpoint, header, and payload the
 DCAD site uses, so both practices arrive in the CRM identically.
 
-- Opening-list signups carry the service interest, preferred contact method,
-  ZIP, and both consent answers in `interest`.
-- Inquiries carry the category and the message in `interest`.
-- Appointment requests carry the reason, preferred call time, and note in
-  `interest`, and pass `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`,
-  `utm_content`, and `gclid` through unchanged so the CRM can attribute the lead.
+- `interest` is always one clean value, because the CRM picks an automatic
+  follow-up text from it: the landing page's selection, the opening list's
+  service interest, or the inquiry category.
+- Everything else (the free-text message, consents, preferred contact, ZIP)
+  goes in `notes`.
+- Appointment requests also pass `utm_source`, `utm_medium`, `utm_campaign`,
+  `utm_term`, `utm_content`, and `gclid` through unchanged so the CRM can
+  attribute the lead.
 - Submissions tagged with a non-production `deployContext` are skipped, so a
   reviewer's test on a deploy preview never becomes a CRM lead.
 - If `CRM_WEBHOOK_SECRET` or `CRM_LOCATION_ID` is missing, the function logs

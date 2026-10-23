@@ -38,18 +38,12 @@ export const INQUIRY_CATEGORIES = [
   'Something else',
 ] as const
 
-/** Paid-traffic landing page: why the visitor wants to come in. */
-export const VISIT_REASONS = [
-  'New patient exam and cleaning',
-  'A specific concern or tooth pain',
-  'Cosmetic consultation',
-  'Dental implants',
-  'Second opinion',
-  'Not sure yet',
-] as const
-
-/** Paid-traffic landing page: when a call back suits them. */
-export const CALL_TIMES = ['Morning', 'Afternoon', 'Either is fine'] as const
+/**
+ * Paid-traffic landing page: what the visitor is interested in. These are the
+ * CRM's own interest values, verbatim, because the CRM routes follow-up texts
+ * on the `interest` field. Change them together or not at all.
+ */
+export const VISIT_REASONS = ['Cleaning', 'New Patient Exam', 'Implants', 'Cosmetic', 'Other'] as const
 
 /** Shape returned by every form API route. */
 export interface FormResponse {

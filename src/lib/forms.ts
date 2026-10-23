@@ -1,6 +1,5 @@
 import { z } from 'zod'
 import {
-  CALL_TIMES,
   CONTACT_METHODS,
   INQUIRY_CATEGORIES,
   SERVICE_INTERESTS,
@@ -13,7 +12,6 @@ export {
   CONTACT_METHODS,
   INQUIRY_CATEGORIES,
   VISIT_REASONS,
-  CALL_TIMES,
 } from './form-options'
 export type { FormResponse } from './form-options'
 
@@ -134,8 +132,7 @@ export const appointmentRequestSchema = z.object({
   lastName: name.describe('last name'),
   phone: requiredPhone,
   email: optionalEmail,
-  callTime: z.enum(CALL_TIMES).default('Either is fine'),
-  reason: z.enum(VISIT_REASONS).default('New patient exam and cleaning'),
+  reason: z.enum(VISIT_REASONS).default('New Patient Exam'),
   message: z.string().trim().max(1000, 'Please keep your note under 1,000 characters.').optional().default(''),
   /** Must be explicitly checked. Never pre-selected in the UI. */
   consentContact: z.literal(true, {

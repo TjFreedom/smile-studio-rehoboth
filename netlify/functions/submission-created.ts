@@ -21,8 +21,9 @@
  *   CRM_WEBHOOK_URL     optional override of the endpoint below.
  *
  * The CRM contract (its WEBHOOKS.md): `first_name` and `location_id` are
- * required; `last_name`, `phone`, `email`, `interest`, and the utm_* fields are
- * optional. Phone is normalised on the CRM side. The CRM always answers 200
+ * required; `last_name`, `phone`, `email`, `interest`, `notes`, and the utm_*
+ * fields are optional. `interest` is kept to a single clean value because the
+ * CRM filters on it to choose an automatic follow-up text. Phone is normalised on the CRM side. The CRM always answers 200
  * once the secret is accepted, and returns 401 when it is not.
  *
  * Without either, the function logs and skips. The submission is still in
@@ -54,7 +55,13 @@ interface CrmLead {
   last_name: string
   phone: string
   email: string
+  /**
+   * The visitor's selection, verbatim. The CRM routes follow-up texts on this
+   * field, so it must be one clean value and never a composed sentence.
+   */
   interest: string
+  /** Everything else: free text, consents, preferences. */
+  notes: string
 }
 
 interface HandlerEvent {
@@ -74,52 +81,37 @@ function isLeadForm(name: string | undefined): name is LeadForm {
   return LEAD_FORMS.includes(name as LeadForm)
 }
 
-/** Opening-list signup. Everything beyond identity goes into `interest`. */
-function fromOpeningList(data: Record<string, unknown>): CrmLead {
-  const parts = ['Opening list signup']
-  if (text(data.serviceInterest)) parts.push(`Interest: ${text(data.serviceInterest)}`)
-  if (text(data.preferredContact)) parts.push(`Preferred contact: ${text(data.preferredContact)}`)
-  if (text(data.zip)) parts.push(`ZIP: ${text(data.zip)}`)
-  if (text(data.consentEmail)) parts.push(`Email consent: ${text(data.consentEmail)}`)
-  if (text(data.consentSms)) parts.push(`SMS consent: ${text(data.consentSms)}`)
-
+function identity(data: Record<string, unknown>) {
   return {
     first_name: text(data.firstName),
     last_name: text(data.lastName),
     phone: text(data.phone),
     email: text(data.email),
-    interest: parts.join(' | '),
   }
 }
 
-/** General inquiry. The category and the message become `interest`. */
-function fromInquiry(data: Record<string, unknown>): CrmLead {
-  const parts = [`Website inquiry${text(data.category) ? ` (${text(data.category)})` : ''}`]
-  if (text(data.message)) parts.push(text(data.message))
-
-  return {
-    first_name: text(data.firstName),
-    last_name: text(data.lastName),
-    phone: text(data.phone),
-    email: text(data.email),
-    interest: parts.join(' | '),
-  }
-}
-
-/** Paid-traffic landing page. A call-back request, so it leads the interest. */
+/** Paid-traffic landing page. Interest is one of the CRM's own values. */
 function fromAppointmentRequest(data: Record<string, unknown>): CrmLead {
-  const parts = ['Appointment request (landing page)']
-  if (text(data.reason)) parts.push(`Reason: ${text(data.reason)}`)
-  if (text(data.callTime)) parts.push(`Best time to call: ${text(data.callTime)}`)
-  if (text(data.message)) parts.push(text(data.message))
+  const notes = ['Appointment request from the landing page']
+  if (text(data.message)) notes.push(text(data.message))
+  return { ...identity(data), interest: text(data.reason) || 'Other', notes: notes.join(' | ') }
+}
 
-  return {
-    first_name: text(data.firstName),
-    last_name: text(data.lastName),
-    phone: text(data.phone),
-    email: text(data.email),
-    interest: parts.join(' | '),
-  }
+/** Opening-list signup. Interest is the service the visitor picked. */
+function fromOpeningList(data: Record<string, unknown>): CrmLead {
+  const notes = ['Opening list signup']
+  if (text(data.preferredContact)) notes.push(`Preferred contact: ${text(data.preferredContact)}`)
+  if (text(data.zip)) notes.push(`ZIP: ${text(data.zip)}`)
+  if (text(data.consentEmail)) notes.push(`Email consent: ${text(data.consentEmail)}`)
+  if (text(data.consentSms)) notes.push(`SMS consent: ${text(data.consentSms)}`)
+  return { ...identity(data), interest: text(data.serviceInterest) || 'Other', notes: notes.join(' | ') }
+}
+
+/** General inquiry. Interest is the category; the message goes to notes. */
+function fromInquiry(data: Record<string, unknown>): CrmLead {
+  const notes = ['Website inquiry']
+  if (text(data.message)) notes.push(text(data.message))
+  return { ...identity(data), interest: text(data.category) || 'Other', notes: notes.join(' | ') }
 }
 
 function buildLead(formName: LeadForm, data: Record<string, unknown>): CrmLead {
